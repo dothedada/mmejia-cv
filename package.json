@@ -1,0 +1,16 @@
+{
+  "name": "mmejia-cv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "browser-sync start --server --files *.html *.css *.js --browser 'firefox'"
+  },
+  "dependencies": {
+    "browser-sync": "^2.29.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
