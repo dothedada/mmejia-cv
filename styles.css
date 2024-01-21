@@ -8,19 +8,38 @@
 
     --font-parragraph: 'Fira Code', monospace;
     --font-headings: 'Poppins', sans-serif;
-    --font-display: 'Rock 3D', system-ui;
+    --font-display: 'Rock 3D', serif;
 }
 html {
     font-size: 100%;
-    line-height: calc(1ex / 0.32);
-}
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
 
+    /* Las marcas de puntuación del inicio y final salen de la caja de texto */
+    hanging-punctuation: first last; 
+    /* Corrige el cambio de texto al cambiar disposición de pantalla */
+    -webkit-text-size-adjust: none; 
+       -moz-text-size-adjust: none;
+            text-size-adjust: none;
+}
+:has(:target) { /* Smooth scrool incluso en ventanas internas */
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+}
+*:not(dialog),
+*::after,
+*::before { 
+    margin: 0; 
+    padding: 0;
+}
 
 h1, h2, h3, h4 {
     font-family: var(--font-headings);
     font-weight: 700;
+    text-wrap: balance;
+    line-height: 1.2;
+    margin: 0;
 }
-
 h1 {
     font-size: 5.652rem;
 }
@@ -33,11 +52,96 @@ h3 {
 h4 { 
     font-size: 1.999rem;
 }
-strong {
+p {
+    line-height: calc(1ex / 0.32);
+    margin: 0 0 calc(1ex / 0.32);
+    text-wrap: pretty;
+    max-width: 65ch;
+}
+b, strong {
     font-weight: 700;
 }
+
+a, button { 
+    /* Corrige el problema de consistencia del cursor */
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+img, picture, svg, video {
+    /* reseteo del comportamiento de imagenes y videos */
+    display: block;
+    max-width: 100%;
+}
+img { 
+    /* reseteo del comportamiento  específico de las imágenes */
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: 1rem;
+}
+input, textarea, button, select {
+    /* Corrige la asignación de fuente a los elementos de formulario */
+    font: inherit;
+}
+
 body {
     font-family: var(--font-parragraph);
     font-weight: 400;
+
+    margin: 0;
+    background-color: var(--background);
+    color: var(--text);
 }
 
+/* Accesibilidad del contenido*/
+.hidden, [hidden] {
+    display: none !important;
+}
+.sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0); 
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap; 
+    width: 1px;
+}
+/* Estilos del botón de skip */
+a.skip-menu {
+    left:-999px;
+    position:absolute;
+    top:auto;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    z-index:-999;
+}
+a.skip-menu:focus, a.skip-menu:active {
+    color: var(--background);
+    background-color: var(--primary);
+    left: unset;
+    top: unset;
+    width: unset;
+    height: unset;
+    overflow: unset;
+    margin: 1rem;
+    padding: 0.5rem 1.5rem;
+    font-size:1em;
+    z-index:999;
+}
+@media(prefers-reduced-motion: reduce) { 
+    /* Bloquea movimiento y animaciones */
+    *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}
