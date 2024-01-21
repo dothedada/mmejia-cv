@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Poppins:wght@800&family=Rock+3D&display=swap');
+:root {
+    --text: hsl(60, 9%, 15%);
+    --background: hsl(53, 40%, 96%);
+    --primary: hsl(358, 78%, 37%);
+    --secondary: hsl(60, 87%, 51%);
+    --accent: hsl(43, 100%, 50%);
+
+    --font-parragraph: 'Fira Code', monospace;
+    --font-headings: 'Poppins', sans-serif;
+    --font-display: 'Rock 3D', system-ui;
+}
+html {
+    font-size: 100%;
+    line-height: calc(1ex / 0.32);
+}
+
+
+h1, h2, h3, h4 {
+    font-family: var(--font-headings);
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 5.652rem;
+}
+h2 {
+    font-size: 3.997rem;
+}
+h3 {
+    font-size: 2.827rem;
+}
+h4 { 
+    font-size: 1.999rem;
+}
+strong {
+    font-weight: 700;
+}
+body {
+    font-family: var(--font-parragraph);
+    font-weight: 400;
+}
+
