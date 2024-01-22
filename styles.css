@@ -3,7 +3,7 @@
     --text: hsl(60, 9%, 15%);
     --background: hsl(53, 40%, 96%);
     --primary: hsl(358, 78%, 37%);
-    --primary-alpha: hsla(358, 78%, 37%, 0.7);
+    --primary-alpha: hsla(358, 78%, 37%, 0.9);
     --secondary: hsl(60, 87%, 51%);
     --accent: hsl(43, 100%, 50%);
 
@@ -41,7 +41,8 @@ h1,
     font-size: clamp(2.813rem, 5.422vw + 1.288rem, 5.625rem);
     line-height: clamp(3.656rem, 4.88vw + 2.284rem, 6.188rem);
 }
-h2 {
+h2,
+.h2 {
     font-size: clamp(2rem, 3.855vw + 0.916rem, 4rem);
     line-height: clamp(2.6rem, 3.47vw + 1.624rem, 4.4rem);
 }
@@ -55,6 +56,7 @@ h4 {
 }
 .textoPosterior {
     font-family: var(--font-display);
+    word-break: break-all;
 }
 p {
     margin: 0 0 calc(1ex / 0.32);
@@ -102,7 +104,10 @@ body {
     color: var(--text);
 }
 
-body > *:not(script) {
+.menu,
+.cabezote,
+.work__profile,
+.portfolio{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
@@ -213,7 +218,7 @@ body > *:not(script) {
     gap: 0.5rem;
     flex-direction: column;
     justify-content: center;
-    transition: left 0.2s ease 0.1s;
+    transition: left 0.2s ease;
 }
 .menu__elementos > li {
     margin: 0 0 0 calc(50% + 1rem);
@@ -274,10 +279,88 @@ h1 {
 }
 
 
+/* -------------- */
+/* -------------- */
+/* --HABILIDADES- */
+/* -------------- */
+/* -------------- */
+.work {
+    padding: 5rem 0 0;
+}
+.work__profile h2, 
+.work__profile .h2,
+.work__profile h3,
+.work__profile a{
+    grid-column: 2 / span 3;
+}
+.work__profile h2,
+.work__profile .h2 {
+    grid-row: 1 / span 1;
+}
+.work__profile h2 {
+    z-index: 1;
+    margin: 0 0 5rem;
+}
+.work__profile .h2 {
+    color: var(--accent);
+    transform: translate(-1rem, 0.2rem);
+    z-index: -1;
+}
+.work__profile a {
+    margin: -1rem 0 5rem;
+    color: var(--accent);
+    font-weight: 700;
+}
+.work__profile a:hover {
+    color: var(--primary);
+}
+.profile__text {
+    grid-column: 1 / span 3;
+    padding: 0 1rem;
+}
+.profile__image {
+    display: none;
+}
 
 
+/* -------------- */
+/* -------------- */
+/* --PORTAFOLIO-- */
+/* -------------- */
+/* -------------- */
+.portfolio {
+    background-color: var(--secondary);
+    padding: 5rem 1rem;
+}
 
-
+.portfolio h2, 
+.portfolio .h2 {
+    grid-column: 2 / span 3;
+    grid-row: 1 / span 1;
+}
+.portfolio .h2 {
+    color: var(--primary);
+    transform: translate(-0.5rem, 0.2rem);
+    z-index: 0;
+    margin: 0 0 2rem;
+}
+.portfolio h2 {
+    z-index: 1;
+}
+.portfolio__text {
+    grid-column: 1 / -1;
+}
+.portfolio__links {
+    grid-column: 2 / span 2;
+    margin: 2rem 0;
+}
+.portfolio__links a {
+    color: var(--primary);
+    font-weight: 700;
+}
+.portfolio__links a:hover {
+    color: var(--accent);
+}
 
 
 
