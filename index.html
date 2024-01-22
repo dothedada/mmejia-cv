@@ -47,8 +47,8 @@
     <nav class="menu">
         <a href="#about" class="skip-menu">Saltar el menú</a>
         <div>
-            <span id="mmejia-logo" class="sr-only">Miguel Mejía - volver al inicio</span>
             <a href="#">
+                <span id="mmejia-logo" class="menu__logo sr-only">Miguel Mejía - volver al inicio</span>
                 <svg version="1.1" 
                     class="menu__logo"
                     xmlns="http://www.w3.org/2000/svg" 
@@ -61,40 +61,41 @@
                         d="M125.2,111c1.1-0.3,2.2-0.6,3.2-0.9c4.4-17.8,6.2-26.4,10.9-38c5.6-13.7,15.3-15.2,20.9,1.9 c2.3,6.9,4.1,15.1,7.5,26.2c20.7-5.6,43.5-11.8,64.2-17.4c1.7-22.8,3.8-37.5,3.5-52.9c-0.1-5.7,3-11.4,8-10.6 c4.3,0.7,7.6,5,9.5,14.3c2,9.8,4.7,24.5,9.5,40.5c8.6-2.7,17.6-5,26.4-7.5c0.7-14.3,1.1-23.8,2-36.7c0.9-13,6.1-51.2,26.4-13.7 c7.4,13.6,10.6,22.4,16.4,37.4c20-4.8,43.9-13.6,54.7-14.9c5.5-0.7,7.1,5.8,8.9,14.9c3.4,17,4,33.6,2.5,48.6 c-1.1,11.6-6.6,21.1-13.4,24.3c-17.2,8.1-42.6-32.5-56.7-66.6c-11.3,3.1-24,6.8-35.3,10c-0.3,36.1-5.3,54.4-13.9,56 c-12.7,2.5-21-28.8-25.4-45.5c-2.1,0.5-4.2,1.1-6.3,1.8l-4.2,1.4c-2.1,0.7-4.2,1.3-6.3,1.8c-9.6,72.8-24.9,93.4-37.8,93.8 c-17.6,0.6-27.8-27.4-39.8-72.6c-8.3,2.1-17.1,4.8-25.4,6.8c-7.7,29.2-12.6,35.2-18.9,34.2c-9-1.4-10.1-17.4-10-26.8 c-7.6,2-15.2,4-22.8,6.1l-45.4,12.1c-7.6,2-15.2,4-22.8,6.1c-0.5,6.2-5.7,10.9-8.5,11.2c-3.9,0.4-6.5-6-6.5-16.8 c4-26.8,15.6-57.9,29.9-80.9c10.5-17,22.1-29,36.5-36.3c11.4-5.8,20.3-3.1,24.7-0.4c4.9,3,9,8.4,12.9,18.7 c7.7,20.1,10,49.7,10.9,73.5c1-0.3,2-0.6,3.2-0.9L125.2,111z M168.7,103.9c12.7,49.1,22.7,66,33.3,66c17,0,28.6-63.2,29.4-82.8 C223.8,88.9,175.6,102.4,168.7,103.9z M13.9,138.7c0,0-1.2-18.3,5-39.2C27.3,71,51.3,31.7,73.1,27.9c24.4-4.2,31.6,29.3,32.8,87.8 C97.9,117.7,13.9,138.7,13.9,138.7z M115.4,118.8l11.9-3.1c0,0-2.8,13.6-9,14.3C115.4,130.4,115.4,118.8,115.4,118.8z M263.2,77.7 c3.7,16.2,13.8,41.1,17.9,38c7.1-5.4,7.5-40.2,7.5-44.8C285.1,71.8,266,76.8,263.2,77.7z M335.4,57.8c0,0,38.4-12.2,46.3-10 c4.4,1.2,5.3,7.1,7,16.2c1.6,8.7,4.7,34.2,0.5,41.7c-4.7,8.4-12.1,10.4-21.4,1.9C357.2,98,343.8,76.4,335.4,57.8z M135.8,108.2 l23.4-6.2c0,0-5.9-25.4-10.4-24.3C141,79.7,135.8,108.2,135.8,108.2z M238.3,80.8c0,0,4.2-32.1,6-35.5c1.6-3.1,9.5,31.1,9.5,31.1 L238.3,80.8z M294.1,64.6c0,0,0-41.7,8-46.1c8.8-4.6,25.4,36.7,25.4,36.7L294.1,64.6z"/>
                 </svg>
             </a>
-            <button class="menu__idioma">
-                <span class="sr-only">Ir a la versión en español</span>
-                <span aria-hidden="true">Ñ</span>
-            </button>
         </div>
-        <label for="" class="menu__estado">
-            <span class="sr-only">mostrar el menú</span>
-            <span class="sr-only">ocultar el menú</span>
-            <input type="checkbox">
+        <button class="menu__idioma">
+            <span class="sr-only">Ir a la versión en español</span>
+            <span aria-hidden="true">> eng</span>
+        </button>
+        <input id="mostrarMenu" type="checkbox">
+        <label for="mostrarMenu" class="menu__estado" tabindex="0">
+            <span class="sr-only">mostrar o ocultar el el menú</span>
+            <span class="menu__btn" aria-hidden="true"></span>
         </label>
-        <ul class="menu__elementos plain-list">
-            <li><a href="#">Sobre mí</a></li>
-            <li><a href="#">Habilidades</a></li>
-            <li><a href="#">Portafolio</a></li>
-            <li><a href="#">Contáctame</a></li>
+        <ul class="menu__elementos">
+            <li><a href="#">Sobre mí > </a></li>
+            <li><a href="#">Habilidades > </a></li>
+            <li><a href="#">Mi trabajo > </a></li>
+            <li><a href="#">Hablemos > </a></li>
         </ul>
     </nav>
 
     <header id="about" class="cabezote">
         <img 
-            src="https://picsum.photos/200/300?random=1" 
+            src="/img/retrato-mmejia.jpg" 
             class="cabezote__foto"
             alt="Miguel Mejía sonriendo a la cámara durante una exposición" 
-            width="200" height="200">
+            width="220" height="220">
+        <div class="h1 textoPosterior" aria-hidden="true">Hola! soy Miguel Mejia</div>
         <h1 class="cabezote__titulo">Hola! soy Miguel Mejía</h1>
         <div class="cabezote__texto">
             <p>"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, fugit.</p>
             <p>Dignissimos voluptatibus debitis nostrum omnis odio, mollitia sunt quis quod!</p>
             <p>Eius deleniti dolores unde saepe totam. Delectus enim beatae accusantium?</p>
-            <a href="#">mi hoja de vida</a>
+            <a href="#">mi hoja de vida > </a>
         </div>
     </header>
 
-    <main class="work">
+    <!-- <main class="work">
         <section class="work__profile">
             <h2 class="profile__title">título de mi perfil</h2>
             <div>
@@ -108,6 +109,7 @@
             <div>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque, cumque?</p>
                 <p>Deleniti quasi quo, a necessitatibus voluptates error inventore eos ullam.</p>
+                <a href="#">Stori taim</a>
             </div>
         </section>
         <section class="work__skills">
@@ -116,6 +118,7 @@
             <div>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, esse.</p>
                 <p>Placeat odio laudantium facere, obcaecati necessitatibus vel tempora hic quo.</p>
+                <a href="#">¡Chismeee!</a>
             </div>
         </section>
         <section class="work__skills">
@@ -124,6 +127,7 @@
             <div>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, soluta.</p>
                 <p>Molestiae, expedita dolore tenetur officiis hic eaque accusamus cum ad.</p>
+                <a href="#">eso te cuento...</a>
             </div>
         </section>
 
@@ -204,9 +208,9 @@
                 <a href="">enlace al proyecto</a>
             </div>
         </article>
-    </main>
+    </main> -->
     
-    <footer class="contact">
+    <!-- <footer class="contact">
         <div class="contact__social">
             <h2>Mis redes sociales</h2>
             <ul class="contact__links">
@@ -231,7 +235,7 @@
             <div class="formulario">---</div>
         </div>
         
-    </footer>
+    </footer> -->
 
 </body>
 </html>
