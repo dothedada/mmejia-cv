@@ -57,6 +57,9 @@ h4 {
 .textoPosterior {
     font-family: var(--font-display);
     word-break: break-all;
+    -webkit-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 p {
     margin: 0 0 calc(1ex / 0.32);
@@ -249,10 +252,12 @@ body {
     height: 14rem;
     object-fit: cover;
     object-position: center right;
+    z-index: 0;
 }
 .cabezote__titulo, .h1 {
     grid-column: 2 / span 2;
     grid-row: 1 / span 2;
+    z-index: 1;
 }
 .cabezote__titulo {
     color: var(--background);
