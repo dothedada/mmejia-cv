@@ -14,6 +14,25 @@ const visibilidadMenu = (() => {
     })
 })()
 
+const mostrarDetallePortafolio = (() => {
+    for(const botonVer of document.querySelectorAll('.botonesVerMas')) {
+        botonVer.addEventListener('click', boton => {
+            document.getElementById(boton.target.getAttribute('data-window'))
+                .showModal()
+        })
+    }
+    for (const botonCerrar of document.querySelectorAll('.cerrarModal')) {
+        botonCerrar.addEventListener('click', boton => {
+            boton.target.closest('dialog').close()
+        })
+    }
+})()
+
+
+
+
+
+
 const envioCorreo = (() => {
 	const formulario = document.querySelector("form");
 	const resultado = document.getElementById("resultado");

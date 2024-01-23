@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;700&family=Poppins:wght@700&family=Rock+3D&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Poppins:wght@700&family=Rock+3D&display=swap');
 :root {
     --text: hsl(60, 9%, 15%);
     --background: hsl(53, 40%, 96%);
@@ -72,10 +72,12 @@ p {
     hanging-punctuation: first last; 
 }
 b, strong {
-    font-weight: 700;
+    font-weight: 500;
 }
 a, button { 
     cursor: pointer;
+    font-weight: 500;
+    text-decoration: underline;
 }
 ul {
     list-style: none;
@@ -105,6 +107,7 @@ input, textarea, button, select {
 body {
     font-family: var(--font-parragraph);
     font-size: 1rem;
+    font-weight: 300;
 
     margin: 0;
     background-color: var(--background);
@@ -149,7 +152,6 @@ body {
     background: none;
     border: none;
     color: var(--background);
-    text-decoration: underline;
 }
 .menu__idioma:hover {
     color: var(--secondary);
@@ -315,7 +317,6 @@ h1 {
 .work__profile a {
     margin: -1rem 0 5rem;
     color: var(--accent);
-    font-weight: 700;
 }
 .work__profile a:hover {
     color: var(--primary);
@@ -360,7 +361,6 @@ h1 {
 }
 .portfolio__links a {
     color: var(--primary);
-    font-weight: 700;
 }
 .portfolio__links a:hover {
     color: var(--accent);
@@ -380,6 +380,7 @@ h1 {
     color: var(--accent);
     padding: 0 0 0 calc(25% + 0rem); 
     margin: 0.2rem 0;
+    text-decoration: none;
 }
 .portfolio__filter button:hover,
 .portfolio__filter button:focus-visible {
@@ -425,9 +426,20 @@ h1 {
 .portfolio__card a {
     grid-column: 2 / -1;
 }
-.portfolio__card a {
+.portfolio__card div {
+    margin: 0 0 1.5rem;
+}
+.portfolio__card button {
+    border: none;
+    background: none;
+}
+.portfolio__card a,
+.portfolio__card button {
     color: var(--accent);
-    font-weight: 700;
+}
+.portfolio__card a:hover,
+.portfolio__card button:hover {
+    color: var(--primary);
 }
 /* -------------- */
 /* -------------- */
@@ -448,6 +460,9 @@ h1 {
 }
 .contact a {
     color: var(--background);
+}
+.contact a:hover {
+    color: var(--secondary);
 }
 .contact__title {
     margin: 0 0 3rem;
@@ -492,8 +507,6 @@ h1 {
     background: none;
     border: none;
     color: var(--accent);
-    font-weight: 700;
-    text-decoration: underline;
 }
 .contact__form button:hover {
     color: var(--secondary);
@@ -509,7 +522,7 @@ h1 {
 .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
   display: block;
   margin: 0.5rem;
-  font-weight: 700;
+  font-weight: 500;
   color: var(--secondary);
 }
 .is-invalid,
