@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Poppins:wght@700&family=Rock+3D&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Poppins:wght@700&family=Rock+3D&display=swap');
 :root {
     --text: hsl(60, 9%, 15%);
     --background: hsl(53, 40%, 96%);
     --primary: hsl(358, 78%, 37%);
-    --primary-alpha: hsla(358, 78%, 37%, 0.9);
+    --backgroundColor-alpha: hsla(60, 9%, 15%, 0.7);
     --secondary: hsl(60, 87%, 51%);
     --accent: hsl(43, 100%, 50%);
 
@@ -51,7 +51,8 @@ h3 {
     line-height: clamp(2.275rem, 1.578vw + 1.831rem, 3.094rem);
 }
 h4,
-.contact h3 { 
+.contact h3, 
+dialog h2 {
     font-size: clamp(1.375rem, 1.205vw + 1.036rem, 2rem);
     line-height: clamp(1.788rem, 0.795vw + 1.564rem, 2.2rem);
 }
@@ -72,12 +73,14 @@ p {
     hanging-punctuation: first last; 
 }
 b, strong {
-    font-weight: 500;
-}
-a, button { 
-    cursor: pointer;
-    font-weight: 500;
     text-decoration: underline;
+}
+a, button, a > *, button > * { 
+    cursor: pointer;
+    font-weight: 300;
+    text-decoration: underline;
+    background: none;
+    border: none;
 }
 ul {
     list-style: none;
@@ -148,12 +151,12 @@ body {
     fill: var(--background);
     height: 32px;
 }
-.menu__idioma {
-    background: none;
-    border: none;
+.menu__idioma,
+.menu__idioma > span {
     color: var(--background);
 }
-.menu__idioma:hover {
+.menu__idioma:hover, 
+.menu__idioma:hover > span {
     color: var(--secondary);
 }
 .menu__estado {
@@ -374,8 +377,6 @@ h1 {
     margin: 4rem 1rem;
 }
 .portfolio__filter button {
-    border: none;
-    background: none;
     border-bottom: solid 1px var(--accent);
     color: var(--accent);
     padding: 0 0 0 calc(25% + 0rem); 
@@ -429,10 +430,6 @@ h1 {
 .portfolio__card div {
     margin: 0 0 1.5rem;
 }
-.portfolio__card button {
-    border: none;
-    background: none;
-}
 .portfolio__card a,
 .portfolio__card button {
     color: var(--accent);
@@ -441,6 +438,44 @@ h1 {
 .portfolio__card button:hover {
     color: var(--primary);
 }
+
+::backdrop {
+    background-color: var(--backgroundColor-alpha);
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+}
+dialog {
+    box-sizing: border-box;
+    border: none;
+    width: calc(100dvw - 4rem);
+    height: calc(100dvh - 6rem);
+    padding: 1rem;
+    background-color: var(--background);
+}
+dialog img {
+    width: 100%;
+    mix-blend-mode: multiply;
+}
+dialog figcaption {
+    font-size: 0.8rem;
+    text-align: right;
+    margin: 0.5rem 0 2rem 15%;
+}
+dialog h2,
+span {
+    color: var(--primary);
+}
+.cerrarModal {
+    position: sticky;
+    display: block;
+    top: 0;
+    margin: 0 0 0 auto;
+    padding: 0.5rem 0 0.5rem 1rem;
+    background-color: var(--background);
+    z-index: 10;
+    color: var(--primary);
+}
+
 /* -------------- */
 /* -------------- */
 /* ---CONTACTO--- */
@@ -504,8 +539,6 @@ h1 {
     min-height: 10rem;
 }
 .contact__form button {
-    background: none;
-    border: none;
     color: var(--accent);
 }
 .contact__form button:hover {
@@ -522,7 +555,6 @@ h1 {
 .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
   display: block;
   margin: 0.5rem;
-  font-weight: 500;
   color: var(--secondary);
 }
 .is-invalid,

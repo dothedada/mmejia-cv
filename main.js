@@ -28,11 +28,6 @@ const mostrarDetallePortafolio = (() => {
     }
 })()
 
-
-
-
-
-
 const envioCorreo = (() => {
 	const formulario = document.querySelector("form");
 	const resultado = document.getElementById("resultado");
