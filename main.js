@@ -12,10 +12,16 @@ const visibilidadMenu = (() => {
         }
         scrollInicial = window.scrollY
     })
+    
+    for (const botonMenu of menu.lastElementChild.children) {
+        botonMenu.addEventListener('click', () => {
+            menuActivo.checked = false
+        })
+    }
 })()
 
 const mostrarDetallePortafolio = (() => {
-    for(const botonVer of document.querySelectorAll('.botonesVerMas')) {
+    for (const botonVer of document.querySelectorAll('.botonesVerMas')) {
         botonVer.addEventListener('click', boton => {
             document.getElementById(boton.target.getAttribute('data-window'))
                 .showModal()

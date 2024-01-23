@@ -70,10 +70,10 @@
             <span class="menu__btn" aria-hidden="true"></span>
         </label>
         <ul class="menu__elementos">
-            <li><a href="#">Sobre mí > </a></li>
-            <li><a href="#">Habilidades > </a></li>
-            <li><a href="#">Mi trabajo > </a></li>
-            <li><a href="#">Hablemos > </a></li>
+            <li><a href="#about">Sobre mí > </a></li>
+            <li><a href="#work">Habilidades > </a></li>
+            <li><a href="#portfolio">Mi trabajo > </a></li>
+            <li><a href="#contact">Hablemos > </a></li>
         </ul>
     </nav>
 
@@ -89,11 +89,11 @@
             <p>"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, fugit.</p>
             <p>Dignissimos voluptatibus debitis nostrum omnis odio, mollitia sunt quis quod!</p>
             <p>Eius deleniti dolores unde saepe totam. Delectus enim beatae accusantium?</p>
-            <a href="#">mi hoja de vida > </a>
+            <a href="#" download="HojaDeVida_MiguelMejia2024.pdf" type="application/pdf">Descarga mi hoja de vida > </a>
         </div>
     </header>
 
-    <main class="work">
+    <main id="work" class="work">
         <section class="work__profile">
             <div class="h2 textoPosterior" aria-hidden="true">HABILID A DES</div>
             <h2 class="profile__title">HABILIDADES</h2>
@@ -103,21 +103,21 @@
             </div>
     
             <h3>Imagen</h3>
-            <div class="profile__text">
+            <div class="profile__text smallParragraph">
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque, cumque?</p>
                 <p>Deleniti quasi quo, a necessitatibus voluptates error inventore eos ullam.</p>
             </div>
             <a href="#">Estori taim > </a>
             
             <h3>Información y escritura</h3>
-            <div class="profile__text">
+            <div class="profile__text smallParragraph">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, esse.</p>
                 <p>Placeat odio laudantium facere, obcaecati necessitatibus vel tempora hic quo.</p>
             </div>
             <a href="#">¡Chismeee! > </a>
             
             <h3>Programación</h3>
-            <div class="profile__text">
+            <div class="profile__text smallParragraph">
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, soluta.</p>
                 <p>Molestiae, expedita dolore tenetur officiis hic eaque accusamus cum ad.</p>
             </div>
@@ -138,18 +138,18 @@
                 <p>Quam at quae qui sequi eum natus iste voluptatum, perspiciatis dolor ducimus veritatis? Aliquid libero fugit aut facere autem. Accusamus.</p>
             </div>
             <ul class="portfolio__links">
-                <li><a href="">Retrato > </a></li>
-                <li><a href="">Producto > </a></li>
-                <li><a href="">Audiovisual > </a></li>
+                <li><a href="https://mmejia.com" target="_blank">Retrato > </a></li>
+                <li><a href="https://producto.mmejia.com" target="_blank">Producto > </a></li>
+                <li><a href="https://audiovisual.mmejia.com" target="_blank">Audiovisual > </a></li>
             </ul>
         </section>
 
-        <ul class="portfolio__filter">
+        <ul id="portfolio" class="portfolio__filter">
             <li>Filtrar</li>
             <li><button>Programación/</button></li>
             <li><button>Información/</button></li>
             <li><button>Imagen/</button></li>
-            <li><button>Ver Todos/</button></li>
+            <li><button>Ver todos/</button></li>
         </ul>
 
         <section class="work__portfolio">
@@ -171,7 +171,7 @@
 
                 <h4>Colombia la mejor educada, 2015 - 2025.</h4>
                 <span>Imagen</span>
-                <div>
+                <div class="smallParragraph">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, impedit!</p>
                     <p>In itaque harum excepturi iste odit maxime eius nostrum soluta.</p>
                     <button class="botonesVerMas" data-window="test1">Leer más > </button>
@@ -201,7 +201,7 @@
 
                 <h4>Colombia la mejor educada, 2015 - 2025.</h4>
                 <span>Imagen</span>
-                <div>
+                <div class="smallParragraph">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, impedit!</p>
                     <p>In itaque harum excepturi iste odit maxime eius nostrum soluta.</p>
                     <button class="botonesVerMas" data-window="test2">Leer más > </button>
@@ -236,7 +236,7 @@
         </section>
     </main>
     
-    <footer class="contact">
+    <footer id="contact" class="contact">
         <div class="contact__title">
             <div class="h2 textoPosterior" aria-hidden="true">HABLEmos</div>
             <h2 class="portfolio__title">HABLEMOS</h2>
@@ -244,17 +244,29 @@
         <div class="contact__links">
             <h3>Redes</h3>
             <ul> 
-                <li class="social__links"><a href="">GitHub > </a></li>
-                <li class="social__links"><a href="">Instagram > </a></li>
-                <li class="social__links"><a href="">LinkedIn > </a></li>
+                <li class="social__links">
+                    <a href="https://github.com/dothedada" target="_blank">GitHub > </a>
+                </li>
+                <li class="social__links">
+                    <a href="http://instagram.com/do.thedada/" target="_blank">Instagram > </a>
+                </li>
+                <li class="social__links">
+                    <a href="https://www.linkedin.com/in/-mmejia/" target="_blank">LinkedIn > </a>
+                </li>
             </ul>
 
             <h3>Información de contacto</h3>
             <ul>
-                <li class="social__links"><a href="">Correo > </a></li>
-                <li class="social__links"><a href="">Teléfono > </a></li>
-                <li class="social__links"><a href="">whatsapp > </a></li>
-                <li class="social__links">Bogotá, Colombia</li>
+                <li class="social__links">
+                    <a href="mailto:info@mmejia.com">info@mmejia.com > </a>
+                </li>
+                <li class="social__links">
+                    <a href="tel:573043839127">(+57) 304 383 9127 > </a>
+                </li>
+                <li class="social__links">
+                    <a href="https://wa.me/573043839127" target="_blank">whatsapp > </a>
+                </li>
+                <li class="social__links">Bogotá, Colombia.</li>
             </ul>
         </div>
 

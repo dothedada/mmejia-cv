@@ -32,6 +32,17 @@ html {
     scroll-padding-top: 4rem;
 }
 
+
+
+@media (min-width: 600px) {
+    html,
+    :has(:target) {
+        scroll-padding-top: 6rem;
+    }
+}
+
+
+
 h1, h2, h3, h4 {
     font-family: var(--font-headings);
     text-wrap: balance;
@@ -71,6 +82,10 @@ p {
     text-wrap: pretty;
     max-width: 65ch;
     hanging-punctuation: first last; 
+}
+.smallParragraph, 
+.smallParragraph * {
+    font-size: 1rem;
 }
 b, strong {
     text-decoration: underline;
@@ -128,6 +143,7 @@ body {
     gap: 1rem;
     box-sizing: border-box;
 }
+
 /* -------------- */
 /* -------------- */
 /* -----MENU----- */
@@ -243,6 +259,41 @@ body {
 .menu__elementos a:focus-visible {
     color: var(--secondary);
 }
+@media (min-width: 600px) {
+    .menu,
+    .cabezote,
+    .work__profile,
+    .portfolio,
+    .contact__title,
+    .contact__links,
+    .contact__form {
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .menu {
+        height: unset;
+        align-items: start;
+        padding: 1rem;
+    }
+    .menu--hide {
+        top: -9rem;
+    }
+    .menu__estado {
+        display: none;
+    }
+    .menu__elementos {
+        position: unset;
+        grid-column: 5 / span 2;
+        top: unset;
+        left: unset;
+        width: unset;
+        height: unset;
+        border-bottom: none;
+        gap: 0.2rem;
+    }
+    .menu__elementos > li {
+        margin: 0; 
+    }
+}
 /* -------------- */
 /* -------------- */
 /* ----HEADER---- */
@@ -290,6 +341,29 @@ h1 {
 .cabezote__texto a:hover {
     color: var(--accent);
 }
+@media (min-width: 600px) {
+    .cabezote {
+        padding: 12rem 0 5rem;
+        grid-template-rows: repeat(4, minmax(5rem, auto));
+        min-height: 100vh;
+    }
+    .cabezote__foto {
+        grid-row: 1 / span 3;
+        grid-column: 4 / -1;
+        height: unset;
+        width: 100%;
+        height: 100%;
+    }
+    .cabezote__titulo, .h1 {
+        grid-column: 2 / span 3;
+    }
+    .cabezote__texto {
+        grid-column: 2 / span 4;
+        grid-row: 3 / span 2;
+        z-index: 10;
+    }
+
+}
 /* -------------- */
 /* -------------- */
 /* --HABILIDADES- */
@@ -297,6 +371,9 @@ h1 {
 /* -------------- */
 .work {
     padding: 5rem 0 0;
+}
+.work__profile {
+    padding: 0 1rem;
 }
 .work__profile h2, 
 .work__profile .h2,
@@ -326,11 +403,40 @@ h1 {
 }
 .profile__text {
     grid-column: 1 / span 3;
-    padding: 0 1rem;
 }
 .profile__image {
     display: none;
 }
+@media (min-width: 600px) {
+    .work__profile h3,
+    .work__profile a{
+        grid-column: 3 / span 3;
+    }
+    .work__profile .h2 {
+        color: var(--accent);
+        transform: translate(-1rem, 0.2rem);
+        z-index: -1;
+    }
+    .work__profile a {
+        margin: -1rem 0 5rem;
+        color: var(--accent);
+    }
+    .work__profile a:hover {
+        color: var(--primary);
+    }
+    .profile__text {
+        grid-column: 3 / -1;
+    }
+    .profile__text.smallParragraph {
+        grid-column: 2 / span 3;
+
+    }
+    .work__profile a {
+        margin: 0rem 0 5rem;
+        grid-column: 3 / -1;
+    }
+}
+
 /* -------------- */
 /* -------------- */
 /* --PORTAFOLIO-- */
@@ -368,6 +474,11 @@ h1 {
 .portfolio__links a:hover {
     color: var(--accent);
 }
+@media (min-width: 600px) {
+    .portfolio__text {
+        grid-column: 3 / -1;
+    }
+}
 /* -------------- */
 /* -------------- */
 /* ---FILTROS---- */
@@ -390,6 +501,22 @@ h1 {
 }
 .portfolio__filter button:focus-visible {
     outline-color: var(--primary);
+}
+@media (min-width: 600px) {
+    .portfolio__filter {
+        margin: 2rem 1rem;
+        border-bottom: solid 1px var(--accent);
+        display: flex;
+        gap: 1rem;
+    }
+    .portfolio__filter li:first-child {
+        margin: 0 auto 0 0;
+    }
+    .portfolio__filter button {
+        border-bottom: none;
+        padding: 0; 
+        margin: 0;
+    }
 }
 /* -------------- */
 /* -------------- */
@@ -476,6 +603,49 @@ span {
     color: var(--primary);
 }
 
+@media (min-width: 600px) {
+    .work__portfolio {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    .portfolio__card {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 0 0 4rem;
+    }
+    .portfolio__card svg,
+    .portfolio__card img {
+        grid-column: 2 / -1;
+    }
+    .portfolio__card div {
+        grid-column: 1 / -2;
+    }
+
+    dialog {
+        box-sizing: border-box;
+        border: none;
+        width: calc(90dvw - 4rem);
+        height: calc(90dvh - 6rem);
+        padding: 2rem;
+    }
+    dialog img {
+        width: 100%;
+        mix-blend-mode: multiply;
+    }
+    dialog p {
+        margin: 1.5rem 5rem 1.5rem 0;
+    }
+    dialog figcaption {
+        font-size: 0.8rem;
+        text-align: right;
+        margin: 0.5rem 0 2rem 15%;
+    }
+    dialog h2,
+    span {
+        width: 75%;
+    }
+}
 /* -------------- */
 /* -------------- */
 /* ---CONTACTO--- */
@@ -564,6 +734,25 @@ span {
 .fin {
     margin: 1rem;
     text-align: center;
+}
+@media (min-width: 600px) {
+    .contact {
+        padding: 5rem 1rem;
+    }
+    .contact h3 {
+        grid-column: 2 / -1;
+    }
+    .contact ul {
+        grid-column: 3 / -1;
+    }
+    .contact__title div,
+    .contact__title h2 {
+        grid-column: 2 / span 3;
+        grid-row: 1;
+    }
+    .contact__form form {
+        grid-column: 3 / -1;
+    }
 }
 
 /* Accesibilidad del contenido*/
