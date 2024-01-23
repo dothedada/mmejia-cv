@@ -200,31 +200,23 @@
 
             <h2 class="contact__title">Escríbeme :)</h2>
             
-            <form action="https://api.web3forms.com/submit" method="POST"
-				id="form" class="needs-validation" novalidate>
+            <form action="https://api.web3forms.com/submit" 
+                method="POST" id="form" class="needs-validation" novalidate>
 
                 <input type="hidden" name="access_key" value="ad49b973-547e-4bb6-a420-4302896c4a48" />
-
                 <input type="hidden" name="subject" value="Nuevo mensaje de cv.mmejia.com" />
-
-                <input type="checkbox" name="botcheck" id="" style="display: none;" aria-hidden="true" />
-
+                <input type="checkbox" name="botcheck" id="" class="hidden" />
                 <div>
-                    <div>
-                        <label for="Nombre">Tu nombre</label>
-                        <input type="text" name="Nombre" id="Nombre" required />
-                        <div class="empty-feedback invalid-feedback"> * Ingresa tu nombre </div>
-                    </div>
+                    <label for="Nombre">Tu nombre</label>
+                    <input type="text" name="Nombre" id="Nombre" required />
+                    <div class="empty-feedback invalid-feedback"> * Escribe tu nombre </div>
                 </div>
 
                 <div>
                     <label for="email">Tu correo</label>
                     <input type="email" name="email" id="email" required />
-                    <div class="empty-feedback">
-                        * Ingresa tu correo electrónico 
-                    </div>
-                    <div class="invalid-feedback">
-                        * Porfavor ingresa una dirección de correo válida 
+                    <div class="empty-feedback invalid-feedback">
+                        * Escribe una dirección de correo válida 
                     </div>
                 </div>
 
