@@ -50,7 +50,8 @@ h3 {
     font-size: clamp(1.75rem, 2.048vw + 1.174rem, 2.813rem);
     line-height: clamp(2.275rem, 1.578vw + 1.831rem, 3.094rem);
 }
-h4 { 
+h4,
+.contact h3 { 
     font-size: clamp(1.375rem, 1.205vw + 1.036rem, 2rem);
     line-height: clamp(1.788rem, 0.795vw + 1.564rem, 2.2rem);
 }
@@ -80,6 +81,9 @@ ul {
     list-style: none;
     padding: 0;
 }
+ul > li {
+    margin-bottom: 0.3rem;
+}
 img, picture, svg, video {
     display: block;
     max-width: 100%;
@@ -106,17 +110,18 @@ body {
     background-color: var(--background);
     color: var(--text);
 }
-
 .menu,
 .cabezote,
 .work__profile,
-.portfolio{
+.portfolio,
+.contact__title,
+.contact__links,
+.contact__form {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     box-sizing: border-box;
 }
-
 /* -------------- */
 /* -------------- */
 /* -----MENU----- */
@@ -127,9 +132,6 @@ body {
     width: 100%;
     padding: 0 1rem;
     background-color: var(--primary);
-    -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-
     align-items: center;
     height: 3.75rem;
     z-index: 999;
@@ -209,14 +211,13 @@ body {
     left: 0;
 }
 .menu__elementos {
-    background-color: var(--primary-alpha);
+    background-color: var(--primary);
     position: absolute;
-    -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
     top: 3.75rem;
     left: -100%;
     width: 100%;
     height: calc(50vh - 3.75rem);
+    border-bottom: solid 1px var(--background);
     display: flex;
     gap: 0.5rem;
     flex-direction: column;
@@ -234,7 +235,6 @@ body {
 .menu__elementos a:focus-visible {
     color: var(--secondary);
 }
-
 /* -------------- */
 /* -------------- */
 /* ----HEADER---- */
@@ -282,8 +282,6 @@ h1 {
 .cabezote__texto a:hover {
     color: var(--accent);
 }
-
-
 /* -------------- */
 /* -------------- */
 /* --HABILIDADES- */
@@ -326,8 +324,6 @@ h1 {
 .profile__image {
     display: none;
 }
-
-
 /* -------------- */
 /* -------------- */
 /* --PORTAFOLIO-- */
@@ -366,8 +362,6 @@ h1 {
 .portfolio__links a:hover {
     color: var(--accent);
 }
-
-
 /* -------------- */
 /* -------------- */
 /* ---FILTROS---- */
@@ -392,8 +386,6 @@ h1 {
 .portfolio__filter button:focus-visible {
     outline-color: var(--primary);
 }
-
-
 /* -------------- */
 /* -------------- */
 /* ---PROYECTO--- */
@@ -434,37 +426,97 @@ h1 {
     color: var(--accent);
     font-weight: 700;
 }
-
-
-
 /* -------------- */
 /* -------------- */
 /* ---CONTACTO--- */
 /* -------------- */
 /* -------------- */
-
-
-/* Estilos formulario */
+.contact {
+    background-color: var(--primary);
+    padding: 3rem 1rem;
+    color: var(--background);
+}
+.contact h3 {
+    grid-column: 1 / -1;
+}
+.contact ul {
+    grid-column: 2 / -1;
+    margin: 0 0 3rem;
+}
+.contact a {
+    color: var(--background);
+}
+.contact__title {
+    margin: 0 0 3rem;
+}
+.contact__title div,
+.contact__title h2 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+.contact__title h2 {
+    z-index: 1;
+}
+.contact__title div {
+    transform: translate(-1rem, 0.2rem);
+    color: var(--text);
+    z-index: 0;
+}
+.contact__form form {
+    grid-column: 2 / -1;
+}
+.contact__form div {
+    margin: 0 0 1rem;
+}
+.contact__form input, 
+.contact__form textarea {
+    box-sizing: border-box;
+    border: none;
+    background-color: var(--background);
+    width: 100%;
+    padding: 0.5rem 1rem;
+    margin: 0.2rem 0 0;
+}
+.contact__form input:focus-visible, 
+.contact__form textarea:focus-visible {
+    background-color: var(--secondary);
+}
+.contact__form textarea {
+    resize: vertical;
+    min-height: 10rem;
+}
+.contact__form button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+}
+.contact__form button:hover {
+    color: var(--secondary);
+}
+.contact__form #resultado {
+    margin: 1rem 0;
+}
 .invalid-feedback,
 .empty-feedback {
   display: none;
 }
-
-.was-validated :placeholder-shown:invalid ~ .empty-feedback {
-  display: block;
-}
-
+.was-validated :placeholder-shown:invalid ~ .empty-feedback,
 .was-validated :not(:placeholder-shown):invalid ~ .invalid-feedback {
   display: block;
+  margin: 0.5rem;
+  font-weight: 700;
+  color: var(--secondary);
 }
-
 .is-invalid,
 .was-validated :invalid {
-  border-color: #dc3545;
+  border-color: blue;
 }
-
-
-
+.fin {
+    margin: 1rem;
+    text-align: center;
+}
 
 /* Accesibilidad del contenido*/
 :focus-visible {
