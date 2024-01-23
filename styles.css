@@ -363,12 +363,80 @@ h1 {
 }
 
 
+/* -------------- */
+/* -------------- */
+/* ---FILTROS---- */
+/* -------------- */
+/* -------------- */
+.portfolio__filter {
+    margin: 4rem 1rem;
+}
+.portfolio__filter button {
+    border: none;
+    background: none;
+    border-bottom: solid 1px var(--accent);
+    color: var(--accent);
+    padding: 0 0 0 calc(25% + 0rem); 
+    margin: 0.2rem 0;
+}
+.portfolio__filter button:hover,
+.portfolio__filter button:focus-visible {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+.portfolio__filter button:focus-visible {
+    outline-color: var(--primary);
+}
+
+
+/* -------------- */
+/* -------------- */
+/* ---PROYECTO--- */
+/* -------------- */
+/* -------------- */
+.portfolio__card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 1rem 4rem;
+}
+.portfolio__card svg,
+.portfolio__card img {
+    grid-column: 2 / -1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+}
+.portfolio__card img {
+    mix-blend-mode: luminosity;
+    z-index: 0;
+}
+.portfolio__card h4 {
+    color: var(--primary);
+    grid-column: 1 / -1;
+    grid-row: 1;
+    align-self: end;
+    z-index: 1;
+}
+.portfolio__card span {
+    grid-column: 1 / -1;
+    color: var(--primary);
+}
+.portfolio__card div,
+.portfolio__card a {
+    grid-column: 2 / -1;
+}
+.portfolio__card a {
+    color: var(--accent);
+    font-weight: 700;
+}
 
 
 
-
-
-
+/* -------------- */
+/* -------------- */
+/* ---CONTACTO--- */
+/* -------------- */
+/* -------------- */
 
 
 

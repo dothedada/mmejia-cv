@@ -146,72 +146,43 @@
             </ul>
         </section>
 
-        <!-- <article class="work__portfolio">
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
+        <ul class="portfolio__filter">
+            <li>Filtrar</li>
+            <li><button>Programación/</button></li>
+            <li><button>Información/</button></li>
+            <li><button>Imagen/</button></li>
+            <li><button>Ver Todos/</button></li>
+        </ul>
+
+        <section class="work__portfolio">
+            <div class="portfolio__card" data-filter="imagen">
+                <svg version="1.1" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="200" height="200" viewBox="0 0 25 25"
+                    <defs>
+                        <linearGradient id="linearGradient" gradientTransform="rotate(60)">
+                            <stop stop-color="#ffb700" offset="0" />
+                            <stop stop-color="#efef15" offset="0.5" />
+                        </linearGradient>
+                    </defs>
+                    <rect
+                        width="100" height="100" x="0" y="0"
+                        style="fill:url(#linearGradient);" />
+                </svg>
+                <img src="https://picsum.photos/200/200?grayscale" alt="" width="200" height="200">
+
+                <h4>Colombia la mejor educada, 2015 - 2025.</h4>
+                <span>Imagen</span>
                 <div>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, impedit!</p>
                     <p>In itaque harum excepturi iste odit maxime eius nostrum soluta.</p>
                 </div>
-                <a href="">enlace al proyecto</a>
+                <a href="">enlace al proyecto > </a>
             </div>
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
-                <div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, officiis.</p>
-                    <p>Rem culpa tempore, expedita magni totam ullam est commodi a!</p>
-                </div>
-                <a href="">enlace al proyecto</a>
-            </div>
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, repudiandae!</p>
-                    <p>Illo unde modi eius quis quasi! Aliquam nobis similique debitis?</p>
-                </div>
-                <a href="">enlace al proyecto</a>
-            </div>
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
-                <div>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempore, nobis.</p>
-                    <p>Quo ab quibusdam delectus ea. A aut eaque esse voluptate?</p>
-                </div>
-                <a href="">enlace al proyecto</a>
-            </div>
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
-                <div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, dolore!</p>
-                    <p>Quibusdam accusamus repellat dolor eveniet ipsum molestias porro tenetur id.</p>
-                </div>
-                <a href="">enlace al proyecto</a>
-            </div>
-            <div class="portfolio__card">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
-                <h4>proyecto X</h4>
-                <div>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae, atque.</p>
-                    <p>Tempora ratione fuga sapiente nemo laudantium veniam praesentium sed quos!</p>
-                </div>
-                <a href="">enlace al proyecto</a>
-            </div>
-        </article> -->
+        </section>
     </main>
     
-    <!-- <footer class="contact">
-        <div class="contact__social">
+    <footer class="contact">
             <h2>Mis redes sociales</h2>
             <ul class="contact__links">
                 <li class="social__links"><a href="">mi red 01</a></li>
@@ -219,23 +190,58 @@
                 <li class="social__links"><a href="">mi red 03</a></li>
                 <li class="social__links"><a href="">mi red 04</a></li>
             </ul>
-        </div>
 
-        <div class="contact__information">
             <h2>Información de contacto</h2>
             <ul class="contact__links">
                 <li class="social__links"><a href="">Correo</a></li>
                 <li class="social__links"><a href="">Teléfono</a></li>
                 <li class="social__links"><a href="">whatsapp</a></li>
             </ul>
-        </div>
 
-        <div class="contact__form">
             <h2 class="contact__title">Escríbeme :)</h2>
-            <div class="formulario">---</div>
-        </div>
+            
+            <form action="https://api.web3forms.com/submit" method="POST"
+				id="form" class="needs-validation" novalidate>
+
+                <input type="hidden" name="access_key" value="ad49b973-547e-4bb6-a420-4302896c4a48" />
+
+                <input type="hidden" name="subject" value="Nuevo mensaje de cv.mmejia.com" />
+
+                <input type="checkbox" name="botcheck" id="" style="display: none;" aria-hidden="true" />
+
+                <div>
+                    <div>
+                        <label for="Nombre">Tu nombre</label>
+                        <input type="text" name="Nombre" id="Nombre" required />
+                        <div class="empty-feedback invalid-feedback"> * Ingresa tu nombre </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="email">Tu correo</label>
+                    <input type="email" name="email" id="email" required />
+                    <div class="empty-feedback">
+                        * Ingresa tu correo electrónico 
+                    </div>
+                    <div class="invalid-feedback">
+                        * Porfavor ingresa una dirección de correo válida 
+                    </div>
+                </div>
+
+                <div>
+                    <label for="Mensaje">Tu mensaje</label>
+                    <textarea name="Mensaje" id="Mensaje" required></textarea>
+                    <div class="empty-feedback invalid-feedback">
+                        * Escribe tu mensaje
+                    </div>
+                </div>
+
+                <button type="submit"> Enviar > </button>
+                <p id="result"></p>
+            </form>
+
         
-    </footer> -->
+    </footer>
 
 </body>
 </html>
