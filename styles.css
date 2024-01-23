@@ -135,7 +135,11 @@ body {
     align-items: center;
     height: 3.75rem;
     z-index: 999;
-
+    top: 0;
+    transition: top 0.2s ease;
+}
+.menu--hide {
+    top: -3.75rem;
 }
 .menu__logo {
     fill: var(--background);
@@ -150,7 +154,6 @@ body {
 .menu__idioma:hover {
     color: var(--secondary);
 }
-
 .menu__estado {
     width: 48px;
     height: 48px;
@@ -536,7 +539,6 @@ h1 {
     white-space: nowrap; 
     width: 1px;
 }
-/* Estilos del botón de skip */
 a.skip-menu {
     left:-999px;
     position:absolute;
@@ -560,7 +562,6 @@ a.skip-menu:focus, a.skip-menu:active {
     z-index:999;
 }
 @media(prefers-reduced-motion: reduce) { 
-    /* Bloquea movimiento y animaciones */
     *, *::before, *::after {
         transition: none !important;
         animation: none !important;

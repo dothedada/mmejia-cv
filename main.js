@@ -1,13 +1,29 @@
-(() => {
-	const form = document.querySelector("form");
+const visibilidadMenu = (() => {
+    const menu = document.querySelector('.menu')
+    const menuActivo = document.querySelector('#mostrarMenu')
+    let scrollInicial = window.scrollY
+
+    window.addEventListener('scroll', () => {
+        if (menuActivo.checked) return
+        if (window.scrollY > scrollInicial) {
+            menu.classList.add('menu--hide')
+        } else {
+            menu.classList.remove('menu--hide')
+        }
+        scrollInicial = window.scrollY
+    })
+})()
+
+const envioCorreo = (() => {
+	const formulario = document.querySelector("form");
 	const resultado = document.getElementById("resultado");
-    form.addEventListener("submit", event => {
+    formulario.addEventListener("submit", event => {
         event.preventDefault();
         event.stopPropagation();
-        if (!form.checkValidity()) {
-            form.querySelectorAll(":invalid")[0].focus();
+        if (!formulario.checkValidity()) {
+            formulario.querySelectorAll(":invalid")[0].focus();
         } else {
-            const formData = new FormData(form);
+            const formData = new FormData(formulario);
             const object = Object.fromEntries(formData);
             const json = JSON.stringify(object);
             resultado.textContent = 'Enviando...';
@@ -34,13 +50,13 @@
                     resultado.textContent = 'Algo salió mal, inténtalo más tarde o contáctame directamente.';
                 })
                 .then(() => {
-                    form.reset();
-                    form.classList.remove("was-validated");
+                    formulario.reset();
+                    formulario.classList.remove("was-validated");
                     resultado.textContent = 'Gracias por escribirme, pronto me estaré poniendo en contacto :)';
                     setTimeout(() => resultado.classList.add("hidden"), 4000);
                 });
         }
-        form.classList.add("was-validated");
+        formulario.classList.add("was-validated");
     },
         false
     );
