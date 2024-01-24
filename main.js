@@ -53,6 +53,15 @@ const mostrarDetallePortafolio = (() => {
             boton.target.closest('dialog').close()
         })
     }
+    for (const modal of document.querySelectorAll('dialog')) {
+        modal.addEventListener('click', e => {
+            const recuadro = modal.getBoundingClientRect()
+            if (e.clientX < recuadro.left || 
+                e.clientX > recuadro.right || 
+                e.clientY < recuadro.top ||
+                e.clientY > recuadro.bottom) modal.close()
+        })
+    }
 })()
 
 const envioCorreo = (() => {

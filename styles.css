@@ -629,6 +629,7 @@ h1 {
 @media (min-width: 1000px) {
     .portfolio__filter {
         margin: 4rem auto;
+        padding: 0 1rem;
         max-width: 1376px;
     }
 }
@@ -850,6 +851,10 @@ span {
     width: 100%;
     padding: 0.5rem 1rem;
     margin: 0.2rem 0 0;
+    transition: 
+        background-color 0.4s ease,
+        outline 0.2s ease,
+        outline-offset 0.2s ease;
 }
 .contact__form input:focus-visible, 
 .contact__form textarea:focus-visible {
