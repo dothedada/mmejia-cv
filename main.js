@@ -4,7 +4,7 @@ const visibilidadMenu = (() => {
     let scrollInicial = window.scrollY
 
     window.addEventListener('scroll', () => {
-        if (menuActivo.checked || window.scrollY < 50) return
+        if (menuActivo.checked || window.scrollY < 5) return
         if (window.scrollY > scrollInicial) {
             menu.classList.add('menu--hide')
         } else {
