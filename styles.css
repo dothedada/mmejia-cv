@@ -79,7 +79,8 @@ p {
     hanging-punctuation: first last; 
 }
 .smallParragraph, 
-.smallParragraph * {
+.smallParragraph * ,
+dialog p{
     font-size: 1rem;
 }
 b, strong {
@@ -591,6 +592,9 @@ h1 {
     padding: 0 0 0 calc(25% + 0rem); 
     margin: 0.2rem 0.2rem;
     text-decoration: none;
+    transition: 
+        background-color 0.5s ease,
+        color 0.5s ease;
 }
 .portfolio__filter button:hover,
 .portfolio__filter button:focus-visible {
@@ -600,7 +604,8 @@ h1 {
 .portfolio__filter button:focus-visible {
     outline-color: var(--primary);
 }
-.portfolio__filter .filter__active {
+.portfolio__filter .filter__active,
+.portfolio__filter .filter__active:hover {
     background-color: var(--primary);
     color: var(--background) ;
 }
@@ -640,21 +645,20 @@ h1 {
     grid-row: 1 / span 1;
     justify-self: end;
     width: 100%;
-    /* height: 100%; */
-    /* max-width: 300px; */
-    /* max-height: 300px; */
-    /* aspect-ratio: 1 / 1; */
-}
-.portfolio__card img {
     mix-blend-mode: luminosity;
-    z-index: 0;
+    opacity: 0.8;
+    transition: opacity 0.5s ease;
+}
+.portfolio__card img:hover {
+    opacity: 1;
+    mix-blend-mode: normal;
 }
 .portfolio__card h4 {
     color: var(--primary);
     grid-column: 1 / -2;
     grid-row: 1;
     align-self: end;
-    z-index: 1;
+    z-index: 2;
 }
 .portfolio__card span {
     grid-column: 1 / -1;
@@ -739,25 +743,18 @@ span {
     }
 
     dialog {
-        box-sizing: border-box;
-        border: none;
         width: calc(90dvw - 4rem);
         height: calc(90dvh - 6rem);
-        padding: 2rem;
-    }
-    dialog img {
-        width: 100%;
-        mix-blend-mode: multiply;
+        padding: 2rem 4rem 4rem;
     }
     dialog p {
-        margin: 1.5rem 5rem 1.5rem 0;
+        margin: 1.5rem 0 1.5rem 8rem;
     }
     dialog figcaption {
-        font-size: 0.8rem;
-        text-align: right;
-        margin: 0.5rem 0 2rem 15%;
+        margin: 0.5rem 0 2rem 8rem;
     }
     dialog h2,
+    dialog h3,
     span {
         width: 75%;
     }
@@ -784,27 +781,18 @@ span {
     }
 
     dialog {
-        box-sizing: border-box;
-        border: none;
-        width: calc(90dvw - 4rem);
-        height: calc(90dvh - 6rem);
-        padding: 2rem;
-    }
-    dialog img {
-        width: 100%;
-        mix-blend-mode: multiply;
+        max-width: 900px;
     }
     dialog p {
-        margin: 1.5rem 5rem 1.5rem 0;
+        margin: 1.5rem 0 1.5rem 15rem;
     }
     dialog figcaption {
-        font-size: 0.8rem;
-        text-align: right;
-        margin: 0.5rem 0 2rem 15%;
+        margin: 0.5rem 0 2rem 15rem;
     }
     dialog h2,
+    dialog h3,
     span {
-        width: 75%;
+        width: 50%;
     }
 }
 /* -------------- */
