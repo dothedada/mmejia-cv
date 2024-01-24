@@ -164,8 +164,8 @@ body {
     top: -3.75rem;
 }
 .menu__logo {
+    padding:  0 0.3rem;
     fill: var(--background);
-    height: 32px;
 }
 .menu__idioma,
 .menu__idioma > span {
@@ -272,7 +272,7 @@ body {
     .menu {
         height: unset;
         align-items: start;
-        padding: 1rem;
+        padding: 1rem 0;
     }
     .menu--hide {
         top: -9rem;
@@ -292,6 +292,28 @@ body {
     }
     .menu__elementos > li {
         margin: 0; 
+    }
+}
+@media (min-width: 1000px) {
+    .menu,
+    .cabezote,
+    .work__profile,
+    .portfolio,
+    .contact__title,
+    .contact__links,
+    .contact__form {
+        grid-template-columns: repeat(12, minmax(1rem, 100px));
+        justify-content: center;
+    }
+    .menu--hide {
+        top: -9rem;
+    }
+    .menu__logo {
+        padding:  0 0.5rem;
+        grid-column: 1 / span 2;
+    }
+    .menu__elementos {
+        grid-column: -2 / span 2;
     }
 }
 /* -------------- */
@@ -361,6 +383,35 @@ h1 {
         grid-column: 2 / span 4;
         grid-row: 3 / span 2;
         z-index: 10;
+    }
+
+}
+@media (min-width: 1000px) {
+    .cabezote {
+        padding: 9rem 0 0rem;
+        grid-template-rows: repeat(2, minmax(5rem, auto));
+        row-gap: 0;
+    }
+    .cabezote__foto {
+        grid-row: 1 / -1;
+        grid-column: 7 / span 5;
+        height: unset;
+        width: 100%;
+        height: 100%;
+        max-width: 450px;
+        max-height: 450px;
+        transform: translateY(36%);
+        align-self: end;
+        object-position: center;
+    }
+    .cabezote__titulo, .h1 {
+        grid-column: 3 / span 6;
+        grid-row: 1;
+        align-self: center;
+    }
+    .cabezote__texto {
+        grid-column: 4 / span 8;
+        grid-row: 2;
     }
 
 }
@@ -436,6 +487,34 @@ h1 {
         grid-column: 3 / -1;
     }
 }
+@media (min-width: 1000px) {
+    .work {
+        padding: 10rem 0 0;
+    }
+    .work__profile {
+        grid-auto-flow: row dense;
+
+    }
+    .work__profile h2, 
+    .work__profile .h2 {
+        grid-column: 3 / span 6;
+    }
+    .profile__text {
+        grid-column: 4 / -3;
+    }
+    .profile__text.smallParragraph {
+        grid-column: 3 / span 5;
+
+    }
+    .work__profile a {
+        margin: 0rem 0 5rem;
+        grid-column: 3 / span 2;
+    }
+
+    .work__profile .profile--last {
+        grid-column: 8 / span 5;
+    }
+}
 
 /* -------------- */
 /* -------------- */
@@ -443,7 +522,7 @@ h1 {
 /* -------------- */
 /* -------------- */
 .portfolio {
-    background-color: var(--secondary);
+    background-color: var(--accent);
     padding: 5rem 1rem;
 }
 
@@ -453,15 +532,17 @@ h1 {
     grid-row: 1 / span 1;
 }
 .portfolio .h2 {
-    color: var(--primary);
+    color: var(--background);
     transform: translate(-0.5rem, 0.2rem);
     z-index: 0;
     margin: 0 0 2rem;
 }
 .portfolio h2 {
+    color: var(--text);
     z-index: 1;
 }
 .portfolio__text {
+    color: var(--text);
     grid-column: 1 / -1;
 }
 .portfolio__links {
@@ -472,11 +553,32 @@ h1 {
     color: var(--primary);
 }
 .portfolio__links a:hover {
-    color: var(--accent);
+    color: var(--background);
 }
 @media (min-width: 600px) {
     .portfolio__text {
         grid-column: 3 / -1;
+    }
+}
+@media (min-width: 1000px) {
+    .portfolio {
+        background-color: var(--accent);
+        padding: 7rem 1rem;
+    }
+
+    .portfolio h2, 
+    .portfolio .h2 {
+        grid-column: 3 / span 4;
+        align-self: start;
+    }
+    .portfolio__text {
+        color: var(--text);
+        grid-column: 7 / -2;
+    }
+    .portfolio__links {
+        grid-column: 4 / span 2;
+        grid-row: 1;
+        align-self: end;
     }
 }
 /* -------------- */
@@ -518,6 +620,11 @@ h1 {
         margin: 0;
     }
 }
+@media (min-width: 1000px) {
+    .portfolio__filter {
+        margin: 4rem 18%;
+    }
+}
 /* -------------- */
 /* -------------- */
 /* ---PROYECTO--- */
@@ -531,7 +638,6 @@ h1 {
 .portfolio__card svg,
 .portfolio__card img {
     grid-column: 2 / -1;
-    grid-row: 1;
     width: 100%;
     height: 100%;
 }
@@ -617,9 +723,68 @@ span {
     .portfolio__card svg,
     .portfolio__card img {
         grid-column: 2 / -1;
+        grid-row: 1 / span 1 !important;
+        background-color: blue;
+        align-self: start;
+        outline: solid 1px green;
     }
     .portfolio__card div {
         grid-column: 1 / -2;
+    }
+    .portfolio__card a {
+        grid-column: 1 / -1;
+    }
+
+    dialog {
+        box-sizing: border-box;
+        border: none;
+        width: calc(90dvw - 4rem);
+        height: calc(90dvh - 6rem);
+        padding: 2rem;
+    }
+    dialog img {
+        width: 100%;
+        mix-blend-mode: multiply;
+    }
+    dialog p {
+        margin: 1.5rem 5rem 1.5rem 0;
+    }
+    dialog figcaption {
+        font-size: 0.8rem;
+        text-align: right;
+        margin: 0.5rem 0 2rem 15%;
+    }
+    dialog h2,
+    span {
+        width: 75%;
+    }
+}
+@media (min-width: 1000px) {
+    .work__portfolio {
+        padding: 0 1rem; 
+        grid-template-columns: repeat(2, minmax(1rem, 680px));
+        justify-content: center;
+    }
+    .portfolio__card {
+        grid-template-columns: repeat(6, 1fr);
+        padding: 0 0 6rem;
+        gap: 1rem;
+    }
+    .portfolio__card svg,
+    .portfolio__card img {
+        grid-column: 3 / -1;
+    }
+    .portfolio__card h4 {
+        grid-column: 2 / -1;
+    }
+    .portfolio__card span {
+        grid-column: 2 / -1;
+    }
+    .portfolio__card div {
+        grid-column: 3 / -1;
+    }
+    .portfolio__card a {
+        grid-column: 3 / -1;
     }
 
     dialog {
@@ -747,14 +912,33 @@ span {
     }
     .contact__title div,
     .contact__title h2 {
-        grid-column: 2 / span 3;
+        grid-column: 2 / span 2;
         grid-row: 1;
     }
     .contact__form form {
         grid-column: 3 / -1;
     }
 }
-
+@media (min-width: 1000px) {
+    .contact {
+        padding: 7rem 1rem;
+    }
+    .contact__title div,
+    .contact__title h2 {
+        grid-column: 3 / span 3;
+        grid-row: 1;
+    }
+    .contact h3 {
+        grid-column: 2 / -1;
+    }
+    .contact ul {
+        grid-column: 3 / -1;
+    }
+    .contact__form form {
+        grid-column: 7 / -1;
+        grid-row: 2;
+    }
+}
 /* Accesibilidad del contenido*/
 :focus-visible {
     border: none;
