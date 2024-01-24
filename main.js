@@ -20,6 +20,27 @@ const visibilidadMenu = (() => {
     }
 })()
 
+const filtrarPortafolio = (() => {
+    const botones = document.querySelector('.portfolio__filter')
+    const portafolio = document.querySelectorAll('.portfolio__card')
+
+    botones.addEventListener('click', e => {
+        if (!e.target.getAttribute('data-filter')) return
+        const filtro = e.target.getAttribute('data-filter')
+
+        document.querySelector('.filter__active').classList.remove('filter__active')
+        e.target.classList.add('filter__active')
+
+        for (const proyecto of portafolio) {
+            proyecto.classList.remove('hidden')
+            if (filtro === 'todo') continue
+            if (!proyecto.getAttribute('data-filter').match(filtro)) {
+                proyecto.classList.add('hidden')
+            }
+        }
+    })
+})() 
+
 const mostrarDetallePortafolio = (() => {
     for (const botonVer of document.querySelectorAll('.botonesVerMas')) {
         botonVer.addEventListener('click', boton => {

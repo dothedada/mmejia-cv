@@ -589,7 +589,7 @@ h1 {
     border-bottom: solid 1px var(--accent);
     color: var(--accent);
     padding: 0 0 0 calc(25% + 0rem); 
-    margin: 0.2rem 0;
+    margin: 0.2rem 0.2rem;
     text-decoration: none;
 }
 .portfolio__filter button:hover,
@@ -599,6 +599,10 @@ h1 {
 }
 .portfolio__filter button:focus-visible {
     outline-color: var(--primary);
+}
+.portfolio__filter .filter__active {
+    background-color: var(--primary);
+    color: var(--background) ;
 }
 @media (min-width: 600px) {
     .portfolio__filter {
@@ -612,7 +616,7 @@ h1 {
     }
     .portfolio__filter button {
         border-bottom: none;
-        padding: 0; 
+        padding: 0 0.2rem; 
         margin: 0;
     }
 }
