@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Poppins:wght@700&family=Rock+3D&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Rock+3D&family=Space+Grotesk:wght@700&display=swap');
 :root {
-    --text: hsl(60, 9%, 15%);
-    --background: hsl(53, 40%, 96%);
-    --primary: hsl(358, 78%, 37%);
-    --backgroundColor-alpha: hsla(60, 9%, 15%, 0.7);
-    --secondary: hsl(60, 87%, 51%);
-    --accent: hsl(43, 100%, 50%);
+    --text: hsl(233, 13%, 13%);
+--background: hsl(351, 21%, 94%);
+--primary: hsl(232, 64%, 40%);
+--secondary: hsl(50, 85%, 67%);
+--accent: hsl(47, 100%, 46%);
+--background-alpha: hsla(47, 100%, 46%, 0.8);
 
     --font-parragraph: 'Fira Code', monospace;
-    --font-headings: 'Poppins', sans-serif;
+    --font-headings: 'Space Grotesk', sans-serif;
     --font-display: 'Rock 3D', serif;
 
 }
@@ -44,8 +44,8 @@ h1, h2, h3, h4 {
 }
 h1,
 .h1 {
-    font-size: clamp(2.813rem, 5.422vw + 1.288rem, 5.625rem);
-    line-height: clamp(3.656rem, 4.88vw + 2.284rem, 6.188rem);
+    font-size: clamp(2.813rem, 6.08vw + 1.483rem, 7.563rem);
+    line-height: clamp(3.375rem, 7.882vw + 1.651rem, 7.563rem);
 }
 h2,
 .h2 {
@@ -339,7 +339,7 @@ body {
     z-index: 1;
 }
 .cabezote__titulo {
-    color: var(--background);
+    color: var(--accent);
 }
 .h1 {
     transform: translate(-0.7rem, 0.3rem);
@@ -356,7 +356,7 @@ h1 {
     color: var(--background);
 }
 .cabezote__texto a {
-    color: var(--secondary);
+    color: var(--accent);
 }
 .cabezote__texto a:hover {
     color: var(--accent);
@@ -387,7 +387,7 @@ h1 {
 }
 @media (min-width: 1000px) {
     .cabezote {
-        padding: 0rem 0 0rem;
+        padding: 9rem 0 1.5rem;
         grid-template-rows: repeat(2, min-content);
         place-content: center;
         row-gap: 0;
@@ -449,10 +449,10 @@ h1 {
 }
 .work__profile button {
     justify-self: start;
-    color: var(--accent);
+    color: var(--primary);
 }
 .work__profile button:hover {
-    color: var(--primary);
+    color: var(--accent);
 }
 .profile__text {
     grid-column: 1 / span 3;
@@ -569,7 +569,7 @@ h1 {
     margin: 0 0 2rem;
 }
 .portfolio h2 {
-    color: var(--text);
+    color: var(--primary);
     z-index: 1;
 }
 .portfolio__text {
@@ -593,7 +593,6 @@ h1 {
 }
 @media (min-width: 1000px) {
     .portfolio {
-        background-color: var(--accent);
         padding: 7rem 1rem;
     }
 
@@ -709,15 +708,15 @@ h1 {
 }
 .portfolio__card a,
 .portfolio__card button {
-    color: var(--accent);
+    color: var(--primary);
 }
 .portfolio__card a:hover,
 .portfolio__card button:hover {
-    color: var(--primary);
+    color: var(--accent);
 }
 
 ::backdrop {
-    background-color: var(--backgroundColor-alpha);
+    background-color: var(--background-alpha);
     -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
 }
@@ -852,7 +851,7 @@ span {
     color: var(--background);
 }
 .contact a:hover {
-    color: var(--secondary);
+    color: var(--accent);
 }
 .contact__title {
     margin: 0 0 3rem;
