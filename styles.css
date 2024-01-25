@@ -1,11 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Rock+3D&family=Space+Grotesk:wght@700&display=swap');
+@font-face {
+    font-family: 'Fira Code';
+    font-weight: 300;
+    src: local('Fira Code'),
+         url('assets/fonts/firacodewght-webfont.woff2') format('woff2'),
+         url('assets/fonts/firacodewght-webfont.woff') format('woff');
+}
+@font-face {
+    font-family: 'Space Grotesk';
+    font-weight: 700;
+    src: local('Space Grotesk'),
+         url('assets/fonts/spacegrotesk-bold-webfont.woff2') format('woff2'),
+         url('assets/fonts/spacegrotesk-bold-webfont.woff') format('woff');
+}
+@font-face {
+    font-family: 'Rock 3D';
+    src: local('Rock 3D'),
+         url('assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
+         url('assets/fonts/rock3d-regular-webfont.woff') format('woff');
+}
 :root {
     --text: hsl(233, 13%, 13%);
---background: hsl(351, 21%, 94%);
---primary: hsl(232, 64%, 40%);
---secondary: hsl(50, 85%, 67%);
---accent: hsl(47, 100%, 46%);
---background-alpha: hsla(47, 100%, 46%, 0.8);
+    --background: hsl(351, 21%, 94%);
+    --primary: hsl(232, 64%, 40%);
+    --secondary: hsl(50, 85%, 67%);
+    --accent: hsl(47, 100%, 46%);
+    --background-alpha: hsla(47, 100%, 46%, 0.8);
 
     --font-parragraph: 'Fira Code', monospace;
     --font-headings: 'Space Grotesk', sans-serif;
@@ -72,7 +91,6 @@ dialog h2 {
 p {
     margin: 0 0 calc(1ex / 0.32);
     font-size: clamp(1rem, 0.964vw + 0.729rem, 1.5rem);
-    font-weight: 300;
     line-height: calc(1ex / 0.32);
     text-wrap: pretty;
     max-width: 65ch;
@@ -88,7 +106,6 @@ b, strong {
 }
 a, button, a > *, button > * { 
     cursor: pointer;
-    font-weight: 300;
     text-decoration: underline;
     background: none;
     border: none;
@@ -121,7 +138,6 @@ input, textarea, button, select {
 body {
     font-family: var(--font-parragraph);
     font-size: 1rem;
-    font-weight: 300;
 
     margin: 0;
     background-color: var(--background);
@@ -343,7 +359,6 @@ body {
 }
 .h1 {
     transform: translate(-0.7rem, 0.3rem);
-    color: var(--text);
     z-index: 0;
 }
 h1 {
@@ -720,6 +735,9 @@ h1 {
     -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
 }
+dialog[open]::backdrop {
+    animation: fade-in 0.5s forwards;
+}
 dialog {
     box-sizing: border-box;
     border: none;
@@ -727,6 +745,9 @@ dialog {
     height: calc(100dvh - 6rem);
     padding: 1rem;
     background-color: var(--background);
+}
+dialog[open] {
+    animation: fade-in 0.5s forwards;
 }
 dialog img {
     width: 100%;
@@ -1013,6 +1034,14 @@ a.skip-menu:focus, a.skip-menu:active {
     padding: 0.5rem 1.5rem;
     font-size:1em;
     z-index:999;
+}
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }   
+}
+@keyframes fade-out {
+    0% { opacity: 1; }
+    100% { opacity: 0; }   
 }
 @media(prefers-reduced-motion: reduce) { 
     *, *::before, *::after {
