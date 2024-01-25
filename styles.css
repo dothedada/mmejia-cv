@@ -690,17 +690,17 @@ h1 {
     grid-template-columns: repeat(4, 1fr);
     padding: 0 1rem 4rem;
 }
+.portfolio__card:not(.hidden) {
+    animation: fade-in 0.3s forwards;
+}
 .portfolio__card img {
     grid-column: 2 / -1;
     grid-row: 1 / span 1;
     justify-self: end;
     width: 100%;
     mix-blend-mode: luminosity;
-    opacity: 0.8;
-    transition: opacity 0.5s ease;
 }
 .portfolio__card img:hover {
-    opacity: 1;
     mix-blend-mode: normal;
 }
 .portfolio__card h4 {
@@ -996,7 +996,7 @@ span {
 @keyframes fade-in {
     0% { 
         opacity: 0; 
-        transform: translateY(100%);
+        transform: translateY(20%);
     }
     100% { 
         opacity: 1;
