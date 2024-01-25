@@ -735,19 +735,16 @@ h1 {
     -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
 }
-dialog[open]::backdrop {
-    animation: fade-in 0.5s forwards;
-}
 dialog {
     box-sizing: border-box;
     border: none;
     width: calc(100dvw - 4rem);
-    height: calc(100dvh - 6rem);
+    max-height: calc(100dvh - 6rem);
     padding: 1rem;
     background-color: var(--background);
 }
 dialog[open] {
-    animation: fade-in 0.5s forwards;
+    animation: fade-in 0.3s forwards;
 }
 dialog img {
     width: 100%;
@@ -800,7 +797,7 @@ span {
 
     dialog {
         width: calc(90dvw - 4rem);
-        height: calc(90dvh - 6rem);
+        max-height: calc(90dvh - 6rem);
         padding: 2rem 4rem 4rem;
     }
     dialog p {
@@ -995,6 +992,17 @@ span {
         grid-column: 2 / -1;
     }
 }
+/* Animaciones */
+@keyframes fade-in {
+    0% { 
+        opacity: 0; 
+        transform: translateY(100%);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0%);
+    }   
+}
 /* Accesibilidad del contenido*/
 :focus-visible {
     border: none;
@@ -1034,14 +1042,6 @@ a.skip-menu:focus, a.skip-menu:active {
     padding: 0.5rem 1.5rem;
     font-size:1em;
     z-index:999;
-}
-@keyframes fade-in {
-    0% { opacity: 0; }
-    100% { opacity: 1; }   
-}
-@keyframes fade-out {
-    0% { opacity: 1; }
-    100% { opacity: 0; }   
 }
 @media(prefers-reduced-motion: reduce) { 
     *, *::before, *::after {
