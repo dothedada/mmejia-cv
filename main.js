@@ -20,6 +20,32 @@ const visibilidadMenu = (() => {
     }
 })()
 
+const expandirInformacion = (() => {
+    for (const boton of document.querySelectorAll('.profile__masInfo')) {
+        boton.addEventListener('click', () => {
+            const masInfo = boton.nextElementSibling
+            masInfo.classList.toggle('profile__masInfo--minimizado')
+            if (masInfo.getAttribute('aria-hidden')) {
+                masInfo.removeAttribute('aria-hidden')
+            } else {
+                masInfo.setAttribute('aria-hidden', 'true')
+            }
+            boton.textContent = boton.textContent
+                .replace(/\+|\-/g, match => match === '+' ? '-' : '+' )
+        })
+    }
+
+    for (const boton of document.querySelectorAll('.profile__menosInfo')) {
+        boton.addEventListener('click', () => {
+            const masInfoBTN = boton.parentElement.previousElementSibling
+            masInfoBTN.textContent = masInfoBTN.textContent.replace('-', '+')
+            boton.parentElement.setAttribute('aria-hidden', 'true')
+            boton.parentElement.classList.add('profile__masInfo--minimizado')
+        })
+    }
+
+})()
+
 const filtrarPortafolio = (() => {
     const botones = document.querySelector('.portfolio__filter')
     const portafolio = document.querySelectorAll('.portfolio__card')
@@ -55,11 +81,10 @@ const mostrarDetallePortafolio = (() => {
     }
     for (const modal of document.querySelectorAll('dialog')) {
         modal.addEventListener('click', e => {
-            const recuadro = modal.getBoundingClientRect()
-            if (e.clientX < recuadro.left || 
-                e.clientX > recuadro.right || 
-                e.clientY < recuadro.top ||
-                e.clientY > recuadro.bottom) modal.close()
+            if (e.clientX < modal.getBoundingClientRect().left || 
+                e.clientX > modal.getBoundingClientRect().right || 
+                e.clientY < modal.getBoundingClientRect().top ||
+                e.clientY > modal.getBoundingClientRect().bottom) modal.close()
         })
     }
 })()

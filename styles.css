@@ -420,12 +420,13 @@ h1 {
     padding: 5rem 0 0;
 }
 .work__profile {
-    padding: 0 1rem;
+    padding: 0 1rem 5rem;
 }
 .work__profile h2, 
 .work__profile .h2,
 .work__profile h3,
-.work__profile a{
+.work__profile button,
+.profile__infoAdicional {
     grid-column: 2 / span 3;
     word-break: unset;
 }
@@ -443,15 +444,37 @@ h1 {
     transform: translate(-1rem, 0.2rem);
     z-index: -1;
 }
-.work__profile a {
-    margin: -1rem 0 5rem;
+.work__profile h3 {
+    margin: 5rem 0 0;
+}
+.work__profile button {
+    justify-self: start;
     color: var(--accent);
 }
-.work__profile a:hover {
+.work__profile button:hover {
     color: var(--primary);
 }
 .profile__text {
     grid-column: 1 / span 3;
+}
+.profile__infoAdicional {
+    background-color: var(--secondary);
+    overflow: hidden;
+    max-height: 50rem;
+    text-wrap: nowrap;
+    transition: max-height 0.4s ease;
+}
+.profile__infoAdicional button{
+    color: var(--primary);
+}
+.profile__infoAdicional button:hover {
+    color: var(--accent);
+}
+.profile__infoAdicional > * {
+    margin: 1rem;
+}
+.profile__infoAdicional[aria-hidden="true"] {
+    max-height: 0px;
 }
 .profile__image {
     display: none;
@@ -466,13 +489,6 @@ h1 {
         transform: translate(-1rem, 0.2rem);
         z-index: -1;
     }
-    .work__profile a {
-        margin: -1rem 0 5rem;
-        color: var(--accent);
-    }
-    .work__profile a:hover {
-        color: var(--primary);
-    }
     .profile__text {
         grid-column: 3 / -1;
     }
@@ -480,18 +496,16 @@ h1 {
         grid-column: 2 / span 3;
 
     }
-    .work__profile a {
-        margin: 0rem 0 5rem;
-        grid-column: 3 / -1;
+    .work__profile button {
+        grid-column: 4 / -1;
+    }
+    .profile__infoAdicional {
+        grid-column: 3 / span 4;
     }
 }
 @media (min-width: 1000px) {
     .work {
         padding: 10rem 0 0;
-    }
-    .work__profile {
-        grid-auto-flow: dense;
-
     }
     .work__profile h2, 
     .work__profile .h2 {
@@ -500,17 +514,36 @@ h1 {
     .profile__text {
         grid-column: 4 / -3;
     }
+    .work__profile h3,
     .profile__text.smallParragraph {
-        grid-column: 3 / span 5;
+        grid-column: 2 / span 5;
 
     }
-    .work__profile a {
-        margin: 0rem 0 5rem;
-        grid-column: 3 / span 2;
+    .work__profile button {
+        grid-column: 3 / span 4;
     }
-
+    .profile__infoAdicional {
+        grid-column: 3 / span 4;
+    }
     .work__profile .profile--last {
         grid-column: 8 / span 5;
+    }
+
+    .work__profile h3.profile--last {
+        grid-column: 8 / span 5;
+        grid-row: 7;
+        align-self: end;
+    }
+    .work__profile div.profile--last {
+        grid-row: 8;
+    }
+    .work__profile button.profile--last {
+        grid-column: 9 / span 4;
+        grid-row: 9;
+    }
+    .work__profile .profile__infoAdicional.profile--last {
+        grid-column: 9 / span 4;
+        grid-row: 10;
     }
 }
 
