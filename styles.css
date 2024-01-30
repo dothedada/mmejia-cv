@@ -28,7 +28,7 @@
 
     --font-parragraph: 'Fira Code', monospace;
     --font-headings: 'Space Grotesk', sans-serif;
-    --font-display: 'Rock 3D', serif;
+    --font-display: 'Rock 3D', sans-serif;
 
 }
 *:not(dialog),
@@ -355,7 +355,7 @@ body {
     z-index: 1;
 }
 .cabezote__titulo {
-    color: var(--accent);
+    color: var(--secondary);
 }
 .h1 {
     transform: translate(-0.7rem, 0.3rem);
@@ -371,19 +371,21 @@ h1 {
     color: var(--background);
 }
 .cabezote__texto a {
-    color: var(--accent);
+    color: var(--secondary);
 }
 .cabezote__texto a:hover {
     color: var(--accent);
 }
 @media (min-width: 600px) {
     .cabezote {
-        grid-template-rows: repeat(5, minmax(5rem, auto));
-        padding: 30% 0 5rem;
+        grid-template-rows: repeat(4, minmax(5rem, auto));
+        padding: 7rem 0 5rem;
         min-height: 95dvh;
+        row-gap: 0;
+        place-content: center;
     }
     .cabezote__foto {
-        grid-row: 2 / span 3;
+        grid-row: 1 / span 3;
         grid-column: 4 / -1;
         height: unset;
         width: 100%;
@@ -395,17 +397,16 @@ h1 {
         grid-column: 2 / span 3;
     }
     .cabezote__texto {
-        grid-row: 4 / span 2;
+        grid-row: 3 / span 2;
         grid-column: 2 / span 4;
         z-index: 10;
     }
 }
 @media (min-width: 1000px) {
     .cabezote {
-        padding: 9rem 0 1.5rem;
+        padding: 7rem 0 3rem;
         grid-template-rows: repeat(2, min-content);
         place-content: center;
-        row-gap: 0;
     }
     .cabezote__foto {
         position: absolute;
@@ -413,7 +414,7 @@ h1 {
         height: max(40vw, 40vh);
         max-width: 450px;
         max-height: 450px;
-        bottom: -5vh;
+        bottom: -15vh;
         right: 10vw;
     }
     .cabezote__titulo, .h1 {
@@ -455,7 +456,7 @@ h1 {
     margin: 0 0 5rem;
 }
 .work__profile .h2 {
-    color: var(--accent);
+    color: var(--secondary);
     transform: translate(-1rem, 0.2rem);
     z-index: -1;
 }
@@ -498,11 +499,6 @@ h1 {
     .work__profile h3,
     .work__profile a{
         grid-column: 3 / span 3;
-    }
-    .work__profile .h2 {
-        color: var(--accent);
-        transform: translate(-1rem, 0.2rem);
-        z-index: -1;
     }
     .profile__text {
         grid-column: 3 / -1;
@@ -578,7 +574,7 @@ h1 {
     grid-row: 1 / span 1;
 }
 .portfolio .h2 {
-    color: var(--background);
+    color: var(--secondary);
     transform: translate(-0.5rem, 0.2rem);
     z-index: 0;
     margin: 0 0 2rem;
@@ -692,6 +688,9 @@ h1 {
 }
 .portfolio__card:not(.hidden) {
     animation: fade-in 0.3s forwards;
+}
+.portfolio__card--salida {
+    animation: fade-out 0.3s forwards;
 }
 .portfolio__card img {
     grid-column: 2 / -1;
@@ -858,6 +857,9 @@ span {
     padding: 3rem 1rem;
     color: var(--background);
 }
+.contact h2 {
+    color: var(--secondary);
+}
 .contact h3 {
     grid-column: 1 / -1;
 }
@@ -1002,6 +1004,16 @@ span {
         opacity: 1;
         transform: translateY(0%);
     }   
+}
+@keyframes fade-out {
+    0% { 
+        opacity: 1;
+        transform: translateY(0%);
+    }   
+    100% { 
+        opacity: 0; 
+        transform: translateY(20%);
+    }
 }
 /* Accesibilidad del contenido*/
 :focus-visible {
