@@ -44,6 +44,7 @@
     *::before { 
         margin: 0; 
         padding: 0;
+        outline: solid 1px green;
     }
 html {
     font-size: 100%;
@@ -689,7 +690,6 @@ h1 {
 .portfolio__card span {
     grid-column: 1 / span 4;
     color: var(--primary);
-    width: 100%;
 }
 .portfolio__card div,
 .portfolio__card a {
@@ -730,7 +730,7 @@ dialog figcaption {
     margin: 0.5rem 0 2rem 15%;
 }
 dialog h2,
-span {
+dialog span {
     color: var(--primary);
 }
 .cerrarModal {
@@ -786,7 +786,7 @@ span {
     }
     dialog h2,
     dialog h3,
-    span {
+    dialog span {
         width: 75%;
     }
 }
@@ -830,7 +830,7 @@ span {
     }
     dialog h2,
     dialog h3,
-    span {
+    dialog span {
         width: 50%;
     }
 }
