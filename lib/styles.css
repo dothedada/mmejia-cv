@@ -2,28 +2,28 @@
     font-family: 'Fira Code';
     font-weight: 300;
     src: local('Fira Code'),
-         url('assets/fonts/firacodewght-webfont.woff2') format('woff2'),
-         url('assets/fonts/firacodewght-webfont.woff') format('woff');
+         url('../assets/fonts/firacodewght-webfont.woff2') format('woff2'),
+         url('../assets/fonts/firacodewght-webfont.woff') format('woff');
 }
 @font-face {
     font-family: 'Fira Sans';
     font-weight: 300;
     src: local('Fira Code'),
-         url('assets/fonts/firasans-book-webfont.woff2') format('woff2'),
-         url('assets/fonts/firasans-book-webfont.woff') format('woff');
+         url('../assets/fonts/firasans-book-webfont.woff2') format('woff2'),
+         url('../assets/fonts/firasans-book-webfont.woff') format('woff');
 }
 @font-face {
     font-family: 'Space Grotesk';
     font-weight: 700;
     src: local('Space Grotesk'),
-         url('assets/fonts/spacegrotesk-bold-webfont.woff2') format('woff2'),
-         url('assets/fonts/spacegrotesk-bold-webfont.woff') format('woff');
+         url('../assets/fonts/spacegrotesk-bold-webfont.woff2') format('woff2'),
+         url('../assets/fonts/spacegrotesk-bold-webfont.woff') format('woff');
 }
 @font-face {
     font-family: 'Rock 3D';
     src: local('Rock 3D'),
-         url('assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
-         url('assets/fonts/rock3d-regular-webfont.woff') format('woff');
+         url('../assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
+         url('../assets/fonts/rock3d-regular-webfont.woff') format('woff');
 }
 :root {
     --text: hsl(233, 13%, 13%);
