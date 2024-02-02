@@ -79,9 +79,10 @@
     <header id="about" class="cabezote">
         <img 
             src="assets/img/retrato-mmejia.gif" 
+            loading="eager"
             class="cabezote__foto"
             alt="Miguel Mejía sonriendo a la cámara durante una exposición" 
-            width="220" height="220">
+            width="300" height="300">
         <div class="h1 textoPosterior" aria-hidden="true">¡HOLA! Soy MIgueL Mejia.</div>
         <h1 class="cabezote__titulo">¡Hola! Soy Miguel Mejía.</h1>
         <div class="cabezote__texto">
@@ -126,6 +127,7 @@
 
             <img 
                 src="assets/img/Lucy.gif" 
+                loading="lazy"
                 width="300" height="300" alt="Lucy FerNanda bostezando durante su siesta de la tarde" 
                 class="profile__image">
 
@@ -158,7 +160,11 @@
 
         <section class="work__portfolio">
             <div class="portfolio__card" data-filter="programacion informacion">
-                <img src="https://picsum.photos/200/200?random=3" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/contratoDigno_PADF-0.png"
+                    loading="lazy"
+                    alt="Contrato Digno para todas las trabajadoras del hogar" 
+                    width="430" height="344">
 
                 <h4>ConTrato Digno</h4>
                 <span>Programación / Información</span>
@@ -173,9 +179,15 @@
                 <button class="cerrarModal">cerrar X</button>
 
                 <figure>
-                    <img src="https://picsum.photos/600/400" alt="" width="200" height="200">
+                    <img 
+                        src="assets/img/contratoDigno_PADF-1.jpg" 
+                        loading="lazy"
+                        alt="Guión técnico del sitio"
+                        srcset="assets/img/contratoDigno_PADF-1s.jpg 700w,
+                                assets/img/contratoDigno_PADF-1.jpg 1800w"
+                        width="300" height="200">
                     <figcaption>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum nesciunt vitae ullam in, natus id odit harum voluptates officiis? Asperiores.
+                        A partir del guión técnico y narrativo que implementaba la información suministrada por PADF el equipo de diseño de AMZK Studio realizó los artes.
                     </figcaption>
                 </figure>
 
@@ -189,7 +201,35 @@
                 </ul>
 
                 <p>Luego de una serie de reuniones en las que recibí información sobre la campaña, los resultados de la primera etapa y las expectativas para la segunda, envié al cliente una serie de preguntas orientadoras que ayudaron a organizar los datos.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/contratoDigno_PADF-2.jpg" 
+                        loading="lazy"
+                        alt="Pantalla de inicio del sitio ConTrato Digno, para PADF."
+                        srcset="assets/img/contratoDigno_PADF-2s.jpg 700w,
+                                assets/img/contratoDigno_PADF-2.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        Implementación de la narrativa especificada en el guión técnico. Diseño e ilustración por Anna Echavarría y Laura Burgos para AMZK Studio.
+                    </figcaption>
+                </figure>
+
                 <p>A partir eso, estructuré la narrativa para el micrositio, desarrollé los textos y elaboré los wireframes sobre los cuales trabajaría el equipo de diseño. Con los artes y contenidos aprobados, inicié el proceso de programación.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/contratoDigno_PADF-3.jpg" 
+                        loading="lazy"
+                        alt="Wireframe que explica la funcionalidad de la pestaña y los contenidos que estarán presentes al cliente y el equipo de diseño."
+                        srcset="assets/img/contratoDigno_PADF-3s.jpg 700w,
+                                assets/img/contratoDigno_PADF-3.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        Antes de la elaboración del diseño se elaboró un wireframe con la información consolidada, el cual permitía tener consciendia de qué información iba a ser visible en qué momento.
+                    </figcaption>
+                </figure>
+
                 <p>Aunque no estaba dentro de los requerimientos del sitio, me encontraba iniciando mis estudios sobre accesibilidad, aproveché para mejorar la accesibilidad del sitio desde la implementación de Semantic HTML.</p>
                 <p>
                 <a href="https://contratodigno.org/" target="_blank">Ir al micrositio de ConTrato Digno > </a>
@@ -197,7 +237,11 @@
             </dialog>
 
             <div class="portfolio__card" data-filter="programacion imagen">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/mmejia-0.jpg"
+                    loading="lazy"
+                    alt="Retrato de Carolina Ardila realizado por Miguel Mejía" 
+                    width="430" height="344">
 
                 <h4>mmejia.com</h4>
                 <span>Programación / Imagen</span>
@@ -212,9 +256,15 @@
                 <button class="cerrarModal">cerrar X</button>
 
                 <figure>
-                    <img src="https://picsum.photos/600/400" alt="" width="200" height="200">
+                    <img 
+                        src="assets/img/mmejia-1.jpg" 
+                        loading="lazy"
+                        alt="Página de inicio de mmejia.com"
+                        srcset="assets/img/mmejia-1s.jpg 700w,
+                                assets/img/mmejia-1.jpg 1800w"
+                        width="300" height="200">
                     <figcaption>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum nesciunt vitae ullam in, natus id odit harum voluptates officiis? Asperiores.
+                        La retícula del sitio permite la libre disposición y variación en el tamaño de las imágnes sin perder su estructura. 
                     </figcaption>
                 </figure>
 
@@ -231,7 +281,35 @@
 
                 <p>El rediseño y programación de mi portafolio de fotografía era necesario luego de más de 10 años de trabajo constante.</p>
                 <p>Venía de tener un portafolio en wordpress personalizado hasta donde la plantilla y mi conocimiento me permitían. El sitio se veía como cualquier otro sitio de fotografía en WordPress, por lo que decidí desmontarlo y rehacerlo desde cero con los siguientes parámetros para su desarrollo: Emplear únicamente código redactado por mí o que pudiera manipular y explicar línea a línea lo que hacía. Desarrollar una diagramación fluida que respondiera a las imágenes y mis intenciones narrativas. Adaptarse a la mayor cantidad de dispositivos y emplear la menor cantidad de Media Querys posible.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/mmejia-2.jpg" 
+                        loading="lazy"
+                        alt="Página del que contiene el trabajo comercial de mmejia.com"
+                        srcset="assets/img/mmejia-2s.jpg 700w,
+                                assets/img/mmejia-2.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        La misma estructura permitió su adaptación para presentar tanto mi trabajo comercial...
+                    </figcaption>
+                </figure>
+
                 <p>Conocer Grid ayudó a que esa transición de diseño editorial a web fuera más natural, evitó tener que hacer 80 versiones del sitio, e implementar una base estructural para presentar los diferentes tipos de trabajo que realizo sin mezclarlos mientras conservan una unidad visual frente a mi marca.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/mmejia-3.jpg" 
+                        loading="lazy"
+                        alt="Página del que contiene el trabajo audiovisual de mmejia.com"
+                        srcset="assets/img/mmejia-3s.jpg 700w,
+                                assets/img/mmejia-3.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        ... como el audiovisual, y la incorporación de un blog (que quedó abandonado, como el 99% de los blogs).
+                    </figcaption>
+                </figure>
+
                 <p>Fue un lindo reencuentro con el diseño web y el aprendizaje, desde ese entonces el diseño y desarrollo web volvieron a ser parte de mi vida.</p>
                 <p>
                     <a href="https://mmejia.com" target="_blank">Ir al portafolio > </a>
@@ -239,7 +317,11 @@
             </dialog>
 
             <div class="portfolio__card" data-filter="programacion informacion">
-                <img src="https://picsum.photos/200/200?random=1" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/trabajadorasHogar_CIM-0.jpg"
+                    loading="lazy"
+                    alt="Trabajadoras del Hogar de todas las Américas unidas por el reconocimiento de sus derechos" 
+                    width="430" height="344">
 
                 <h4>Trabajadoras del Hogar</h4>
                 <span>Programación / Información</span>
@@ -252,6 +334,20 @@
             </div>
             <dialog id="TrabajadorasDelHogar">
                 <button class="cerrarModal">cerrar</button>
+
+                <figure>
+                    <img 
+                        src="assets/img/trabajadorasHogar_CIM-1.jpg" 
+                        loading="lazy"
+                        alt="Página web mostrando las cifras sobre los niveles de escolaridad de las trabajadoras del hogar en las Américas y el Caribe"
+                        srcset="assets/img/trabajadorasHogar_CIM-1s.jpg 700w,
+                                assets/img/trabajadorasHogar_CIM-1.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        Página de inicio del sitio de trabajadoras del hogar. Diseño e ilustración por Alejandra Velez y Anna Echavarría para AMZK Studio.
+                    </figcaption>
+                </figure>
+
                 <h2>Trabajadoras del Hogar</h2>
                 <span>Programación / Información</span>
                 <ul class="profile__stack">
@@ -262,15 +358,47 @@
                     <li>JQuery</li>
                 </ul>
                 <p>Por la parte de información y contenidos, desarrollé las narrativas para que fueran cercanas tanto a las trabajadoras como a las personas empleadoras, al mismo tiempo que desde una representación cuidadosa y detallada reivindica la labor de las trabajadoras domésticas remuneradas.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/trabajadorasHogar_CIM-2.jpg" 
+                        loading="lazy"
+                        alt="Wireframe con la información sobre la escolaridad de las trabajadoras del hogar"
+                        srcset="assets/img/trabajadorasHogar_CIM-2s.jpg 700w,
+                                assets/img/trabajadorasHogar_CIM-2.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        Al tener un esbozo de cómo se deseaba presentar la información el equipo de diseño tomó esta estructura para empezar a ilustrar los artes del sitio.
+                    </figcaption>
+                </figure>
+
                 <p>Desde la programación, teniendo en cuenta las diferentes posibilidades de acceso a la información y tecnología que sumadas a la diversidad de contextos en los que se realiza este trabajo, el micrositio se realizó bilingüe y para consumir la menor cantidad de datos y recursos de procesamiento por parte de las usuarias finales. El fallback contempló dispositivos que no se hubieran actualizado en los últimos 5 años.</p>
                 <p>
+
+                <figure>
+                    <img 
+                        src="assets/img/trabajadorasHogar_CIM-3.jpg" 
+                        loading="lazy"
+                        alt="Violentómetro sobre el escalamiento de violencia contra las trabajdoras del hogar"
+                        srcset="assets/img/trabajadorasHogar_CIM-3s.jpg 700w,
+                                assets/img/trabajadorasHogar_CIM-3.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>
+                        La diagramación que tuvo en cuenta el scroll de la persona que visitaba el sitio para dar una sensación de dinamismo sin cargar el sitio con scripts.
+                    </figcaption>
+                </figure>
+
                 <a href="https://www.oas.org/es/cim/trabajo-domestico/" target="_blank">enlace al micrositio de Trabajadoras del Hogar > </a>
                 </p>
             </dialog>
             
 
             <div class="portfolio__card" data-filter="programacion informacion imagen">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/amzk-0.jpg"
+                    loading="lazy"
+                    alt="Iconografía de Amazink studio" 
+                    width="430" height="344">
 
                 <h4>AMZK</h4>
                 <span>Programación / Información / Imagen</span>
@@ -285,11 +413,18 @@
                 <button class="cerrarModal">cerrar X</button>
 
                 <figure>
-                    <img src="https://picsum.photos/600/400" alt="" width="200" height="200">
+                    <img 
+                        src="assets/img/amzk-r.jpg" 
+                        loading="lazy"
+                        alt="Parrilla de publicaciones de Amazink en Instagram"
+                        srcset="assets/img/amzk-rs.jpg 700w,
+                                assets/img/amzk-r.jpg 1800w"
+                        width="300" height="200">
                     <figcaption>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum nesciunt vitae ullam in, natus id odit harum voluptates officiis? Asperiores.
+                        Durante 3 años se realizaron más de 200 publicaciones en redes, donde se abordaban temas de interés para el estudio.
                     </figcaption>
                 </figure>
+
 
                 <h2>AMZK</h2>
                 <span>Programación / Información</span>
@@ -303,8 +438,41 @@
                 </ul>
 
                 <p><strong>Redes:</strong> A lo largo de 3 años participé en la planificación de la parrilla de contenidos, realicé la investigación y redacción de contenidos que luego se integrarían a las artes realizadas por el equipo de diseño, que luego publiqué de las redes sociales de AMZK.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/amzk-1.jpg" 
+                        loading="lazy"
+                        alt="Pantalla de inicio del sitio de Amazink"
+                        srcset="assets/img/amzk-1s.jpg 700w,
+                                assets/img/amzk-1.jpg 1800w"
+                        width="300" height="200">
+                </figure>
+
                 <p><strong>Sitio web:</strong> Este proyecto inició la migración de un sitio desarrollado y administrado en WordPress a un sitio “estático” que permitía la actualización rápida de contenidos.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/amzk-2.jpg" 
+                        loading="lazy"
+                        alt="Portafolio de los proyectos realizados por amazink"
+                        srcset="assets/img/amzk-2s.jpg 700w,
+                                assets/img/amzk-2.jpg 1800w"
+                        width="300" height="200">
+                </figure>
+
                 <p>Para el diseño del nuevo sitio se contó sólo con el manual de marca y las asesorías del director de diseño, en este punto se aprovechó para corregir los errores de UX y accesibilidad encontrados en el sitio anterior.</p>
+
+                <figure>
+                    <img 
+                        src="assets/img/amzk-3.jpg" 
+                        loading="lazy"
+                        alt="Detalle sobre uno de los proyectos publicados en el sitio"
+                        srcset="assets/img/amzk-3s.jpg 700w,
+                                assets/img/amzk-3.jpg 1800w"
+                        width="300" height="200">
+                </figure>
+
                 <p>Una vez diseñado y estructurado el sitio, seguí con la redacción de los contenidos iniciales dentro de varios Markdown. Una vez terminada la carga inicial del sitio, incorporé la traducción y la carga de todos los proyectos del estudio.</p>
                 <p>
                     <a href="https://amazink.co" target="_blank">Ir al sitio de AMZK studio > </a>
@@ -312,7 +480,11 @@
             </dialog>
 
             <div class="portfolio__card" data-filter="programacion">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/mama-0.jpg"
+                    loading="lazy"
+                    alt="Lumbung en Nuquí y los Mamíferos en Colombia" 
+                    width="430" height="344">
 
                 <h4>MAMA · SCMas</h4>
                 <span>Programación</span>
@@ -326,10 +498,14 @@
                 <button class="cerrarModal">cerrar X</button>
 
                 <figure>
-                    <img src="https://picsum.photos/600/400" alt="" width="200" height="200">
-                    <figcaption>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum nesciunt vitae ullam in, natus id odit harum voluptates officiis? Asperiores.
-                    </figcaption>
+                    <img 
+                        src="assets/img/mama-1.jpg" 
+                        loading="lazy"
+                        alt="Presentación de la documenta 15 y Lumbung Nuquí"
+                        srcset="assets/img/mama-1s.jpg 700w,
+                                assets/img/mama-1.jpg 1800w"
+                        width="300" height="200">
+                    <figcaption>En la implementación, el cliente realizó unos cambios de navegación y estructura que difieren un poco de la propuesta que habñian aprobado. dentro de esos, eliminaron el cabezote del evento y eliminaron algunos de los elementos que contenía el glosario del evento.</figcaption>
                 </figure>
 
                 <h2>Lumbung Nuquí - Más Arte Más Acción</h2>
@@ -340,8 +516,18 @@
                 </ul>
                 <p>Desarrollé una estructura sencilla y flexible que permitiera la carga de contenidos en un sitio web estático a medida que estos se iban obteniendo durante un taller de documentación.</p>
                 <p>
-                    <a href="https://www.masartemasaccion.org/lumbung-documenta/lumbung-nuqui/" target="_blank">Ir al micrositio de Lumbung - Nuquí > </a>
+                    <a href="https://www.masartemasaccion.org/lumbung-documenta/lumbung-nuqui/" target="_blank">Ir a Lumbung - Nuquí > </a>
                 </p>
+
+                <figure>
+                    <img 
+                        src="assets/img/mama-2.jpg" 
+                        loading="lazy"
+                        alt="Banner inicial del sitio de la sociedad colombiana de Mastozoología "
+                        srcset="assets/img/mama-2s.jpg 700w,
+                                assets/img/mama-2.jpg 1800w"
+                        width="300" height="200">
+                </figure>
 
                 <h2>Sociedad Colombiana de Mastozoologia</h2>
                 <span>Programación</span>
@@ -350,12 +536,16 @@
                 </ul>
                 <p>Mi rol en este proyecto fue cerrar el proceso de renovación del sitio web que había sido desarrollado en WordPress, adaptar los nuevos requerimientos a la estructura inicial, actualizar la información e integrar las redes sociales de la Sociedad.</p>
                 <p>
-                    <a href="http://mamiferoscolombia.org/" target="_blank">Ir al sitio de la Sociedad Colombiana de Mastozoología > </a>
+                    <a href="http://mamiferoscolombia.org/" target="_blank">Ir al sitio de la SCMas > </a>
                 </p>
             </dialog>
 
             <div class="portfolio__card" data-filter="programacion">
-                <img src="https://picsum.photos/200/200?random=2" alt="" width="200" height="200">
+                <img 
+                    src="assets/img/programacion-0.jpg"
+                    loading="lazy"
+                    alt="Código en Brainfuck que dice 'Hola, estos son algunos de los ejercicios que he realizado en mi proceso de aprendizaje de programación'" 
+                    width="430" height="344">
 
                 <h4>Ejercicios de programación </h4>
                 <span>Programación</span>

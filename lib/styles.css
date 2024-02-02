@@ -676,7 +676,7 @@ h1 {
     width: 100%;
     aspect-ratio: 5 / 4;
     object-fit: cover;
-    opacity: 0.5;
+    mix-blend-mode: multiply;
     transition: opacity 0.2s ease;
 }
 .portfolio__card:hover img {
@@ -731,7 +731,7 @@ dialog img {
 dialog figcaption {
     font-size: 0.8rem;
     text-align: right;
-    margin: 0.5rem 0 2rem 15%;
+    margin: 0 0 2rem 15%;
 }
 dialog h2,
 dialog span {

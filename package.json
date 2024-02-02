@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "browser-sync start --server --files *.html *.css *.js --browser 'firefox'"
+    "serve": "browser-sync start --server --files *.html lib/styles.css lib/main.js --browser 'firefox'"
   },
   "dependencies": {
     "browser-sync": "^2.29.3"
