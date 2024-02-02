@@ -446,6 +446,7 @@ h1 {
     color: var(--primary);
     font-family: var(--font-link);
     margin: 0 0 2rem;
+    align-items: center;
 }
 .work__profile h2,
 .work__profile .h2 {
@@ -662,6 +663,8 @@ h1 {
 .portfolio__card {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: max-content;
+    grid-auto-rows: min-content;
     padding: 0 1rem 4rem;
     gap: 1rem;
 }
@@ -673,6 +676,8 @@ h1 {
     grid-row: 1 / span 1;
     justify-self: end;
     width: 100%;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
     opacity: 0.5;
     transition: opacity 0.2s ease;
 }
@@ -704,6 +709,7 @@ h1 {
 }
 
 ::backdrop {
+    appearance: none;
     background-color: var(--background-alpha);
     -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
@@ -713,6 +719,7 @@ dialog {
     border: none;
     width: calc(100dvw - 4rem);
     max-height: calc(100dvh - 6rem);
+    border: solid 1px var(--secondary);
     padding: 1rem;
     background-color: var(--background);
 }
@@ -736,8 +743,8 @@ dialog span {
     position: sticky;
     display: block;
     top: 0;
-    margin: 0 0 0 auto;
-    padding: 0.5rem 0 0.5rem 1rem;
+    margin: 0 -1rem 0 auto;
+    padding: 0.5rem 1rem;
     background-color: var(--background);
     z-index: 10;
     color: var(--primary);

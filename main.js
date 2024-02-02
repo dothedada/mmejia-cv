@@ -33,7 +33,6 @@ const filtrarPortafolio = (() => {
 
         for (const proyecto of portafolio) {
             proyecto.classList.remove('hidden')
-            if (filtro === 'todo') continue
             if (!proyecto.getAttribute('data-filter').match(filtro)) {
                 proyecto.classList.add('hidden')
             }
