@@ -302,7 +302,7 @@ body {
         padding: 0;
     }
     .menu__elementos > li {
-        margin: 0; 
+        margin: 0.1rem 0; 
     }
 }
 @media (min-width: 1000px) {
@@ -754,6 +754,7 @@ dialog span {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         padding: 0 1rem;
+        margin: 0 0 2rem;
     }
     .portfolio__card {
         grid-template-columns: repeat(3,1fr);
@@ -800,6 +801,7 @@ dialog span {
         grid-template-columns: repeat(3, minmax(1rem, 568px));
         justify-content: center;
         gap: 3rem;
+        margin: 0 0 5rem;
     }
     .portfolio__card {
         grid-template-columns: repeat(4, 1fr);
