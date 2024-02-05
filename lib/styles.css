@@ -799,11 +799,12 @@ dialog span {
         padding: 0 1rem; 
         grid-template-columns: repeat(3, minmax(1rem, 568px));
         justify-content: center;
+        gap: 3rem;
     }
     .portfolio__card {
         grid-template-columns: repeat(4, 1fr);
         padding: 0;
-        margin: 0 0 3rem;
+        margin: 0;
     }
     .portfolio__card img {
         grid-column: 2 / span 3;
@@ -815,7 +816,7 @@ dialog span {
     .portfolio__card h4,
     .portfolio__card span {
         grid-column: 1 / span 4;
-        margin: 0 0 0 2rem;
+        margin: 0 ;
     }
     .portfolio__card div,
     .portfolio__card a {
