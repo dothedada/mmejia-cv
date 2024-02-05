@@ -850,6 +850,10 @@ dialog span {
     dialog span {
         width: 50%;
     }
+    dialog .profile__stack {
+        margin: 0 0 3rem;
+    }
+
 }
 /* -------------- */
 /* -------------- */
