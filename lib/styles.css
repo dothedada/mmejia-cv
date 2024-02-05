@@ -31,7 +31,6 @@
     --primary: hsl(232, 64%, 40%);
     --secondary: hsl(50, 85%, 67%);
     --accent: hsl(47, 100%, 46%);
-    --background-alpha: hsl(47 100% 46% / 0.7);
 
     --font-parragraph: 'Fira Sans', sans-serif;
     --font-link: 'Fira Code', monospace;
@@ -679,9 +678,6 @@ h1 {
     mix-blend-mode: multiply;
     transition: opacity 0.2s ease;
 }
-.portfolio__card:hover img {
-    opacity: 1;
-}
 .portfolio__card h4 {
     color: var(--primary);
     grid-column: 1 / span 3;
@@ -691,6 +687,7 @@ h1 {
 }
 .portfolio__card span {
     grid-column: 1 / span 4;
+    grid-row: 2 / span 1;
     color: var(--primary);
 }
 .portfolio__card div,
@@ -708,7 +705,6 @@ h1 {
 
 ::backdrop {
     appearance: none;
-    background-color: var(--background-alpha);
     -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
 }
@@ -728,7 +724,6 @@ dialog[open] {
 }
 dialog img {
     width: 100%;
-    /* mix-blend-mode: multiply; */
     outline: solid 1px var(--primary);
 }
 dialog figure {
@@ -746,7 +741,7 @@ dialog span {
 .cerrarModal {
     position: sticky;
     display: block;
-    top: -0.8rem;
+    top: -1rem;
     margin: 0 0 1rem auto;
     padding: 0.4rem 1rem;
     border: none;
@@ -765,7 +760,7 @@ dialog span {
     .work__portfolio {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
+        gap: 2rem;
         padding: 0 1rem;
         margin: 0 0 2rem;
     }
@@ -778,10 +773,7 @@ dialog span {
     }
     .portfolio__card img {
         grid-column: 2 / span 2;
-        grid-row: 1 / span 1;
-    }
-    .portfolio__card:hover img {
-        opacity: 1;
+        grid-row: 1 / span 2;
     }
     .portfolio__card h4,
     .portfolio__card span,
@@ -837,10 +829,6 @@ dialog span {
     }
     .portfolio__card img {
         grid-column: 2 / span 3;
-        grid-row: 1 / span 1;
-    }
-    .portfolio__card:hover img {
-        opacity: 1;
     }
     .portfolio__card h4,
     .portfolio__card span {
