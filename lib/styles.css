@@ -444,7 +444,7 @@ h1 {
     color: var(--accent);
     font-family: var(--font-link);
     margin: 0 0 2rem;
-    align-items: center;
+    align-items: baseline;
 }
 .work__profile h2,
 .work__profile .h2 {
@@ -607,7 +607,7 @@ h1 {
     margin: 4rem 1rem;
 }
 .portfolio__filter button {
-    border-bottom: solid 1px var(--accent);
+    border-bottom: solid 1px var(--primary);
     color: var(--accent);
     padding: 0.2rem 0.2rem 0.2rem calc(25% + 0rem); 
     margin: 0.2rem 0.2rem;
@@ -632,7 +632,7 @@ h1 {
 @media (min-width: 600px) {
     .portfolio__filter {
         margin: 2rem 1rem;
-        border-bottom: solid 1px var(--secondary);
+        border-bottom: solid 1px var(--primary);
         display: flex;
         align-items: baseline;
         gap: 1rem;
@@ -650,7 +650,7 @@ h1 {
     .portfolio__filter {
         margin: 4rem auto;
         padding: 0 1rem;
-        max-width: 1376px;
+        max-width: calc(1560px + 11rem);
     }
 }
 /* -------------- */
