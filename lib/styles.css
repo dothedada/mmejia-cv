@@ -733,6 +733,7 @@ dialog figcaption {
     font-size: 0.8rem;
     text-align: right;
     padding: 0.5rem 1rem 0 15%;
+    text-wrap: balance;
 }
 dialog h2,
 dialog span {
@@ -762,7 +763,7 @@ dialog span {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem;
         padding: 0 1rem;
-        margin: 0 0 2rem;
+        margin: 0 0 3rem;
     }
     .portfolio__card {
         grid-template-columns: repeat(3,1fr);
@@ -791,16 +792,16 @@ dialog span {
         padding: 2rem 4rem 4rem;
     }
     dialog p {
-        margin: 1.5rem 0 1.5rem 8rem;
+        margin: 1.5rem 1rem 1.5rem 25%;
     }
     dialog figure {
-        margin: 1rem -2rem 4rem;
+        margin: 1rem -2rem 3rem;
     }
     dialog img {
         outline: solid 2px var(--primary);
     }
     dialog figcaption {
-        padding: 0.5rem 1rem 0 40%;
+        padding: 0.5rem 1rem 0 25%;
     }
     dialog h2,
     dialog h3,
@@ -843,9 +844,6 @@ dialog span {
 
     dialog {
         max-width: 900px;
-    }
-    dialog p {
-        margin: 1.5rem 0 1.5rem 15rem;
     }
     dialog h2,
     dialog h3,
