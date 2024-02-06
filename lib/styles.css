@@ -68,6 +68,13 @@ h1,
     font-size: clamp(2.813rem, 6.08vw + 1.483rem, 7.563rem);
     line-height: clamp(3.375rem, 7.882vw + 1.651rem, 7.563rem);
 }
+.h1 {
+    transform: translate(-0.7rem, 0.3rem);
+    z-index: 0;
+}
+h1 {
+    z-index: 1;
+}
 h2,
 .h2 {
     font-size: clamp(2rem, 3.855vw + 0.916rem, 4rem);
@@ -297,11 +304,17 @@ body {
         width: unset;
         height: unset;
         border-bottom: none;
+        background: none;
         gap: 0;
         padding: 0;
+        justify-content: flex-start;
+        line-height: 1;
+
     }
     .menu__elementos > li {
+        padding: 0.1rem 0;
         margin: 0.1rem 0; 
+
     }
 }
 @media (min-width: 1000px) {
@@ -345,13 +358,6 @@ body {
 .cabezote__titulo {
     color: var(--secondary);
 }
-.h1 {
-    transform: translate(-0.7rem, 0.3rem);
-    z-index: 0;
-}
-h1 {
-    z-index: 1;
-}
 .cabezote__texto {
     grid-column: 2 / span 3;
     grid-row: 3 / span 1;
@@ -368,7 +374,7 @@ h1 {
 @media (min-width: 600px) {
     .cabezote {
         grid-template-rows: repeat(4, minmax(5rem, auto));
-        padding: 8rem 0 4rem;
+        padding: 7rem 0 4rem;
         min-height: 95dvh;
         row-gap: 0;
         place-content: center;
@@ -393,7 +399,7 @@ h1 {
 }
 @media (min-width: 1000px) {
     .cabezote {
-        padding: 9rem 1rem 1rem;
+        padding: 7rem 1rem 2rem;
         grid-template-rows: repeat(2, min-content);
         place-content: center;
     }
@@ -660,7 +666,7 @@ h1 {
 .portfolio__card {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: max-content;
+    grid-template-rows: max-content 1.5rem;
     grid-auto-rows: min-content;
     padding: 0 1rem 4rem;
     gap: 1rem;
