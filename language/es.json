@@ -156,5 +156,18 @@
     "portfolio_PRG_modal_a1": "Ir al tablero de dibujo > ",
     "portfolio_PRG_modal_h2_EJ2": "Calculadora",
     "portfolio_PRG_modal_p2": "Las personas que aprenden diseño industrial hacen sillas, las que aprenden gráfico, tarjetas de presentación, las que quieren dedicarse a la fotografía, un retrato sosteniendo su cámara ente el espejo de un baño y las personas que aprendemos programación en algún momento hacemos una calculadora. Fue un ejercicio para hacer registro de secuencias de interacción, me basé en el funcionamiento de las calculadoras Casio clásicas. Incorpore casillas de memoria de memoria y la posibilidad de realizar acciones compuestas para realizar operaciones con porcentajes.",
-    "portfolio_PRG_modal_a2": "Ir a la calculadora > "
+    "portfolio_PRG_modal_a2": "Ir a la calculadora > ",
+
+    "contact_h2": "¡Hablemos!",
+    "contact_h3_1": "Redes",
+    "contact_h3_2": "Información de contacto",
+    "contact_h3_3": "Escríbeme",
+    "contact_form_label1": "Tu nombre",
+    "contact_form_label1_validation": "* Escribe tu nombre",
+    "contact_form_label2": "Tu correo",
+    "contact_form_label2_validation1": "* Escribe tu dirección de correo",
+    "contact_form_label2_validation2": "* Escribe una dirección de correo válida",
+    "contact_form_label3": "Tu mensaje",
+    "contact_form_label3_validation": "* Escribe tu mensaje",
+    "contact_form_submit": "Enviar > "
 }

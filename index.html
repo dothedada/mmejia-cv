@@ -59,10 +59,10 @@
                 </svg>
             </a>
         </div>
-        <a href="" class="menu__idioma">
+        <button href="" class="menu__idioma">
             <span class="sr-only" data-lang="seleccion_lang">Ir a la versión en español</span>
-            <span aria-hidden="true"> >eng</span>
-        </a>
+            <span aria-hidden="true"> > eng</span>
+        </button>
         <input id="mostrarMenu" type="checkbox">
         <label for="mostrarMenu" class="menu__estado" tabindex="0">
             <span class="sr-only" data-lang="ver_menu">mostrar o ocultar el el menú</span>
@@ -748,10 +748,10 @@
     <footer id="contact" class="contact">
         <div class="contact__title">
             <div class="h2 textoPosterior" aria-hidden="true">HA BLEmos</div>
-            <h2 class="portfolio__title">¡Hablemos!</h2>
+            <h2 class="portfolio__title" data-lang="contact_h2">¡Hablemos!</h2>
         </div>
         <div class="contact__links">
-            <h3>Redes</h3>
+            <h3 data-lang="contact_h3_1">Redes</h3>
             <ul> 
                 <li class="social__links">
                     <a href="https://github.com/dothedada" target="_blank">GitHub > </a>
@@ -764,7 +764,7 @@
                 </li>
             </ul>
 
-            <h3>Información de contacto</h3>
+            <h3 data-lang="contact_h3_2">Información de contacto</h3>
             <ul>
                 <li class="social__links">
                     <a href="mailto:info@mmejia.com">info@mmejia.com > </a>
@@ -780,7 +780,7 @@
         </div>
 
         <div class="contact__form">
-            <h3>Escríbeme</h3>
+            <h3 data-lang="contact_h3_3">Escríbeme</h3>
             <form action="https://api.web3forms.com/submit" 
                 method="POST" id="form" class="needs-validation" novalidate>
 
@@ -788,25 +788,25 @@
                 <input type="hidden" name="subject" value="Nuevo mensaje de cv.mmejia.com">
                 <input type="checkbox" name="botcheck" id="" class="hidden">
                 <div>
-                    <label for="Nombre">Tu nombre</label>
+                    <label for="Nombre" data-lang="contact_form_label1">Tu nombre</label>
                     <input type="text" name="Nombre" id="Nombre" placeholder="Nombre Apellido" required>
-                    <div class="empty-feedback invalid-feedback"> * Escribe tu nombre </div>
+                    <div class="empty-feedback invalid-feedback" data-lang="contact_form_label1_validation">* Escribe tu nombre</div>
                 </div>
 
                 <div>
-                    <label for="email">Tu correo</label>
+                    <label for="email" data-lang="contact_form_label2">Tu correo</label>
                     <input type="email" name="email" id="email" placeholder="micorreo@dominio.com" required>
-                    <div class="empty-feedback">* Escribe tu dirección de correo</div>
-                    <div class="invalid-feedback">* Escribe una dirección de correo válida</div>
+                    <div class="empty-feedback" data-lang="contact_form_label2_validation1">* Escribe tu dirección de correo</div>
+                    <div class="invalid-feedback" data-lang="contact_form_label2_validation2">* Escribe una dirección de correo válida</div>
                 </div>
 
                 <div>
-                    <label for="Mensaje">Tu mensaje</label>
+                    <label for="Mensaje" data-lang="contact_form_label3">Tu mensaje</label>
                     <textarea name="Mensaje" id="Mensaje" placeholder="..." required></textarea>
-                    <div class="empty-feedback invalid-feedback">* Escribe tu mensaje</div>
+                    <div class="empty-feedback invalid-feedback" data-lang="contact_form_label3_validation">* Escribe tu mensaje</div>
                 </div>
 
-                <button type="submit"> Enviar > </button>
+                <button type="submit" data-lang="contact_form_submit"> Enviar > </button>
                 <p id="resultado"></p>
             </form>
         </div>
