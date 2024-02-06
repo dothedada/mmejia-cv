@@ -708,6 +708,10 @@ body {
 .portfolio__card button:hover {
     color: var(--accent);
 }
+.portfolio__card ul {
+    line-height: 1.5;
+    margin: 0 0 1.5rem;
+}
 
 ::backdrop {
     appearance: none;
