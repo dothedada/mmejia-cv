@@ -182,7 +182,7 @@ body {
     top: -3.75rem;
 }
 .menu__logo {
-    min-width: 40px;
+    width: clamp(40px, 100%, 140px);
     fill: var(--background);
     padding: 0.2rem 0;
 }
