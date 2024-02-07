@@ -100,7 +100,7 @@ dialog h2 {
 p {
     max-width: 65ch;
     font-kerning: normal;
-    font-size: clamp(1rem, 0.964vw + 0.729rem, 1.5rem);
+    font-size: clamp(1rem, 0.5vw + 0.813rem, 1.25rem);
     line-height: calc(1ex / 0.32);
     margin: 0 0 calc(1ex / 0.32);
     text-wrap: pretty;
@@ -1055,7 +1055,7 @@ dialog span {
     outline: solid 1px var(--secondary);
     outline-offset: 3px;
 }
-.hidden, [hidden] {
+.hidden, [hidden], .hiddenLoad {
     display: none !important;
 }
 .sr-only:not(:focus):not(:active) {
