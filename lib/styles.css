@@ -262,6 +262,7 @@ body {
     top: 3.75rem;
     left: -100%;
     width: 100%;
+    min-width: max-content;
     height: calc(50vh - 3.75rem);
     background-color: var(--primary);
     border-bottom: solid 1px var(--background);
@@ -739,8 +740,7 @@ dialog {
     max-height: calc(100dvh - 6rem);
     border: none;
     outline: solid 1px var(--primary);
-    outline-offset: -1rem;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     background-color: var(--background);
     box-shadow: 0 10px 30px 20px hsl(0 0 0 / 0.1);
 }
@@ -810,7 +810,7 @@ dialog span {
     }
 
     dialog {
-        outline: solid 2px var(--primary);
+        outline: solid 1px var(--primary);
         outline-offset: -2rem;
         width: calc(90dvw - 4rem);
         max-height: calc(90dvh - 6rem);
@@ -823,7 +823,7 @@ dialog span {
         margin: 1rem -2rem 3rem;
     }
     dialog img {
-        outline: solid 2px var(--primary);
+        outline: solid 1px var(--primary);
     }
     dialog figcaption {
         padding: 0.5rem 1rem 0 25%;
