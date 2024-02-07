@@ -13,11 +13,11 @@
          url('../assets/fonts/firasans-book-webfont.woff') format('woff');
 }
 @font-face {
-    font-family: 'Space Grotesk';
+    font-family: 'Outfit';
     font-weight: 700;
-    src: local('Space Grotesk'),
-         url('../assets/fonts/spacegrotesk-bold-webfont.woff2') format('woff2'),
-         url('../assets/fonts/spacegrotesk-bold-webfont.woff') format('woff');
+    src: local('Outfit'),
+         url('../assets/fonts/Outfit-Bold.woff2') format('woff2'),
+         url('../assets/fonts/Outfit-Bold.woff') format('woff');
 }
 @font-face {
     font-family: 'Rock 3D';
@@ -34,7 +34,7 @@
 
     --font-parragraph: 'Fira Sans', sans-serif;
     --font-link: 'Fira Code', monospace;
-    --font-headings: 'Space Grotesk', sans-serif;
+    --font-headings: 'Outfit', sans-serif;
     --font-display: 'Rock 3D', sans-serif;
 
 }
