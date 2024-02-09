@@ -10,9 +10,9 @@
     "img_retrato_mmejia": "Miguel Mejía smiling at the camera during one of his exhibitions.",
 
     "header_h1": "Hi! I'm Miguel Mejia.",
-    "header_p1": "I work in a range spanning from visual communication and research to front-end web development.",
+    "header_p1": "I do work in different areas that span from visual communication and research to front-end web development.",
     "header_p2": "My purpose is to support the role played by the communications and technology in the development of more inclusive societies.",
-    "header_a": "Download my resume > ",
+    "header_a": "My resume > ",
 
     "skills_dev": "Front-end development",
     "skills_dev_p1": "I possess solid knowledge in HTML and CSS, which I utilize to create websites that are accessible and responsive across various devices. While I'm making rapid progress, I am also focusing on strengthening my foundations in JavaScript, data structures, and algorithms.",
@@ -147,7 +147,7 @@
     "img_portfolio_PRG": "Base structure of an IIFE function in JavaScript",
     "portfolio_PRG_title": "Coding Exercises",
     "portfolio_PRG_span": "Web development",
-    "portfolio_PRG_p1": "I find it curious how people try to hide errors and the need to avoid them when they are indispensable for learning, building knowledge and experience. These are some of the exercises I have done as I deepen my knowledge in coding.",
+    "portfolio_PRG_p1": "It's funny how we try to hide errors and have a compulsion to avoid them when they are indispensable for learning, building knowledge and experience. These are some of the exercises I have done as I deepen my knowledge in coding.",
     "portfolio_PRG_p2": "Years: 2023 - 2024",
     "portfolio_PRG_more": "Read more > ",
     "portfolio_PRG_modal_cerrar": "Close X",
