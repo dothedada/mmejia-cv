@@ -158,6 +158,11 @@
     "portfolio_PRG_modal_p2": "People who are learning industrial design make chairs, those who are studying graphic design make business cards, those who want to become photographers make a portrait holding their camera in front of a mirror in the bathroom, and those of us who are learning coding at some point make a calculator. It was an exercise to register interaction sequences, I based it on the operation of the classic Casio calculators. I incorporated memory boxes and the possibility of performing compound actions to perform operations with percentages.",
     "portfolio_PRG_modal_a2": "Go to my Calculator > ",
 
+    "portfolio_PRG_modal_h2_EJ3": "Bookshelf inventory - My Bookshelf",
+    "portfolio_PRG_modal_p3": "This two-part exercise was focused on improving code structuring based on the idea of creating an inventory for a library that would allow for the addition, editing, and deletion of books. The first part involved developing the inventory using constructor functions, while the second part entailed refactoring the code using JavaScript classes. However, I decided to broaden the scope of the exercise to learn new skills, such as manipulating LocalStorage, dynamically updating the DOM without reloading the application, and exploring various methods for working with arrays. Additionally, I took the opportunity to strengthen my knowledge of CSS and enhance the fluid layout of the user interface.",
+    "portfolio_PRG_modal_a3": "Go to My Bookshelf > ",
+
+
     "contact_h2": "¡Let's talk!",
     "contact_h3_1": "My social networks",
     "contact_h3_2": "My contact info",

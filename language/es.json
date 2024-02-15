@@ -158,6 +158,10 @@
     "portfolio_PRG_modal_p2": "Las personas que están aprendiendo diseño industrial hacen sillas; las que estudian gráfico, tarjetas de presentación; las que quieren dedicarse a la fotografía, se hacen un retrato sosteniendo su cámara ante el espejo de un baño, y las personas que estamos aprendiendo programación, en algún momento, hacemos una calculadora. Fue un ejercicio para hacer registro de secuencias de interacción. Me basé en el funcionamiento de las calculadoras Casio clásicas. Incorpore casillas de memoria y la posibilidad de realizar acciones compuestas para realizar operaciones con porcentajes.",
     "portfolio_PRG_modal_a2": "Ir a la calculadora > ",
 
+    "portfolio_PRG_modal_h2_EJ3": "Inventario de biblioteca - Mi Biblioteca",
+    "portfolio_PRG_modal_p3": "Este ejercicio de dos partes estuvo enfocado en mejorar la estructuración del código a partir de la idea de crear un inventario para una biblioteca que permitiera la adición, edición y eliminación de libros. La primera parte consistió en desarrollar el inventario utilizando funciones constructoras, mientras que la segunda parte implicó refactorizar el código utilizando clases de JavaScript. Sin embargo, decidí ampliar el alcance del ejercicio para aprender nuevas habilidades, como la manipulación del LocalStorage, la actualización dinámica del DOM sin recargar la aplicación y la exploración de diversos métodos para trabajar con arrays. Además, aproveché la oportunidad para fortalecer mis conocimientos en CSS y mejorar la diagramación fluida de la interfaz de usuario.",
+    "portfolio_PRG_modal_a3": "Ir a Mi Biblioteca > ",
+
     "contact_h2": "¡Hablemos!",
     "contact_h3_1": "Redes sociales",
     "contact_h3_2": "Información de contacto",
