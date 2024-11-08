@@ -1,6 +1,6 @@
 import "../css/style.css";
 import { setupCounter } from "./counter.ts";
-
+console.log("carajo");
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <div>
     <h1>Vite + TypeScript</h1>
