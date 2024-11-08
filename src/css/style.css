@@ -6,13 +6,14 @@
   --secondary: #ceaef5;
   --backup: #a0f3de;
   --grid-lines: rgb(0 0 0 / 0.3);
-  --grid-offset: 0 -4px;
 
   --font-text: "Martian Mono", monospace;
   --font-display: "rock_3dregular", monospace;
 
-  --base-size: 0.875rem;
-  --line-height: 1.3125rem;
+  /* --base-size: clamp(0.875rem, 0.5vw + 0.75rem, 1.25rem); */
+  --base-size: 1rem;
+  --grid-offset: 0 calc(var(--base-size) * -0.25);
+  --line-height: calc(var(--base-size) * 1.5);
 }
 h1 {
   font-family: var(--font-display);
@@ -53,16 +54,23 @@ button {
   }
 
   &:focus-visible {
-    outline: 1px solid var(--backup);
-    outline-offset: 2px;
+    outline: solid 1px var(--links);
+  }
+}
+
+a {
+  &:not([target="_blank"])::after {
+    content: " *";
   }
 
-  &[target="_self"]::after {
-    content: " * ";
-  }
   &[target="_blank"]::after {
-    content: " > ";
+    content: " >";
   }
+}
+
+::selection {
+  background: var(--links);
+  color: var(--background);
 }
 
 body {
