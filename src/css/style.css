@@ -107,3 +107,68 @@ body {
   background-size: var(--line-height) var(--line-height);
   background-position: var(--grid-offset);
 }
+
+main {
+  /* background: red; */
+}
+
+.menu {
+  & button,
+  & a {
+    color: var(--text);
+  }
+}
+
+.menu__show {
+  display: block;
+  outline: 1px solid red;
+  width: 42px;
+  height: 42px;
+
+  & .show__bar {
+    margin: 0 auto;
+    display: block;
+    background-color: var(--links);
+    width: 21px;
+    height: 1px;
+    position: relative;
+
+    &::before,
+    &::after {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: var(--links);
+      left: 0;
+    }
+
+    &::before {
+      transform: translateY(-7px);
+    }
+    &::after {
+      transform: translateY(7px);
+    }
+  }
+
+  &:hover .show__bar,
+  &:hover .show__bar::before,
+  &:hover .show__bar::after {
+    background-color: var(--backup);
+  }
+
+  &:active .show__bar {
+    transform: scale(0.9);
+  }
+
+  &.view .show__bar {
+    background: none;
+  }
+
+  &.view .show__bar::before {
+    transform: rotate(-45deg);
+  }
+  &.view .show__bar::after {
+    transform: rotate(45deg);
+  }
+}
