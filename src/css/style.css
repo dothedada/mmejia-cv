@@ -113,17 +113,40 @@ main {
 }
 
 .menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--line-height);
+  width: 100%;
+  align-items: start;
+  justify-items: start;
+
   & button,
   & a {
     color: var(--text);
+
+    &::before,
+    &::after {
+      content: "";
+    }
   }
+}
+
+.menu__logo {
+  fill: var(--text);
+  height: calc(var(--line-height));
 }
 
 .menu__show {
   display: block;
   outline: 1px solid red;
-  width: 42px;
-  height: 42px;
+  width: calc(var(--line-height) * 2);
+  height: calc(var(--line-height) * 2);
+  transform: translate(
+    calc(var(--line-height) * 0.5),
+    calc(var(--line-height) * -0.5)
+  );
+  grid-column: 4;
+  justify-self: end;
 
   & .show__bar {
     margin: 0 auto;
@@ -171,4 +194,8 @@ main {
   &.view .show__bar::after {
     transform: rotate(45deg);
   }
+}
+
+.menu__links {
+  list-style: none;
 }
