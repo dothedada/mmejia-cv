@@ -66,7 +66,7 @@ button {
     color: var(--links);
     border: none;
     background: none;
-    text-decoration: none;
+    /* text-decoration: none; */
 
     &:hover {
         color: var(--backup);
@@ -129,12 +129,13 @@ main {
     top: 0;
     left: 0;
     padding: var(--line-height) var(--line-height) 0;
+    height: calc(var(--line-height) * 3);
     backdrop-filter: blur(var(--blur));
     background-image: var(--grid);
     background-size: var(--line-height) var(--line-height);
     background-position: var(--grid-offset);
     width: 100vw;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 46px min-content 1fr;
     gap: var(--line-height);
     align-items: start;
     justify-items: start;
@@ -173,15 +174,12 @@ main {
     list-style: none;
     display: flex;
     flex-direction: column;
+    gap: var(--line-height);
     transform: translateX(0);
     transition: transform 0.2s ease-in-out;
 
     &.visible {
         transform: translateX(100%);
-    }
-
-    & li {
-        margin: 0 0 var(--line-height);
     }
 
     & a {
@@ -199,7 +197,6 @@ main {
         calc(var(--line-height) * 0.5),
         calc(var(--line-height) * -0.5)
     );
-    grid-column: 4;
     justify-self: end;
 
     & .show__bar {
@@ -207,7 +204,7 @@ main {
         display: block;
         background-color: var(--links);
         width: 21px;
-        height: 1px;
+        height: 2px;
         position: relative;
         transition: background-color 0.2s ease-in-out;
 
@@ -251,9 +248,40 @@ main {
         transform: rotate(45deg);
     }
 }
+@media (min-width: 650px) {
+    .menu {
+        grid-template-columns: 46px 1fr min-content;
+    }
+    .menu__show {
+        display: none;
+    }
+    .menu__links {
+        position: relative;
+        background: unset;
+        border: unset;
+        backdrop-filter: unset;
+        grid-column: 2;
+        grid-row: 1;
+        left: unset;
+        top: unset;
+        transform: unset;
+        padding: unset;
+        width: unset;
+        height: unset;
+        flex-direction: row;
+
+        & a {
+            text-decoration: none;
+            color: var(--text);
+        }
+    }
+    .menu__lang {
+        grid-column: 3;
+    }
+}
 
 main {
-    margin: calc(var(--line-height) * 3) 0 0;
+    margin: calc(var(--line-height) * 2) 0 0;
 }
 /* @media (min-width: 600px) { */
 /*     .menu__show { */
