@@ -6,14 +6,25 @@
     --secondary: #ceaef5;
     --backup: #a0f3de;
     --grid-lines: rgb(0 0 0 / 0.3);
+    --transparent: rgb(0 0 0 / 0);
 
     --font-text: 'Martian Mono', monospace;
     --font-display: 'rock_3dregular', monospace;
-
-    /* --base-size: clamp(0.875rem, 0.5vw + 0.75rem, 1.25rem); */
     --base-size: 1rem;
+
+    --grid: linear-gradient(
+            to right,
+            transparent calc(var(--line-height) - 1px),
+            var(--grid-lines) 1px
+        ),
+        linear-gradient(
+            to bottom,
+            transparent calc(var(--line-height) - 1px),
+            var(--grid-lines) 1px
+        );
     --grid-offset: 0 calc(var(--base-size) * -0.25);
     --line-height: calc(var(--base-size) * 1.5);
+    --blur: 10px;
 }
 h1 {
     font-family: var(--font-display);
@@ -114,16 +125,23 @@ main {
 
 .menu {
     display: grid;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: var(--line-height) var(--line-height) 0;
+    backdrop-filter: blur(var(--blur));
+    background-image: var(--grid);
+    background-size: var(--line-height) var(--line-height);
+    background-position: var(--grid-offset);
+    width: 100vw;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--line-height);
-    width: 100%;
     align-items: start;
     justify-items: start;
+    z-index: 10;
 
     & button,
-    & a {
-        color: var(--text);
-
+    a {
         &::before,
         &::after {
             content: '';
@@ -136,9 +154,45 @@ main {
     height: calc(var(--line-height));
 }
 
+.menu__lang {
+    color: var(--text);
+}
+
+.menu__links {
+    position: absolute;
+    width: 100%;
+    height: calc(100vh - var(--line-height) * 3);
+    padding: calc(var(--line-height) * 2);
+    top: calc(var(--line-height) * 3);
+    left: -100%;
+    border-top: 1px solid var(--text);
+    backdrop-filter: blur(var(--blur));
+    background-image: var(--grid);
+    background-size: var(--line-height) var(--line-height);
+    background-position: var(--grid-offset);
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(0);
+    transition: transform 0.2s ease-in-out;
+
+    &.visible {
+        transform: translateX(100%);
+    }
+
+    & li {
+        margin: 0 0 var(--line-height);
+    }
+
+    & a {
+        display: block;
+        text-align: right;
+    }
+}
+
 .menu__show {
     display: block;
-    outline: 1px solid red;
+    position: relative;
     width: calc(var(--line-height) * 2);
     height: calc(var(--line-height) * 2);
     transform: translate(
@@ -155,6 +209,7 @@ main {
         width: 21px;
         height: 1px;
         position: relative;
+        transition: background-color 0.2s ease-in-out;
 
         &::before,
         &::after {
@@ -164,6 +219,7 @@ main {
             height: 100%;
             background-color: var(--links);
             left: 0;
+            transition: transform 0.2s ease-in-out;
         }
 
         &::before {
@@ -185,7 +241,7 @@ main {
     }
 
     &.view .show__bar {
-        background: none;
+        background-color: var(--transparent);
     }
 
     &.view .show__bar::before {
@@ -196,6 +252,11 @@ main {
     }
 }
 
-.menu__links {
-    list-style: none;
+main {
+    margin: calc(var(--line-height) * 3) 0 0;
 }
+/* @media (min-width: 600px) { */
+/*     .menu__show { */
+/*         display: none; */
+/*     } */
+/* } */
