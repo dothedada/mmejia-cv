@@ -140,6 +140,8 @@ main {
     align-items: start;
     justify-items: start;
     z-index: 10;
+    transform: translateY(0);
+    transition: transform 0.5s ease-in-out;
 
     & button,
     a {
@@ -147,6 +149,10 @@ main {
         &::after {
             content: '';
         }
+    }
+
+    &.hide {
+        transform: translateY(calc(var(--line-height) * -3));
     }
 }
 
@@ -252,9 +258,11 @@ main {
     .menu {
         grid-template-columns: 46px 1fr min-content;
     }
+
     .menu__show {
         display: none;
     }
+
     .menu__links {
         position: relative;
         background: unset;
@@ -273,6 +281,10 @@ main {
         & a {
             text-decoration: none;
             color: var(--text);
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
     .menu__lang {
@@ -281,8 +293,10 @@ main {
 }
 
 main {
-    margin: calc(var(--line-height) * 2) 0 0;
+    margin: calc(var(--line-height) * 2) auto 0;
+    max-width: 1200px;
 }
+
 /* @media (min-width: 600px) { */
 /*     .menu__show { */
 /*         display: none; */
