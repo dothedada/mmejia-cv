@@ -1,7 +1,7 @@
-import "../css/style.css";
-import { setupCounter } from "./counter.ts";
-console.log("carajo");
-document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
+import '../css/style.css';
+import { setupCounter } from './counter.ts';
+
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <h1>Vite + TypeScript</h1>
     <div class="card">
@@ -13,4 +13,4 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   </div>
 `;
 
-setupCounter(document.querySelector<HTMLButtonElement>("#counter")!);
+setupCounter(document.querySelector<HTMLButtonElement>('#counter')!);
