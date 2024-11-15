@@ -46,6 +46,44 @@ const blockPageMove = (): void => {
     document.body.style.overflow = bloqued ? 'unset' : 'hidden';
 };
 
+// data
+const fileFetcher = async (
+    fileName = 'dataFiles/files.txt',
+    timeout = 5000,
+): Promise<string | void> => {
+    const controller = new AbortController();
+    const conectionTimeOut = setTimeout(() => controller.abort(), timeout);
+
+    try {
+        const response = await fetch(fileName, { signal: controller.signal });
+        if (!response.ok) {
+            throw new Error(
+                `Error ${response.status}. No se pudo obtener el archivo${fileName}`,
+            );
+        }
+        const textData = await response.text();
+        return textData;
+    } catch (err) {
+        if (err instanceof Error) {
+            if (err.name === 'AbortError') {
+                throw new Error('Error: Tiempo de conexion excedido');
+            }
+            throw new Error(
+                `Error al obtener el archivo ${fileName}: ${err.name}`,
+            );
+        }
+    } finally {
+        clearTimeout(conectionTimeOut);
+    }
+};
+
+const filesToLoad = await fileFetcher().then((data) => data?.split('\n'));
+const siteData = filesToLoad?.reduce(async (data, currentFetch) => {
+    const currentfile = await fileFetcher(`${getLang()}/${currentFetch}`);
+    data[currentFetch] = currentfile;
+    return data;
+}, {});
+console.log(filesToLoad);
 // menu
 let userPosition = window.scrollY;
 window.addEventListener('scroll', () => {
