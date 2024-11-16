@@ -1,6 +1,7 @@
 interface HeadProperty {
     [key: string]: string;
 }
+
 interface ParsedFile {
     header: HeadProperty;
     body?: string;
