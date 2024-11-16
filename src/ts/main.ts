@@ -1,6 +1,9 @@
 import '../css/style.css';
 import txtSR from './ui-sr_txt';
+import fileFetcher from './fetcher';
+import textTest from './testText.txt?raw';
 
+console.log(textTest);
 type Lang = 'es' | 'en';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
@@ -47,59 +50,10 @@ const blockPageMove = (): void => {
 };
 
 // data
-const fileFetcher = async (
-    fileName = 'dataFiles/files.txt',
-    timeout = 5000,
-): Promise<string | void> => {
-    const controller = new AbortController();
-    const conectionTimeOut = setTimeout(() => controller.abort(), timeout);
-
-    try {
-        const response = await fetch(fileName, { signal: controller.signal });
-        if (!response.ok) {
-            throw new Error(
-                `Error ${response.status}. No se pudo obtener el archivo${fileName}`,
-            );
-        }
-        const textData = await response.text();
-        return textData;
-    } catch (err) {
-        if (err instanceof Error) {
-            if (err.name === 'AbortError') {
-                throw new Error('Error: Tiempo de conexion excedido');
-            }
-            throw new Error(
-                `Error al obtener el archivo ${fileName}: ${err.name}`,
-            );
-        }
-    } finally {
-        clearTimeout(conectionTimeOut);
-    }
-};
 
 const filesToLoad = await fileFetcher().then((data) =>
     data?.split('\n').filter((e) => e),
 );
-
-const fileParser = (fileData) => {
-    const [, headerData, bodyData] = fileData.match(
-        /---([\s\S]*?)---\n([\s\S]*)/,
-    );
-    const header = {};
-
-    if (headerData) {
-        for (const headerInfo of headerData.split('\n').filter((e) => e)) {
-            const [key, value] = headerInfo.split(':');
-            console.log(key, value);
-            header[key.trim()] = value
-                .trim()
-                .match(/['"]([\S ]*)["']|^(.*)$/)[1];
-        }
-    }
-    console.log(header, bodyData);
-};
-
-fileParser(await fileFetcher(`dataFiles/${getLang()}/${filesToLoad[0]}`));
 
 // menu
 let userPosition = window.scrollY;
