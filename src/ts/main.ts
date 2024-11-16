@@ -77,13 +77,30 @@ const fileFetcher = async (
     }
 };
 
-const filesToLoad = await fileFetcher().then((data) => data?.split('\n'));
-const siteData = filesToLoad?.reduce(async (data, currentFetch) => {
-    const currentfile = await fileFetcher(`${getLang()}/${currentFetch}`);
-    data[currentFetch] = currentfile;
-    return data;
-}, {});
-console.log(filesToLoad);
+const filesToLoad = await fileFetcher().then((data) =>
+    data?.split('\n').filter((e) => e),
+);
+
+const fileParser = (fileData) => {
+    const [, headerData, bodyData] = fileData.match(
+        /---([\s\S]*?)---\n([\s\S]*)/,
+    );
+    const header = {};
+
+    if (headerData) {
+        for (const headerInfo of headerData.split('\n').filter((e) => e)) {
+            const [key, value] = headerInfo.split(':');
+            console.log(key, value);
+            header[key.trim()] = value
+                .trim()
+                .match(/['"]([\S ]*)["']|^(.*)$/)[1];
+        }
+    }
+    console.log(header, bodyData);
+};
+
+fileParser(await fileFetcher(`dataFiles/${getLang()}/${filesToLoad[0]}`));
+
 // menu
 let userPosition = window.scrollY;
 window.addEventListener('scroll', () => {
