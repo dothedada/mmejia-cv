@@ -29,16 +29,7 @@ const getTarget = (header: Header, parentNode: string, childNode: string) => {
     return targetArr;
 };
 
-const fileParser = (fileData: string) => {
-    const match = fileData.match(/---([\s\S]*?)---\n([\s\S]*)/);
-
-    if (!match || match.length < 3) {
-        throw new Error(
-            'Invalid frontmatter format: Missing or malformed delimiter',
-        );
-    }
-
-    const [, headerData, body] = match;
+const headerParser = (headerData: string): Header => {
     const header: Header = {};
     const headerLines = headerData.split('\n').map((line) => ({
         content: line.trim(),
@@ -81,8 +72,35 @@ const fileParser = (fileData: string) => {
 
         targetArr.push(cleanData);
     }
+    return header;
+};
 
+const bodyParser = (bodyData: string, header: Header) => {
+    const { portfolio, contact } = header;
+
+    const regex = new RegExp(/---\((.+)\)\n+([\S\s]+?)---\(\1\)/, 'g');
+    const bodySections = Array.from(bodyData.matchAll(regex)).map((section) => {
+        console.log(section, portfolio, contact);
+        const [, sectionName, sectionContent] = section;
+        return { section: sectionName, content: sectionContent };
+    });
+};
+
+const fileParser = (fileData: string) => {
+    const match = fileData.match(/---([\s\S]*?)---\n([\s\S]*)/);
+
+    if (!match || match.length < 3) {
+        throw new Error(
+            'Invalid frontmatter format: Missing or malformed delimiter',
+        );
+    }
+
+    const [, headerData, bodyData] = match;
+
+    const header = headerParser(headerData);
+    const body = bodyParser(bodyData, header);
     console.log(header);
+
     return { header, body };
 };
 

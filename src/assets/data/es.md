@@ -5,7 +5,7 @@ portfolio:
     - proyectoDos.md
     - proyectoTres.md
     - proyectoCuatro.md
-contacto:
+contact:
     - Redes Sociales:
           - LinkedIn | https://www.linkedin.com/in/-mmejia/
           - GitHub | https://github.com/dothedada
@@ -13,9 +13,6 @@ contacto:
           - info@mmejia.com | mailto:info@mmejia.com
           - (+57) 304 383 9127 | tel:3043839127
           - WhatsApp | https://wa.me/573043839127
-    - carajo:
-          - uno
-          - dos
 ---
 
 ---(about)
@@ -28,6 +25,7 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 
 [Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)
 
+---(about)
 ---(skills)
 
 ## Desarrollo front-end | Mis Habilidadess
@@ -62,6 +60,7 @@ Con frecuencia trabajo temas como discapacidad visual, derechos humanos y labora
 
 Por gusto y responsabilidad necesito comprender a fondo lo que voy a comunicar, por lo tanto, me enseñé a estar constantemente aprendiendo. Sin embargo, la información y el aprendizaje siempre estarán incompletos si no se comparten, así que experimento hasta encontrar formas creativas para transmitirlos. He desarrollado clases y talleres sobre comunicación visual, semiótica y fotografía. También he organizado laboratorios y abierto conversatorios sobre ética, tecnología y comunicación.
 
+---(skills)
 ---(portfolio)
 
 ## Algunas cosas que he realizado | Mi Trabajoo
@@ -78,4 +77,4 @@ Este portafolio es una muestra de los trabajos y ejercicios que he llevado a cab
 [Portafolio de foto-producto](https://producto.mmejia.com)
 [Portafolio Audiovisual](https://audiovisual.mmejia.com)
 
----(contact)
+---(portfolio)
