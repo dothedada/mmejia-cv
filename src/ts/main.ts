@@ -1,20 +1,20 @@
 import '../css/style.css';
+import dataTxt from '../assets/data/testText.txt?raw';
 import { initializeLang, toggleLang } from './lang';
+import fileParser from './mdParser';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
 const menuLinks = document.querySelector<HTMLUListElement>('.menu__links')!;
 
 // lang
-
 initializeLang();
 
+// UI
 const blockPageMove = (): void => {
     const bloqued = document.body.style.overflow === 'hidden';
     document.body.style.overflow = bloqued ? 'unset' : 'hidden';
 };
-
-// data
 
 // menu
 let userPosition = window.scrollY;
@@ -45,3 +45,7 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
         menuBtn.classList.toggle('view');
     });
 });
+
+// data
+console.log(dataTxt);
+fileParser(dataTxt);
