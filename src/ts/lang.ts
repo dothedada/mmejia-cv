@@ -38,4 +38,4 @@ const toggleLang = (): void => {
 
 const initializeLang = () => setLang(getLang());
 
-export { initializeLang, toggleLang };
+export { getLang, initializeLang, toggleLang };

@@ -28,4 +28,18 @@ const fileFetcher = async (
     }
 };
 
-export default fileFetcher;
+const dataLoader = async (lang: string): Promise<string> => {
+    const mdFiles = import.meta.glob('../assets/data/*.md', { as: 'raw' });
+    const filePath = `../assets/data/${lang}.md`;
+    const fileFallback = '..assets/data/fallback.md';
+    const loader = mdFiles[filePath] || mdFiles[fileFallback];
+
+    try {
+        const content = await loader();
+        return content;
+    } catch (err) {
+        throw new Error(`Error while loading the data file in ${lang}`);
+    }
+};
+
+export { fileFetcher, dataLoader };

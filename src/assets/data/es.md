@@ -10,9 +10,9 @@ contacto:
           - LinkedIn | https://www.linkedin.com/in/-mmejia/
           - GitHub | https://github.com/dothedada
     - Información de contacto:
-          - mail: info@mmejia.com | mailto:info@mmejia.com
-          - tel: (+57) 304 383 9127 | tel:3043839127
-          - whatsapp: WhatsApp | https://wa.me/573043839127
+          - info@mmejia.com | mailto:info@mmejia.com
+          - (+57) 304 383 9127 | tel:3043839127
+          - WhatsApp | https://wa.me/573043839127
 ---
 
 ---(about)

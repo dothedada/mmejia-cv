@@ -1,6 +1,6 @@
 import '../css/style.css';
-import dataTxt from '../assets/data/testText.txt?raw';
-import { initializeLang, toggleLang } from './lang';
+import { getLang, initializeLang, toggleLang } from './lang';
+import { dataLoader } from './fetcher';
 import fileParser from './mdParser';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
@@ -47,5 +47,6 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 });
 
 // data
-console.log(dataTxt);
-fileParser(dataTxt);
+
+const initialData = await dataLoader(getLang());
+fileParser(initialData);
