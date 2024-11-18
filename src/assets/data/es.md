@@ -1,5 +1,5 @@
 ---
-Last update: 16/11/2024
+date: 16/11/2024
 portfolio:
     - proyectoUno.md
     - proyectoDos.md

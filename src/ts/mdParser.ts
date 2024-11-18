@@ -75,15 +75,33 @@ const headerParser = (headerData: string): Header => {
     return header;
 };
 
+const makeHeaders = (dataString: string) => {
+    const regex = new RegExp(/(#+)\s+(.+)\s\|\s(.+)/, 'g');
+    const newString = dataString.replace(
+        regex,
+        (_, hashes, text, backTxt) =>
+            `<h${hashes.length}>${text}</h${hashes.length}><span class="header__background>${backTxt}</span>"`,
+    );
+    console.log(newString);
+};
+const makeParragraph = (dataString: string) => {
+    const regex = new RegExp(/ /, 'g');
+};
+
 const bodyParser = (bodyData: string, header: Header) => {
     const { portfolio, contact } = header;
 
     const regex = new RegExp(/---\((.+)\)\n+([\S\s]+?)---\(\1\)/, 'g');
-    const bodySections = Array.from(bodyData.matchAll(regex)).map((section) => {
-        console.log(section, portfolio, contact);
+    const sectionsData = Array.from(bodyData.matchAll(regex)).map((section) => {
         const [, sectionName, sectionContent] = section;
-        return { section: sectionName, content: sectionContent };
-    });
+        return [sectionName, sectionContent];
+    }, []);
+
+    const sections = Object.keys(sectionsData);
+    console.log(sectionsData[0][1]);
+    makeHeaders(sectionsData[1][1]);
+
+    // console.log(sectionsData);
 };
 
 const fileParser = (fileData: string) => {
@@ -99,7 +117,6 @@ const fileParser = (fileData: string) => {
 
     const header = headerParser(headerData);
     const body = bodyParser(bodyData, header);
-    console.log(header);
 
     return { header, body };
 };
