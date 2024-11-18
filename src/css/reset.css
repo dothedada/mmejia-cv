@@ -1,0 +1,115 @@
+@font-face {
+    font-family: 'Martian Mono';
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+    src:
+        local('Martian Mono'),
+        url('../assets/fonts/MartianMono-Light.woff2') format('woff2'),
+        url('../assets/fonts/MartianMono-Light.woff') format('woff');
+}
+@font-face {
+    font-family: 'rock_3dregular';
+    src:
+        local('rock_3dregular'),
+        url('../assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
+        url('../assets/fonts/rock3d-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+html {
+    font-size: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+
+    /* Las marcas de puntuación del inicio y final salen de la caja de texto */
+    hanging-punctuation: first last;
+    /* Corrige el cambio de texto al cambiar disposición de pantalla */
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    text-size-adjust: none;
+}
+:has(:target) {
+    /* Smooth scrool incluso en ventanas internas, revisar soporte */
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+}
+*:not(dialog),
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Tipografía */
+h1,
+h2,
+h3,
+h4 {
+    text-wrap: balance;
+}
+p {
+    max-width: 65ch;
+    line-height: calc(1ex / 0.32);
+    margin: 0 0 calc(1ex / 0.32);
+    text-wrap: pretty;
+}
+b,
+strong {
+    text-decoration: underline;
+}
+/* Interacción */
+a,
+button {
+    cursor: pointer;
+}
+input,
+textarea,
+button,
+select {
+    font: inherit;
+}
+/* Multimedia */
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+img {
+    max-inline-size: 100%;
+    max-block-size: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-style: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+    shape-margin: 1rem;
+}
+/* Secciones */
+/* Accesibilidad del contenido*/
+.hidden,
+[hidden] {
+    display: none !important;
+}
+.sr-only:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+/* Estilos del botón de skip */
+@media (prefers-reduced-motion: reduce) {
+    /* Bloquea movimiento y animaciones */
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}
