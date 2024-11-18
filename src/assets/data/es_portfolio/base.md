@@ -1,11 +1,10 @@
 ---
-section: "sección del archivo en el sitio"
-title: "titulo"
-date: "2024-11-10"
-shortText: "Resumen, o texto corto"
-preview: "ruta/de/la/imagen.jpg"
-url: "ruta del proyecto"
-repository: "Ruta del repositorio"
+title: titulo del proyecto
+date: 2024-11-10
+shortText: Resumen, o texto corto
+preview: ruta/de/la/imagen.jpg
+url: https://mmejia.com
+repository: https://github.com
 ---
 
 # título
