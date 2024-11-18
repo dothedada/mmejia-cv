@@ -95,7 +95,7 @@ const bodyParser = (bodyData: string, header: Header) => {
     const sectionsData = Array.from(bodyData.matchAll(regex)).map((section) => {
         const [, sectionName, sectionContent] = section;
         return [sectionName, sectionContent];
-    }, []);
+    });
 
     const sections = Object.keys(sectionsData);
     console.log(sectionsData[0][1]);
