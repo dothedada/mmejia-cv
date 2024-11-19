@@ -207,7 +207,7 @@ const parseParagraph = (sectionData: string): string | void => {
 
 type ListState = { items: string[]; indent: number };
 
-const parseUl = (listState: ListState, sectionData: string): void => {
+const parseLi = (listState: ListState, sectionData: string): void => {
     const isInList = !!listState.items.length;
     const liRegex = new RegExp(/^( +)?[-*]\s+(.+)$/);
 
@@ -227,17 +227,46 @@ const parseUl = (listState: ListState, sectionData: string): void => {
     }
 
     const [, indentString, item] = listItem;
-    const indent = indentString?.length ?? 0;
+    const currentIndent = indentString?.length ?? 0;
 
-    if (!isInList || listState.indent < indent) {
+    if (!isInList || listState.indent < currentIndent) {
         listState.items.push('<ul>');
     }
-    if (listState.indent > indent) {
+    if (listState.indent > currentIndent) {
         listState.items.push('</ul>');
     }
 
     listState.items.push(`<li>${item.trim()}</li>`);
-    listState.indent = indent;
+    listState.indent = currentIndent;
+};
+
+const parseUl = (sectionData: string) => {
+    // const ulRegex = new RegExp(
+    //     /(?: *)(?:[-]\s+.+)(?:\n(?!\s*(?:#|\[|\/|\n|\w)).+)*/,
+    //     'g',
+    // );
+
+    // const list = sectionData.match(ulRegex)?.[0] ?? '';
+    // const list = sectionData;
+    //
+    // if (!list) {
+    //     return;
+    // }
+    // console.log(list);
+    //
+    // const listItems = list.split('\n');
+    // listItems.push('');
+    // const listState: ListState = { items: [], indent: 0 };
+    // listItems.forEach((listItem) => parseLi(listState, listItem));
+    //
+    // return listState.items.join('\n');
+
+    const listItems = sectionData.split('\n');
+    listItems.push(''); // Asegura el cierre de la última lista.
+    const listState: ListState = { items: [], indent: 0 };
+    listItems.forEach((listItem) => parseLi(listState, listItem));
+
+    return listState.items.join('\n');
 };
 
 const parseSections = (loadedData: string): Section[] => {
@@ -247,11 +276,38 @@ const parseSections = (loadedData: string): Section[] => {
     // const menuElements = '123';
     const listState: ListState = { items: [], indent: 0 };
 
-    ['- 1', '- 2', '- 3', '  - uno', '  - dos', '- 4', 'a'].forEach((item) => {
-        parseUl(listState, item);
-    });
+    let text = `
+lkasjlaksd
+asd
+asd
+asd*
 
-    console.log(listState.items);
+asdasdad
+
+- Item 1
+  - Subitem 1.1
+    - Subitem 1.1.1
+  - Subitem 1.2
+- Item 2
+- Item 3
+- Item 4
+- Item 5
+
+# Heading 1
+
+- Another list
+- Nested item
+
+[Link](http://example.com)
+`;
+
+    text = text.replace(
+        /(?: *)(?:[-*]\s+.+)(?:\n(?:\s*(?:[-*]\s+.+))+)*/g,
+        (match) => parseUl(match) || match, // Reemplaza con la lista parseada.
+    );
+
+    console.log(text);
+    // console.log(listState.items);
 };
 
 export { parseSections };
