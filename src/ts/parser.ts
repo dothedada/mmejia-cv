@@ -98,7 +98,6 @@ const makeSections = (bodyString: string): SectionData[] => {
     const sections = Array.from(bodyString.matchAll(sectionRegex)).map(
         (section) => {
             const [, sectionName, sectionData] = section;
-            console.log(sectionName);
             return { [sectionName]: sectionData };
         },
     );
@@ -106,11 +105,59 @@ const makeSections = (bodyString: string): SectionData[] => {
     return sections;
 };
 
+const parseHeadings = (sectionData: string): string => {
+    const headingRegex = new RegExp(/^(#{1,6})\s*(.+)$/);
+    const headingArray = sectionData.match(headingRegex);
+    if (!headingArray || headingArray.length < 3) {
+        throw new Error(`Could not parse the heading string ${sectionData}`);
+    }
+    const [, hashes, heading] = headingArray;
+    const hLevel = hashes.length;
+    const headingId = heading
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]/g, '');
+    return `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
+};
+
+const parseDecorator = (sectionData: string): string => {
+    const decoratorRegex = new RegExp(/^\/\/\s(.+)$/);
+    const decoratorArray = sectionData.match(decoratorRegex);
+    if (!decoratorArray || decoratorArray.length < 3) {
+        throw new Error(`Could not parse the decorator string ${sectionData}`);
+    }
+    const decorator = decoratorArray[1];
+    return `<div class="decorator">${decorator}</div>`;
+};
+
+const parseLink = (sectionData: string): string => {
+    const linkRegex = new RegExp(/\[(.+)\]\((.+)\)([DB])?/);
+    const linkArray = sectionData.match(linkRegex);
+    if (!linkArray || linkArray.length < 4) {
+        throw new Error(`Could not parse the link string ${sectionData}`);
+    }
+    const [, linkTxt, link, linkType] = linkArray;
+    if (!linkTxt.trim() || !link.trim()) {
+        throw new Error(`Invalid link or text in: "${sectionData}"`);
+    }
+    const linkSettings =
+        linkType === 'D'
+            ? ` download="${linkTxt}" type="application/pdf"`
+            : linkType === 'B'
+              ? ' target="_blank"'
+              : '';
+    return `<a href="${link}"${linkSettings}>${linkTxt}</a>`;
+};
+
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
 
-    console.log(header, sectionsData);
+    // const menuElements = '123';
+
+    console.log(header);
+    console.log(sectionsData);
 };
 
 export { parseSections };
