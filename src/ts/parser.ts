@@ -162,7 +162,7 @@ const parseLink = (sectionData: string): string | void => {
 const parseImg = (sectionData: string): string | void => {
     const imgRegex = new RegExp(/!\[(.+)\]\((.+)\)/);
     const imgArray = sectionData.match(imgRegex);
-    if (!imgArray) {*
+    if (!imgArray) {
         return;
     }
     if (imgArray.length < 3) {
@@ -191,37 +191,67 @@ const parseDivider = (sectionData: string): string | void => {
 
 const parseParagraph = (sectionData: string): string | void => {
     const text = sectionData.trim();
-    const strongRegex = new RegExp(/\*\*(.+)\*\*/g)
-    const emphasisRegex = new RegExp(/\*(.+)\*/g)
+    const strongRegex = new RegExp(/\*\*([\w\s]+)\*\*/, 'g');
+    const emphasisRegex = new RegExp(/\*(.+)\*/, 'g');
 
     if (!text) {
         return;
     }
 
-    let paragraph = text.replace(/</g, '&lt;').replace(/>/g, '&gt');
-    paragraph.replace(strongRegex, '<strong>$1</strong>')
-    paragraph.replace(emphasisRegex, '<em>$1</em>')
-
-    return paragraph
+    return text
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt')
+        .replace(strongRegex, '<strong>$1</strong>')
+        .replace(emphasisRegex, '<em>$1</em>');
 };
 
-// const parseSection = (loadedData: string): string => {
-//     const textLines = loadedData.split('\n')
-//     if (!textLines.length) {
-//         throw new Error(`Can not parse the section ${loadedData}`)
-//     }
-//
-//     const sectionContent 
-// }
+type ListState = { items: string[]; indent: number };
+
+const parseUl = (listState: ListState, sectionData: string): void => {
+    const isInList = !!listState.items.length;
+    const liRegex = new RegExp(/^( +)?[-*]\s+(.+)$/);
+
+    const listItem = sectionData.match(liRegex);
+
+    if (!listItem && !isInList) {
+        return;
+    }
+
+    if (!listItem) {
+        listState.items.push('</ul>');
+        return;
+    }
+
+    if (listItem.length < 3) {
+        throw new Error(`Could not parse the list item string ${sectionData}`);
+    }
+
+    const [, indentString, item] = listItem;
+    const indent = indentString?.length ?? 0;
+
+    if (!isInList || listState.indent < indent) {
+        listState.items.push('<ul>');
+    }
+    if (listState.indent > indent) {
+        listState.items.push('</ul>');
+    }
+
+    listState.items.push(`<li>${item.trim()}</li>`);
+    listState.indent = indent;
+};
 
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
 
     // const menuElements = '123';
+    const listState: ListState = { items: [], indent: 0 };
 
-    console.log(header);
-    console.log(sectionsData);
+    ['- 1', '- 2', '- 3', '  - uno', '  - dos', '- 4', 'a'].forEach((item) => {
+        parseUl(listState, item);
+    });
+
+    console.log(listState.items);
 };
 
 export { parseSections };
