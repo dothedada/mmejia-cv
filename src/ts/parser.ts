@@ -105,10 +105,13 @@ const makeSections = (bodyString: string): SectionData[] => {
     return sections;
 };
 
-const parseHeadings = (sectionData: string): string => {
+const parseHeadings = (sectionData: string): string | void => {
     const headingRegex = new RegExp(/^(#{1,6})\s*(.+)$/);
     const headingArray = sectionData.match(headingRegex);
-    if (!headingArray || headingArray.length < 3) {
+    if (!headingArray) {
+        return;
+    }
+    if (headingArray.length < 3) {
         throw new Error(`Could not parse the heading string ${sectionData}`);
     }
     const [, hashes, heading] = headingArray;
@@ -121,20 +124,26 @@ const parseHeadings = (sectionData: string): string => {
     return `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
 };
 
-const parseDecorator = (sectionData: string): string => {
+const parseDecorator = (sectionData: string): string | void => {
     const decoratorRegex = new RegExp(/^\/\/\s(.+)$/);
     const decoratorArray = sectionData.match(decoratorRegex);
-    if (!decoratorArray || decoratorArray.length < 3) {
+    if (!decoratorArray) {
+        return;
+    }
+    if (decoratorArray.length < 3) {
         throw new Error(`Could not parse the decorator string ${sectionData}`);
     }
     const decorator = decoratorArray[1];
     return `<div class="decorator">${decorator}</div>`;
 };
 
-const parseLink = (sectionData: string): string => {
+const parseLink = (sectionData: string): string | void => {
     const linkRegex = new RegExp(/\[(.+)\]\((.+)\)([DB])?/);
     const linkArray = sectionData.match(linkRegex);
-    if (!linkArray || linkArray.length < 4) {
+    if (!linkArray) {
+        return;
+    }
+    if (linkArray.length < 4) {
         throw new Error(`Could not parse the link string ${sectionData}`);
     }
     const [, linkTxt, link, linkType] = linkArray;
@@ -149,6 +158,61 @@ const parseLink = (sectionData: string): string => {
               : '';
     return `<a href="${link}"${linkSettings}>${linkTxt}</a>`;
 };
+
+const parseImg = (sectionData: string): string | void => {
+    const imgRegex = new RegExp(/!\[(.+)\]\((.+)\)/);
+    const imgArray = sectionData.match(imgRegex);
+    if (!imgArray) {*
+        return;
+    }
+    if (imgArray.length < 3) {
+        throw new Error(`Could not parse the link string ${sectionData}`);
+    }
+
+    const [, imgAlt, imgSrc] = imgArray;
+
+    const safeAlt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const safeSrc = imgSrc.trim().replace(/"/g, '&quot;');
+
+    if (!safeAlt || !safeSrc) {
+        throw new Error(`Invalid image or alternate text in: "${sectionData}"`);
+    }
+
+    return `<img src="${imgSrc}" alt="${imgAlt}" />`;
+};
+
+const parseDivider = (sectionData: string): string | void => {
+    const dividerRegex = new RegExp(/^---$/);
+    if (!sectionData.match(dividerRegex)) {
+        return;
+    }
+    return '<hr>';
+};
+
+const parseParagraph = (sectionData: string): string | void => {
+    const text = sectionData.trim();
+    const strongRegex = new RegExp(/\*\*(.+)\*\*/g)
+    const emphasisRegex = new RegExp(/\*(.+)\*/g)
+
+    if (!text) {
+        return;
+    }
+
+    let paragraph = text.replace(/</g, '&lt;').replace(/>/g, '&gt');
+    paragraph.replace(strongRegex, '<strong>$1</strong>')
+    paragraph.replace(emphasisRegex, '<em>$1</em>')
+
+    return paragraph
+};
+
+// const parseSection = (loadedData: string): string => {
+//     const textLines = loadedData.split('\n')
+//     if (!textLines.length) {
+//         throw new Error(`Can not parse the section ${loadedData}`)
+//     }
+//
+//     const sectionContent 
+// }
 
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
