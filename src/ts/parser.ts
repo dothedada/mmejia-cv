@@ -265,14 +265,34 @@ const processLine = (line: string): string => {
     return line;
 };
 
-// const makeMenu = (sectionsName: string[])
+const makeMenu = (sections: SectionData): string => {
+    let menu = '<ul class="menu__links">\n';
+    for (const section of sections.keys()) {
+        menu += `<li><a href="${section}">${section}</a></li>\n`;
+    }
+    menu += '</ul>';
+
+    return menu;
+};
+
+const makeDocument = (sections: SectionData): string => {
+    let mainDocument = '<main>\n';
+    for (const [name, section] of sections.entries()) {
+        const sectionParsed = section.split('\n').map(processLine).join('\n');
+        mainDocument += `<div id="${name}">\n${sectionParsed}</div>\n`;
+    }
+    mainDocument += '</main>';
+
+    return mainDocument;
+};
 
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
+    const menu = makeMenu(sectionsData);
+    const mainDocument = makeDocument(sectionsData);
 
-    const sections = sectionsData.keys();
-    console.log(typeof sections);
+    console.log(menu, mainDocument);
 };
 
 export { parseSections };
