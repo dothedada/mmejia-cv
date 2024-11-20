@@ -139,7 +139,7 @@ const parseDecorator = (sectionData: string): string | void => {
 };
 
 const parseLink = (sectionData: string): string | void => {
-    const linkRegex = new RegExp(/\[(.+)\]\((.+)\)([DB])?/);
+    const linkRegex = new RegExp(/^\[(.+)\]\((.+)\)([DB])?/);
     const linkArray = sectionData.match(linkRegex);
     if (!linkArray) {
         return;
@@ -147,17 +147,22 @@ const parseLink = (sectionData: string): string | void => {
     if (linkArray.length < 4) {
         throw new Error(`Could not parse the link string ${sectionData}`);
     }
+
     const [, linkTxt, link, linkType] = linkArray;
     if (!linkTxt.trim() || !link.trim()) {
         throw new Error(`Invalid link or text in: "${sectionData}"`);
     }
-    const linkSettings =
-        linkType === 'D'
-            ? ` download="${linkTxt}" type="application/pdf"`
-            : linkType === 'B'
-              ? ' target="_blank"'
-              : '';
-    return `<a href="${link}"${linkSettings}>${linkTxt}</a>`;
+
+    let linkSettings = '';
+    if (linkType === 'D') {
+        const filenameRegex = new RegExp(/\/((?!.+\/).+\.[\w\d]{3})/);
+        const filename = link.match(filenameRegex)?.[1];
+        linkSettings = ` download="${filename}" type="application/pdf"`;
+    } else if (linkType === 'B') {
+        linkSettings = ' target="_blank"';
+    }
+
+    return `<a href="${link}"${linkSettings}>${linkTxt}</a> `;
 };
 
 const parseImg = (sectionData: string): string | void => {
@@ -225,6 +230,7 @@ const parseParagraph = (sectionData: string): string | void => {
     const text = sectionData.trim();
     const strongRegex = new RegExp(/\*\*([\w\s]+)\*\*/, 'g');
     const emphasisRegex = new RegExp(/\*(.+)\*/, 'g');
+    const linkInParRegex = new RegExp(/\[.+\]\(.+\)[BD]?/, 'g');
 
     if (!text) {
         return;
@@ -234,29 +240,40 @@ const parseParagraph = (sectionData: string): string | void => {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt')
         .replace(strongRegex, '<strong>$1</strong>')
-        .replace(emphasisRegex, '<em>$1</em>');
+        .replace(emphasisRegex, '<em>$1</em>')
+        .replace(linkInParRegex, (match) => parseLink(match) || '');
+};
+
+let listState: ListState = [null];
+const parsers = [
+    parseHeadings,
+    parseDecorator,
+    parseLink,
+    parseImg,
+    parseDivider,
+    (line: string) => parseList(line, listState),
+    parseParagraph,
+];
+
+const processLine = (line) => {
+    for (const parser of parsers) {
+        const parsedLine = parser(line);
+        if (parsedLine) {
+            return parsedLine;
+        }
+    }
+
+    return line;
 };
 
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
-
-    let listState: ListState = [null];
-
-    const textTest = sectionsData[0].about.split('\n').map((line) => {
-        const text =
-            parseHeadings(line) ||
-            parseDecorator(line) ||
-            parseLink(line) ||
-            parseImg(line) ||
-            parseDivider(line) ||
-            parseList(line, listState) ||
-            parseParagraph(line) ||
-            line;
-
-        return text;
-    });
-    console.log(textTest.join('\n'));
+    console.log(sectionsData);
+    const text = sectionsData[2].portfolio
+        .split('\n')
+        .map((line) => processLine(line));
+    console.log(text.join('\n'));
 };
 
 export { parseSections };

@@ -22,7 +22,7 @@ Trabajo en un rango que abarca desde la comunicación visual y la investigación
 
 Mi propósito es apoyar el rol de la comunicación y la tecnología en la construcción de sociedades más inclusivas.
 
-[Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)
+[Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)D
 
 ---(about)
 
@@ -33,6 +33,14 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 // Mis Habilidadess
 
 ### Stack
+
+Idiomas
+
+-   JavaScript / TypeScipt
+-   CSS
+-   HTML
+-   Bash
+-   Lua
 
 ### Mi Perfíl
 
@@ -46,7 +54,7 @@ Es probable que mi próximo paso se dirija hacia TypeScript y React, seguido por
 
 En cada proyecto trato siempre de aprender algo nuevo, sea una un proceso o una técnica, que me ayude a mejorar la experiencia de las personas, sea de forma explícita en la pantalla o implícita en el cóndigo.
 
----+
+---
 
 ## Antes del front-end
 
@@ -74,11 +82,11 @@ Por gusto y responsabilidad necesito comprender a fondo lo que voy a comunicar, 
 
 @@ portfolio
 
----+
+---
 
 // Otros trabajos
 
-Aunque la imagen siempre está presente en mi trabajo, las formas en las que la abordo pueden cambiar. Actualmente mi enfoque se orienta hacia el acceso a la información y la creación de herramientas digitales.
+Aunque la imagen [Portafolio de retratos](https://mmejia.com)siempre está presente en mi trabajo, las formas en las que la abordo pueden cambiar. Actualmente mi enfoque se orienta hacia el acceso a la información y la creación de herramientas digitales.
 
 Este portafolio es una muestra de los trabajos y ejercicios que he llevado a cabo en el desarrollo front-end y de cómo se entrelazan con mi experiencia como comunicador visual.
 
