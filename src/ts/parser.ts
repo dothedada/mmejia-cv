@@ -8,7 +8,7 @@ interface DataWithLink {
 }
 type ParsedData = string | DataWithLink | ParsedData[];
 type Header = Record<string, ParsedData | Record<string, ParsedData>>;
-type SectionData = Record<string, string>;
+type SectionData = Map<string, string>;
 type ListState = (number | null)[];
 
 const allocateHeaderData = (
@@ -92,15 +92,14 @@ const parseHeader = (loadedData: string): [Header, string] => {
     return [header, bodyString];
 };
 
-const makeSections = (bodyString: string): SectionData[] => {
+const makeSections = (bodyString: string): SectionData => {
     const sectionRegex = new RegExp(/---\((.+)\)\n+([\S\s]+?)---\(\1\)/, 'g');
 
-    const sections = Array.from(bodyString.matchAll(sectionRegex)).map(
-        (section) => {
-            const [, sectionName, sectionData] = section;
-            return { [sectionName]: sectionData };
-        },
-    );
+    const sections = new Map();
+    Array.from(bodyString.matchAll(sectionRegex)).forEach((section) => {
+        const [, sectionName, sectionData] = section;
+        sections.set(sectionName, sectionData);
+    });
 
     return sections;
 };
@@ -255,7 +254,7 @@ const parsers = [
     parseParagraph,
 ];
 
-const processLine = (line) => {
+const processLine = (line: string): string => {
     for (const parser of parsers) {
         const parsedLine = parser(line);
         if (parsedLine) {
@@ -266,14 +265,14 @@ const processLine = (line) => {
     return line;
 };
 
+// const makeMenu = (sectionsName: string[])
+
 const parseSections = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
-    console.log(sectionsData);
-    const text = sectionsData[2].portfolio
-        .split('\n')
-        .map((line) => processLine(line));
-    console.log(text.join('\n'));
+
+    const sections = sectionsData.keys();
+    console.log(typeof sections);
 };
 
 export { parseSections };
