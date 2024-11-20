@@ -226,21 +226,23 @@ const parseList = (
 };
 
 const parseParagraph = (sectionData: string): string | void => {
-    const text = sectionData.trim();
     const strongRegex = new RegExp(/\*\*([\w\s]+)\*\*/, 'g');
     const emphasisRegex = new RegExp(/\*(.+)\*/, 'g');
     const linkInParRegex = new RegExp(/\[.+\]\(.+\)[BD]?/, 'g');
+    const text = sectionData.trim();
 
     if (!text) {
         return;
     }
 
-    return text
+    const sanitizedText = text
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt')
         .replace(strongRegex, '<strong>$1</strong>')
         .replace(emphasisRegex, '<em>$1</em>')
         .replace(linkInParRegex, (match) => parseLink(match) || '');
+
+    return `<p>${sanitizedText}</p>`;
 };
 
 let listState: ListState = [null];
@@ -268,31 +270,31 @@ const processLine = (line: string): string => {
 const makeMenu = (sections: SectionData): string => {
     let menu = '<ul class="menu__links">\n';
     for (const section of sections.keys()) {
-        menu += `<li><a href="${section}">${section}</a></li>\n`;
+        menu += `<li><a href="#${section}">${section}</a></li>\n`;
     }
     menu += '</ul>';
 
     return menu;
 };
 
-const makeDocument = (sections: SectionData): string => {
+const makeSection = (sections: SectionData): string => {
     let mainDocument = '<main>\n';
     for (const [name, section] of sections.entries()) {
         const sectionParsed = section.split('\n').map(processLine).join('\n');
-        mainDocument += `<div id="${name}">\n${sectionParsed}</div>\n`;
+        mainDocument += `<section id="${name}">\n${sectionParsed}</section>\n`;
     }
     mainDocument += '</main>';
 
     return mainDocument;
 };
 
-const parseSections = (loadedData: string): Section[] => {
+const makeDocument = (loadedData: string): Section[] => {
     const [header, bodyString] = parseHeader(loadedData);
     const sectionsData = makeSections(bodyString);
     const menu = makeMenu(sectionsData);
-    const mainDocument = makeDocument(sectionsData);
+    const mainDocument = makeSection(sectionsData);
 
-    console.log(menu, mainDocument);
+    console.log(header, menu, mainDocument);
 };
 
-export { parseSections };
+export { makeDocument };

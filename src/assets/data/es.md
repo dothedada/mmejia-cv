@@ -2,14 +2,6 @@
 date: 16/11/2024
 portfolio:
     - base.md
-contact:
-    - Redes Sociales:
-          - LinkedIn | https://www.linkedin.com/in/-mmejia/
-          - GitHub | https://github.com/dothedada
-    - Información de contacto:
-          - info@mmejia.com | mailto:info@mmejia.com
-          - (+57) 304 383 9127 | tel:3043839127
-          - WhatsApp | https://wa.me/573043839127
 ---
 
 ---(about)
@@ -102,6 +94,15 @@ Este portafolio es una muestra de los trabajos y ejercicios que he llevado a cab
 
 // Hablemos
 
-@@ contact
+### Redes Sociales:
+
+[LinkedIn](https://www.linkedin.com/in/-mmejia/)B
+[GitHub](https://github.com/dothedada)B
+
+### Información de contacto:
+
+[info@mmejia.com](mailto:info@mmejia.com)
+[(+57) 304 383 9127](tel:3043839127)
+[WhatsApp](https://wa.me/573043839127)B
 
 ---(contact)

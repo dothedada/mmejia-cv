@@ -2,7 +2,7 @@ import '../css/style.css';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
 import fileParser from './mdParser';
-import { parseSections } from './parser';
+import { makeDocument } from './parser';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
@@ -51,4 +51,4 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 
 const initialData = await dataLoader(getLang());
 // fileParser(initialData);
-parseSections(initialData);
+makeDocument(initialData);
