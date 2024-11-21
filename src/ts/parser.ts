@@ -2,18 +2,36 @@ interface Section {
     name: string;
     data: string;
 }
-type Header = Record<string, string[] | string>;
+type Header = Record<string, string | string[]>;
 type SectionData = Map<string, string>;
-type ListState = number | null;
+type ListState = (number | null)[];
+type LinkElement = Record<'download' | 'type' | 'target' | 'href', string>;
 
 interface ParserState {
     isSubSectionOpen: boolean;
-    listState: number | null;
+    listState: ListState;
 }
 
 const parserState: ParserState = {
     isSubSectionOpen: false,
-    listState: null,
+    listState: [null],
+};
+
+const createElement = (
+    tag: string,
+    content: string,
+    attributes?: Record<string, string>,
+): string => {
+    if (!attributes) {
+        return `<${tag}>${content}</${tag}>`;
+    }
+
+    const attrs = Object.entries(attributes)
+        .filter(([, value]) => value !== undefined)
+        .map(([key, value]) => `${key}="${value}"`)
+        .join(' ');
+
+    return `<${tag} ${attrs}>${content}</${tag}>`;
 };
 
 const parseDocument = (loadedData: string): [Header, string] => {
@@ -135,7 +153,7 @@ const parseDecorator = (sectionData: string): string | void => {
         throw new Error(`Could not parse the decorator string ${sectionData}`);
     }
     const decorator = decoratorArray[1];
-    return `<div class="decorator">${decorator}</div>`;
+    return createElement('div', decorator, { class: 'decorator' });
 };
 
 const parseLink = (sectionData: string): string | void => {
@@ -153,16 +171,18 @@ const parseLink = (sectionData: string): string | void => {
         throw new Error(`Invalid link or text in: "${sectionData}"`);
     }
 
-    let linkSettings = '';
+    const linkSettings: Partial<LinkElement> = {};
+    linkSettings.href = link;
     if (linkType === 'D') {
         const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
-        const filename = link.match(filenameRegex)?.[1];
-        linkSettings = ` download="${filename}" type="application/pdf"`;
+        const filename = link.match(filenameRegex)?.[1] || '';
+        linkSettings.download = filename;
+        linkSettings.type = 'application/pdf';
     } else if (linkType === 'B') {
-        linkSettings = ' target="_blank"';
+        linkSettings.target = '_blank';
     }
 
-    return `<a href="${link}"${linkSettings}>${linkTxt}</a> `;
+    return createElement('a', linkTxt, linkSettings);
 };
 
 const parseImg = (sectionData: string): string | void => {
@@ -207,8 +227,8 @@ const parseList = (
     const listItem = sectionData.match(listRegex);
 
     if (!listItem) {
-        if (listState !== null) {
-            listState = null;
+        if (listState[0] !== null) {
+            listState[0] = null;
             return '</ul>';
         }
         return;
@@ -218,14 +238,14 @@ const parseList = (
     const [, indent, item] = listItem;
     const indentCount = indent?.length || 0;
 
-    if (listState === null || listState < indentCount) {
+    if (listState[0] === null || listState[0] < indentCount) {
         listRender += '<ul>\n';
-    } else if (listState > indentCount) {
+    } else if (listState[0] > indentCount) {
         listRender += '\n</ul>';
     }
-    listState = indentCount;
+    listState[0] = indentCount;
 
-    listRender += `<li>${item.trim()}</li>`;
+    listRender += createElement('li', item.trim());
 
     return listRender;
 };
@@ -249,10 +269,10 @@ const parseParagraph = (sectionData: string): string | void => {
 
     if (!parserState.isSubSectionOpen) {
         parserState.isSubSectionOpen = true;
-        return `\t<div class="subSection">\n\n<p>${sanitizedText}</p>`;
+        return `\t<div class="subSection">\n\n${createElement('p', sanitizedText)}`;
     }
 
-    return `<p>${sanitizedText}</p>`;
+    return createElement('p', sanitizedText);
 };
 
 const parsers = [
