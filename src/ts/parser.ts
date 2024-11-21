@@ -1,13 +1,15 @@
-interface Section {
-    name: string;
-    data: string;
+interface Page {
+    menu: string;
+    document: string;
+    header: Header;
 }
 type Header = Record<string, string | string[]>;
 type SectionData = Map<string, string>;
 type ListState = (number | null)[];
-type LinkElement = Record<'download' | 'type' | 'target' | 'href', string>;
-type ImgElement = Record<'src' | 'alt', string>;
-
+type LinkProps = Record<'download' | 'type' | 'target' | 'href', string>;
+type ImgProps = Record<'src' | 'alt', string>;
+type HeadingProps = Record<'id', string>;
+type SectionProps = Record<'id' | 'class', string>;
 interface ParserState {
     isSubSectionOpen: boolean;
     listState: ListState;
@@ -32,6 +34,23 @@ const createElement = (
     return selfClosing
         ? `<${tag} ${attrs}/> `
         : `<${tag} ${attrs}>${content}</${tag}>`;
+};
+
+const closeSubSection = (): string => {
+    if (parserState.isSubSectionOpen) {
+        parserState.isSubSectionOpen = false;
+        return '</div>\n';
+    }
+    return '';
+};
+
+const openSubsection = (): string => {
+    let prefix = '';
+    if (parserState.isSubSectionOpen) {
+        prefix += closeSubSection();
+    }
+    parserState.isSubSectionOpen = true;
+    return `${prefix}<div class="sub lala">\n`;
 };
 
 const parseDocument = (loadedData: string): [Header, string] => {
@@ -105,7 +124,6 @@ const parseSections = (bodyString: string): SectionData => {
     return sections;
 };
 
-// let parserState.isSubSectionOpen = false;
 const parseHeadings = (sectionData: string): string | void => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
@@ -117,26 +135,22 @@ const parseHeadings = (sectionData: string): string | void => {
     }
     const [, hashes, heading] = headingArray;
     const hLevel = hashes.length;
-    const headingId = heading
+    const headingProps: Partial<HeadingProps> = {};
+    headingProps.id = heading
         .trim()
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^\w-]/g, '');
 
-    let baseHeading = `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
+    let baseHeading = createElement(`h${hLevel}`, heading.trim(), headingProps);
 
     if (parserState.isSubSectionOpen && hLevel > 3) {
-        baseHeading = `\t</div>\n\n${baseHeading}`;
-        parserState.isSubSectionOpen = false;
+        baseHeading = `${closeSubSection()}${baseHeading}`;
         return baseHeading;
     }
 
     if (hLevel === 3) {
-        if (parserState.isSubSectionOpen) {
-            return `\t</div>\n\n\t<div class="subSection">\n\n${baseHeading}`;
-        }
-        parserState.isSubSectionOpen = true;
-        return `\t<div class="subSection">\n\n${baseHeading}`;
+        return `${openSubsection()}${baseHeading}`;
     }
 
     return baseHeading;
@@ -171,18 +185,18 @@ const parseLink = (sectionData: string): string | void => {
         throw new Error(`Invalid link or text in: "${sectionData}"`);
     }
 
-    const linkSettings: Partial<LinkElement> = {};
-    linkSettings.href = link;
+    const linkProps: Partial<LinkProps> = {};
+    linkProps.href = link;
     if (linkType === 'D') {
         const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
         const filename = link.match(filenameRegex)?.[1] || '';
-        linkSettings.download = filename;
-        linkSettings.type = 'application/pdf';
+        linkProps.download = filename;
+        linkProps.type = 'application/pdf';
     } else if (linkType === 'B') {
-        linkSettings.target = '_blank';
+        linkProps.target = '_blank';
     }
 
-    return createElement('a', linkTxt, linkSettings);
+    return createElement('a', linkTxt, linkProps);
 };
 
 const parseImg = (sectionData: string): string | void => {
@@ -197,16 +211,16 @@ const parseImg = (sectionData: string): string | void => {
 
     const [, imgAlt, imgSrc] = imgArray;
 
-    const imgSettings: Partial<ImgElement> = {};
+    const imgProps: Partial<ImgProps> = {};
 
-    imgSettings.alt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    imgSettings.src = imgSrc.trim().replace(/"/g, '&quot;');
+    imgProps.alt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    imgProps.src = imgSrc.trim().replace(/"/g, '&quot;');
 
-    if (!imgSettings.alt || !imgSettings.src) {
+    if (!imgProps.alt || !imgProps.src) {
         throw new Error(`Invalid image or alternate text in: "${sectionData}"`);
     }
 
-    return createElement('img', '', imgSettings, true);
+    return createElement('img', '', imgProps, true);
 };
 
 const parseDivider = (sectionData: string): string | void => {
@@ -215,14 +229,7 @@ const parseDivider = (sectionData: string): string | void => {
         return;
     }
 
-    let htmlString = '';
-    if (parserState.isSubSectionOpen) {
-        parserState.isSubSectionOpen = false;
-        htmlString += '\t</div>\n\n';
-    }
-
-    // return
-    return `${htmlString}${createElement('hr', '', {}, true)}`;
+    return `${closeSubSection()}${createElement('hr', '', {}, true)}`;
 };
 
 const parseList = (
@@ -273,12 +280,12 @@ const parseParagraph = (sectionData: string): string | void => {
         .replace(emphasisRegex, '<em>$1</em>')
         .replace(linkInParRegex, (match) => parseLink(match) || '');
 
+    let prefix = '';
     if (!parserState.isSubSectionOpen) {
-        parserState.isSubSectionOpen = true;
-        return `\t<div class="subSection">\n\n${createElement('p', sanitizedText)}`;
+        prefix += openSubsection();
     }
 
-    return createElement('p', sanitizedText);
+    return `${prefix}${createElement('p', sanitizedText)}`;
 };
 
 const parsers = [
@@ -312,29 +319,33 @@ const makeMenu = (sections: SectionData): string => {
     return menu;
 };
 
-const makeSection = (sections: SectionData, htmlSection: string): string => {
-    let mainDocument = `<${htmlSection}>\n`;
+const makeSection = (sections: SectionData): string => {
+    let mainDocument = '';
+
     for (const [name, section] of sections.entries()) {
         let sectionParsed = section.split('\n').map(processLine).join('\n');
-        if (parserState.isSubSectionOpen) {
-            sectionParsed += '\n\n\t</div>';
-            parserState.isSubSectionOpen = false;
-        }
-        mainDocument += `<section id="${name}">\n${sectionParsed}</section>\n`;
-        console.log(sectionParsed);
+        sectionParsed += closeSubSection();
+        const sectionProps: Partial<SectionProps> = {};
+        sectionProps.id = name;
+        mainDocument += createElement('section', sectionParsed, sectionProps);
     }
-    mainDocument += `</${htmlSection}>`;
 
     return mainDocument;
 };
 
-const makeDocument = (loadedData: string): Section[] | void => {
+const makeDocument = (loadedData: string): Page => {
     const [header, bodyString] = parseDocument(loadedData);
     const sectionsData = parseSections(bodyString);
     const menu = makeMenu(sectionsData);
-    const mainDocument = makeSection(sectionsData, 'main');
+    const mainDocument = createElement('main', makeSection(sectionsData));
 
-    // console.log(header, menu, mainDocument);
+    console.log(header);
+
+    return {
+        menu,
+        document: mainDocument,
+        header,
+    };
 };
 
 export { makeDocument };
