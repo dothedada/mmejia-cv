@@ -2,12 +2,22 @@ interface Section {
     name: string;
     data: string;
 }
-type Header = Record<string, string[]>;
+type Header = Record<string, string[] | string>;
 type SectionData = Map<string, string>;
-type ListState = (number | null)[];
+type ListState = number | null;
+
+interface ParserState {
+    isSubSectionOpen: boolean;
+    listState: number | null;
+}
+
+const parserState: ParserState = {
+    isSubSectionOpen: false,
+    listState: null,
+};
 
 const parseDocument = (loadedData: string): [Header, string] => {
-    const headerRegex = new RegExp(/---([\s\S]*?)---\n([\s\S]*)/);
+    const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
     const dataSplit = loadedData.match(headerRegex);
     if (!dataSplit || dataSplit.length !== 3) {
         throw new Error('Invalid frontmatter format');
@@ -18,7 +28,7 @@ const parseDocument = (loadedData: string): [Header, string] => {
     const header: Header = {};
 
     const headerLines = headerString.split('\n').map((line) => {
-        const regexIndent = new RegExp(/^\s+/);
+        const regexIndent = /^\s+/;
         return {
             string: line.trim(),
             indent: line.match(regexIndent)?.[0].length || 0,
@@ -66,7 +76,7 @@ const parseDocument = (loadedData: string): [Header, string] => {
 };
 
 const parseSections = (bodyString: string): SectionData => {
-    const sectionRegex = new RegExp(/---\((.+)\)\n+([\S\s]+?)---\(\1\)/, 'g');
+    const sectionRegex = /---\((.+)\)\n+([\S\s]+?)---\(\1\)/g;
 
     const sections = new Map();
     Array.from(bodyString.matchAll(sectionRegex)).forEach((section) => {
@@ -77,9 +87,9 @@ const parseSections = (bodyString: string): SectionData => {
     return sections;
 };
 
-let isSubSectionOpen = false;
+// let parserState.isSubSectionOpen = false;
 const parseHeadings = (sectionData: string): string | void => {
-    const headingRegex = new RegExp(/^(#{1,6})\s*(.+)$/);
+    const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
     if (!headingArray) {
         return;
@@ -97,17 +107,17 @@ const parseHeadings = (sectionData: string): string | void => {
 
     let baseHeading = `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
 
-    if (isSubSectionOpen && hLevel > 3) {
+    if (parserState.isSubSectionOpen && hLevel > 3) {
         baseHeading = `\t</div>\n\n${baseHeading}`;
-        isSubSectionOpen = false;
+        parserState.isSubSectionOpen = false;
         return baseHeading;
     }
 
     if (hLevel === 3) {
-        if (isSubSectionOpen) {
+        if (parserState.isSubSectionOpen) {
             return `\t</div>\n\n\t<div class="subSection">\n\n${baseHeading}`;
         }
-        isSubSectionOpen = true;
+        parserState.isSubSectionOpen = true;
         return `\t<div class="subSection">\n\n${baseHeading}`;
     }
 
@@ -115,7 +125,7 @@ const parseHeadings = (sectionData: string): string | void => {
 };
 
 const parseDecorator = (sectionData: string): string | void => {
-    const decoratorRegex = new RegExp(/^\/\/\s(.+)$/);
+    const decoratorRegex = /^\/\/\s(.+)$/;
     const decoratorArray = sectionData.match(decoratorRegex);
     if (!decoratorArray) {
         return;
@@ -129,7 +139,7 @@ const parseDecorator = (sectionData: string): string | void => {
 };
 
 const parseLink = (sectionData: string): string | void => {
-    const linkRegex = new RegExp(/^\[(.+)\]\((.+)\)([DB])?/);
+    const linkRegex = /^\[(.+)\]\((.+)\)([DB])?/;
     const linkArray = sectionData.match(linkRegex);
     if (!linkArray) {
         return;
@@ -145,7 +155,7 @@ const parseLink = (sectionData: string): string | void => {
 
     let linkSettings = '';
     if (linkType === 'D') {
-        const filenameRegex = new RegExp(/\/((?!.+\/).+\.[\w\d]{3})/);
+        const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
         const filename = link.match(filenameRegex)?.[1];
         linkSettings = ` download="${filename}" type="application/pdf"`;
     } else if (linkType === 'B') {
@@ -156,7 +166,7 @@ const parseLink = (sectionData: string): string | void => {
 };
 
 const parseImg = (sectionData: string): string | void => {
-    const imgRegex = new RegExp(/!\[(.+)\]\((.+)\)/);
+    const imgRegex = /!\[(.+)\]\((.+)\)/;
     const imgArray = sectionData.match(imgRegex);
     if (!imgArray) {
         return;
@@ -178,12 +188,12 @@ const parseImg = (sectionData: string): string | void => {
 };
 
 const parseDivider = (sectionData: string): string | void => {
-    const dividerRegex = new RegExp(/^---$/);
+    const dividerRegex = /^---$/;
     if (!sectionData.match(dividerRegex)) {
         return;
     }
-    if (isSubSectionOpen) {
-        isSubSectionOpen = false;
+    if (parserState.isSubSectionOpen) {
+        parserState.isSubSectionOpen = false;
         return '\t</div>\n\n<hr>';
     }
     return '<hr>';
@@ -193,12 +203,12 @@ const parseList = (
     sectionData: string,
     listState: ListState,
 ): string | void => {
-    const listRegex = new RegExp(/^( +)?[-] +(.+)$/);
+    const listRegex = /^( +)?[-] +(.+)$/;
     const listItem = sectionData.match(listRegex);
 
     if (!listItem) {
-        if (listState[0] !== null) {
-            listState[0] = null;
+        if (listState !== null) {
+            listState = null;
             return '</ul>';
         }
         return;
@@ -208,12 +218,12 @@ const parseList = (
     const [, indent, item] = listItem;
     const indentCount = indent?.length || 0;
 
-    if (listState[0] === null || listState[0] < indentCount) {
+    if (listState === null || listState < indentCount) {
         listRender += '<ul>\n';
-    } else if (listState[0] > indentCount) {
+    } else if (listState > indentCount) {
         listRender += '\n</ul>';
     }
-    listState[0] = indentCount;
+    listState = indentCount;
 
     listRender += `<li>${item.trim()}</li>`;
 
@@ -221,9 +231,9 @@ const parseList = (
 };
 
 const parseParagraph = (sectionData: string): string | void => {
-    const strongRegex = new RegExp(/\*\*([\w\s]+)\*\*/, 'g');
-    const emphasisRegex = new RegExp(/\*(.+)\*/, 'g');
-    const linkInParRegex = new RegExp(/\[.+\]\(.+\)[BD]?/, 'g');
+    const strongRegex = /\*\*([\w\s]+)\*\*/g;
+    const emphasisRegex = /\*(.+)\*/g;
+    const linkInParRegex = /\[.+\]\(.+\)[BD]?/g;
     const text = sectionData.trim();
 
     if (!text) {
@@ -237,22 +247,21 @@ const parseParagraph = (sectionData: string): string | void => {
         .replace(emphasisRegex, '<em>$1</em>')
         .replace(linkInParRegex, (match) => parseLink(match) || '');
 
-    if (!isSubSectionOpen) {
-        isSubSectionOpen = true;
+    if (!parserState.isSubSectionOpen) {
+        parserState.isSubSectionOpen = true;
         return `\t<div class="subSection">\n\n<p>${sanitizedText}</p>`;
     }
 
     return `<p>${sanitizedText}</p>`;
 };
 
-let listState: ListState = [null];
 const parsers = [
     parseHeadings,
     parseDecorator,
     parseLink,
     parseImg,
     parseDivider,
-    (line: string) => parseList(line, listState),
+    (line: string) => parseList(line, parserState.listState),
     parseParagraph,
 ];
 
@@ -281,9 +290,9 @@ const makeSection = (sections: SectionData, htmlSection: string): string => {
     let mainDocument = `<${htmlSection}>\n`;
     for (const [name, section] of sections.entries()) {
         let sectionParsed = section.split('\n').map(processLine).join('\n');
-        if (isSubSectionOpen) {
+        if (parserState.isSubSectionOpen) {
             sectionParsed += '\n\n\t</div>';
-            isSubSectionOpen = false;
+            parserState.isSubSectionOpen = false;
         }
         mainDocument += `<section id="${name}">\n${sectionParsed}</section>\n`;
         console.log(sectionParsed);
