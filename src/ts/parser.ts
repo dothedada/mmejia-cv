@@ -2,37 +2,9 @@ interface Section {
     name: string;
     data: string;
 }
-interface DataWithLink {
-    text: string;
-    link: string;
-}
-type ParsedData = string | DataWithLink | ParsedData[];
-type Header = Record<string, ParsedData | Record<string, ParsedData>>;
+type Header = Record<string, string[]>;
 type SectionData = Map<string, string>;
 type ListState = (number | null)[];
-
-const allocateHeaderData = (
-    header: Header,
-    parentNode: string,
-    childNode: string,
-) => {
-    if (childNode) {
-        header[parentNode] = header[parentNode] ?? {};
-        const parentObject = header[parentNode] as Record<string, ParsedData[]>;
-        parentObject[childNode] = parentObject[childNode] ?? [];
-    } else {
-        header[parentNode] = header[parentNode] ?? [];
-    }
-
-    const targetArr = childNode
-        ? (header[parentNode] as Record<string, ParsedData[]>)[childNode]
-        : header[parentNode];
-
-    if (!Array.isArray(targetArr)) {
-        throw new Error(`Expected an Array but found ${typeof targetArr}`);
-    }
-    return targetArr;
-};
 
 const parseHeader = (loadedData: string): [Header, string] => {
     const headerRegex = new RegExp(/---([\s\S]*?)---\n([\s\S]*)/);
@@ -72,27 +44,28 @@ const parseHeader = (loadedData: string): [Header, string] => {
             continue;
         }
 
-        const [rawData, link] = line.split(' | ');
-        const text = rawData.match(/^-\s*(.+)$/);
+        const text = line.match(/^-\s*(.+)$/);
 
         if (!text) {
             throw new Error(`Invalid line format: ${text}`);
         }
 
-        const cleanData: ParsedData = !link
-            ? text[1]
-            : { text: text[1], link: link.trim() };
+        const cleanText = text[1];
 
-        const [parentNode, childNode] = currentLevel;
-        const targetArr = allocateHeaderData(header, parentNode, childNode);
+        header[currentLevel[0]] = header[currentLevel[0]] ?? [];
+        const targetArr = header[currentLevel[0]];
 
-        targetArr.push(cleanData);
+        if (!Array.isArray(targetArr)) {
+            throw new Error(`Expected an Array but found ${typeof targetArr}`);
+        }
+
+        targetArr.push(cleanText);
     }
 
     return [header, bodyString];
 };
 
-const makeSections = (bodyString: string): SectionData => {
+const parseSections = (bodyString: string): SectionData => {
     const sectionRegex = new RegExp(/---\((.+)\)\n+([\S\s]+?)---\(\1\)/, 'g');
 
     const sections = new Map();
@@ -277,22 +250,25 @@ const makeMenu = (sections: SectionData): string => {
     return menu;
 };
 
-const makeSection = (sections: SectionData): string => {
-    let mainDocument = '<main>\n';
+const makeSection = (sections: SectionData, htmlSection: string): string => {
+    let mainDocument = `<${htmlSection}>\n`;
     for (const [name, section] of sections.entries()) {
         const sectionParsed = section.split('\n').map(processLine).join('\n');
         mainDocument += `<section id="${name}">\n${sectionParsed}</section>\n`;
     }
-    mainDocument += '</main>';
+    mainDocument += `</${htmlSection}>`;
 
     return mainDocument;
 };
 
-const makeDocument = (loadedData: string): Section[] => {
+const makeDocument = (loadedData: string): Section[] | void => {
     const [header, bodyString] = parseHeader(loadedData);
-    const sectionsData = makeSections(bodyString);
+    const sectionsData = parseSections(bodyString);
     const menu = makeMenu(sectionsData);
-    const mainDocument = makeSection(sectionsData);
+    const mainDocument = makeSection(sectionsData, 'main');
+
+    console.log(sectionsData.get('portfolio'));
+    console.log(makeSection(sectionsData.get('portfolio'), 'article'));
 
     console.log(header, menu, mainDocument);
 };

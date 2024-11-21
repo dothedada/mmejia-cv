@@ -1,6 +1,6 @@
 ---
-title: titulo del proyecto
 date: 2024-11-10
+title: titulo del proyecto
 shortText: Resumen, o texto corto
 preview: ruta/de/la/imagen.jpg
 url: https://mmejia.com
