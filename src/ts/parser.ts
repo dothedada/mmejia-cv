@@ -6,7 +6,7 @@ type Header = Record<string, string[]>;
 type SectionData = Map<string, string>;
 type ListState = (number | null)[];
 
-const parseHeader = (loadedData: string): [Header, string] => {
+const parseDocument = (loadedData: string): [Header, string] => {
     const headerRegex = new RegExp(/---([\s\S]*?)---\n([\s\S]*)/);
     const dataSplit = loadedData.match(headerRegex);
     if (!dataSplit || dataSplit.length !== 3) {
@@ -77,6 +77,7 @@ const parseSections = (bodyString: string): SectionData => {
     return sections;
 };
 
+let isSubSectionOpen = false;
 const parseHeadings = (sectionData: string): string | void => {
     const headingRegex = new RegExp(/^(#{1,6})\s*(.+)$/);
     const headingArray = sectionData.match(headingRegex);
@@ -93,7 +94,24 @@ const parseHeadings = (sectionData: string): string | void => {
         .toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^\w-]/g, '');
-    return `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
+
+    let baseHeading = `<h${hLevel} id="${headingId}">${heading.trim()}</h${hLevel}>`;
+
+    if (isSubSectionOpen && hLevel > 3) {
+        baseHeading = `\t</div>\n\n${baseHeading}`;
+        isSubSectionOpen = false;
+        return baseHeading;
+    }
+
+    if (hLevel === 3) {
+        if (isSubSectionOpen) {
+            return `\t</div>\n\n\t<div class="subSection">\n\n${baseHeading}`;
+        }
+        isSubSectionOpen = true;
+        return `\t<div class="subSection">\n\n${baseHeading}`;
+    }
+
+    return baseHeading;
 };
 
 const parseDecorator = (sectionData: string): string | void => {
@@ -164,6 +182,10 @@ const parseDivider = (sectionData: string): string | void => {
     if (!sectionData.match(dividerRegex)) {
         return;
     }
+    if (isSubSectionOpen) {
+        isSubSectionOpen = false;
+        return '\t</div>\n\n<hr>';
+    }
     return '<hr>';
 };
 
@@ -215,6 +237,11 @@ const parseParagraph = (sectionData: string): string | void => {
         .replace(emphasisRegex, '<em>$1</em>')
         .replace(linkInParRegex, (match) => parseLink(match) || '');
 
+    if (!isSubSectionOpen) {
+        isSubSectionOpen = true;
+        return `\t<div class="subSection">\n\n<p>${sanitizedText}</p>`;
+    }
+
     return `<p>${sanitizedText}</p>`;
 };
 
@@ -253,8 +280,13 @@ const makeMenu = (sections: SectionData): string => {
 const makeSection = (sections: SectionData, htmlSection: string): string => {
     let mainDocument = `<${htmlSection}>\n`;
     for (const [name, section] of sections.entries()) {
-        const sectionParsed = section.split('\n').map(processLine).join('\n');
+        let sectionParsed = section.split('\n').map(processLine).join('\n');
+        if (isSubSectionOpen) {
+            sectionParsed += '\n\n\t</div>';
+            isSubSectionOpen = false;
+        }
         mainDocument += `<section id="${name}">\n${sectionParsed}</section>\n`;
+        console.log(sectionParsed);
     }
     mainDocument += `</${htmlSection}>`;
 
@@ -262,15 +294,12 @@ const makeSection = (sections: SectionData, htmlSection: string): string => {
 };
 
 const makeDocument = (loadedData: string): Section[] | void => {
-    const [header, bodyString] = parseHeader(loadedData);
+    const [header, bodyString] = parseDocument(loadedData);
     const sectionsData = parseSections(bodyString);
     const menu = makeMenu(sectionsData);
     const mainDocument = makeSection(sectionsData, 'main');
 
-    console.log(sectionsData.get('portfolio'));
-    console.log(makeSection(sectionsData.get('portfolio'), 'article'));
-
-    console.log(header, menu, mainDocument);
+    // console.log(header, menu, mainDocument);
 };
 
 export { makeDocument };
