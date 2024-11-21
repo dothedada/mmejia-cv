@@ -6,6 +6,7 @@ type Header = Record<string, string | string[]>;
 type SectionData = Map<string, string>;
 type ListState = (number | null)[];
 type LinkElement = Record<'download' | 'type' | 'target' | 'href', string>;
+type ImgElement = Record<'src' | 'alt', string>;
 
 interface ParserState {
     isSubSectionOpen: boolean;
@@ -20,18 +21,17 @@ const parserState: ParserState = {
 const createElement = (
     tag: string,
     content: string,
-    attributes?: Record<string, string>,
+    attributes: Record<string, string> = {},
+    selfClosing = false,
 ): string => {
-    if (!attributes) {
-        return `<${tag}>${content}</${tag}>`;
-    }
-
     const attrs = Object.entries(attributes)
         .filter(([, value]) => value !== undefined)
         .map(([key, value]) => `${key}="${value}"`)
         .join(' ');
 
-    return `<${tag} ${attrs}>${content}</${tag}>`;
+    return selfClosing
+        ? `<${tag} ${attrs}/> `
+        : `<${tag} ${attrs}>${content}</${tag}>`;
 };
 
 const parseDocument = (loadedData: string): [Header, string] => {
@@ -197,14 +197,16 @@ const parseImg = (sectionData: string): string | void => {
 
     const [, imgAlt, imgSrc] = imgArray;
 
-    const safeAlt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const safeSrc = imgSrc.trim().replace(/"/g, '&quot;');
+    const imgSettings: Partial<ImgElement> = {};
 
-    if (!safeAlt || !safeSrc) {
+    imgSettings.alt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    imgSettings.src = imgSrc.trim().replace(/"/g, '&quot;');
+
+    if (!imgSettings.alt || !imgSettings.src) {
         throw new Error(`Invalid image or alternate text in: "${sectionData}"`);
     }
 
-    return `<img src="${imgSrc}" alt="${imgAlt}" />`;
+    return createElement('img', '', imgSettings, true);
 };
 
 const parseDivider = (sectionData: string): string | void => {
@@ -212,11 +214,15 @@ const parseDivider = (sectionData: string): string | void => {
     if (!sectionData.match(dividerRegex)) {
         return;
     }
+
+    let htmlString = '';
     if (parserState.isSubSectionOpen) {
         parserState.isSubSectionOpen = false;
-        return '\t</div>\n\n<hr>';
+        htmlString += '\t</div>\n\n';
     }
-    return '<hr>';
+
+    // return
+    return `${htmlString}${createElement('hr', '', {}, true)}`;
 };
 
 const parseList = (

@@ -26,6 +26,7 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 
 ### Stack
 
+![texto alternativo](https://url.dela.img)
 Idiomas
 
 -   JavaScript / TypeScipt
@@ -79,6 +80,7 @@ Por gusto y responsabilidad necesito comprender a fondo lo que voy a comunicar, 
 // Otros trabajos
 
 Aunque la imagen [Portafolio de retratos](https://mmejia.com)siempre está presente en mi trabajo, las formas en las que la abordo pueden cambiar. Actualmente mi enfoque se orienta hacia el acceso a la información y la creación de herramientas digitales.
+
 Este portafolio es una muestra de los trabajos y ejercicios que he llevado a cabo en el desarrollo front-end y de cómo se entrelazan con mi experiencia como comunicador visual.
 
 [Portafolio de retratos](https://mmejia.com)
