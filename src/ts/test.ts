@@ -128,7 +128,7 @@ export class Renderer {
     }
 
     renderMarkdown(markdown: string): string {
-        const [header, body] = this.parseDocument(markdown);
+        const [header, body] = this.getDocumentStructure(markdown);
         const menuItems = this.state.showSections;
 
         const lines = body.split('\n');
@@ -145,11 +145,10 @@ export class Renderer {
             }
         }
 
-        console.log(menuItems);
         return html;
     }
 
-    private parseDocument(markdown: string): [Header, string] {
+    private getDocumentStructure(markdown: string): [Header, string] {
         const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
         const dataSplit = markdown.match(headerRegex);
         if (!dataSplit || dataSplit.length !== 3) {
@@ -227,12 +226,22 @@ export class Renderer {
             li: (t) => this.listRenderer(t as ListToken),
         };
 
-        return renderers[token.label](token) || '';
+        return renderers[token.label](token) || '\n';
+    }
+
+    private closeList(): string {
+        if (this.state.currentListLevel === null) {
+            return ``;
+        }
+        this.state.setListLevel(null);
+        return '</ul>\n';
     }
 
     private closeSubsection(): string {
+        let prefix = '';
         this.state.setSubsection(false);
-        return '\t</div>\n\n';
+        prefix += this.closeList();
+        return `${prefix}\t</div>\n`;
     }
 
     private openSubsection(): string {
@@ -246,10 +255,9 @@ export class Renderer {
 
     private sectionRenderer(token: SectionToken): string {
         if (this.state.currentSection === token.name) {
-            const prefix = this.state.inSubsection
-                ? this.closeSubsection()
-                : '';
-            return `${prefix}</section>\n`;
+            let prefix = '';
+            prefix += this.state.inSubsection ? this.closeSubsection() : '';
+            return `${prefix}</section>\n\n`;
         } else {
             this.state.setSection(token.name);
             return `<section id="${token.name}>\n`;
@@ -262,12 +270,15 @@ export class Renderer {
             prefix = this.closeSubsection();
         } else if (/^h3$/.test(token.label)) {
             prefix = this.openSubsection();
+        } else {
+            prefix = this.closeList();
         }
         return `${prefix}<${token.label} id="${token.id}">${token.content}</${token.label}>\n`;
     }
 
     private linkRenderer(token: LinkToken): string {
         let attr = '';
+
         if (token.target) {
             attr = ` target="_blank"`;
         } else if (token.type) {
@@ -286,7 +297,8 @@ export class Renderer {
     }
 
     private imgRenderer(token: ImgToken): string {
-        return `<img alt="${token.alt}" src="${token.src}">\n`;
+        const prefix = this.closeList();
+        return `${prefix}<img alt="${token.alt}" src="${token.src}">\n`;
     }
 
     private divRenderer(token: DivToken): string {
@@ -302,6 +314,7 @@ export class Renderer {
 
     private paragraphRenderer(token: ParagraphToken): string {
         let prefix = '';
+        prefix += this.closeList();
         if (!this.state.inSubsection) {
             prefix = this.openSubsection();
         }
@@ -309,9 +322,18 @@ export class Renderer {
     }
 
     private listRenderer(token: ListToken): string {
-        // NOTE: apertura ul
-        // NOTE: cierre sub ul
-        return `<li>${token.content}</li>\n`;
+        let prefix = '';
+        if (
+            this.state.currentListLevel === null ||
+            token.indent > this.state.currentListLevel
+        ) {
+            prefix = '<ul>\n';
+        } else if (token.indent < this.state.currentListLevel) {
+            prefix = '\n</ul>\n';
+        }
+        this.state.setListLevel(token.indent);
+
+        return `${prefix}<li>${token.content}</li>\n`;
     }
 }
 
