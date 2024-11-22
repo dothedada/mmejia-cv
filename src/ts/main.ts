@@ -1,8 +1,7 @@
 import '../css/style.css';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
-import { makeDocument } from './parser';
-import { Renderer } from './test';
+import { Renderer } from './render';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
@@ -50,7 +49,5 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 // data
 
 const initialData = await dataLoader(getLang());
-// fileParser(initialData);
-makeDocument(initialData);
 const renderDom = new Renderer();
-console.log(renderDom.renderMarkdown(initialData));
+console.log(renderDom.renderMarkdown(initialData).html);

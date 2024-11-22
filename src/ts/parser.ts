@@ -1,351 +1,218 @@
-interface Page {
-    menu: string;
-    document: string;
-    header: Header;
+import { Parser, ParsedToken, HeadingLevel } from './types';
+class ParserState {
+    private isSubsectionOpen: boolean;
+    private listLevel: number | null;
+    private isHeader: boolean;
+    private sections: string[];
+
+    constructor() {
+        this.isSubsectionOpen = false;
+        this.listLevel = null;
+        this.isHeader = false;
+        this.sections = [];
+    }
+
+    get inHeader(): boolean {
+        return this.isHeader;
+    }
+
+    setHeader(inHeader: boolean) {
+        this.isHeader = inHeader;
+    }
+
+    get currentSection(): string {
+        return this.sections[this.sections.length - 1];
+    }
+
+    get showSections(): string[] {
+        return this.sections;
+    }
+
+    setSection(section: string) {
+        this.sections.push(section);
+    }
+
+    get inSubsection(): boolean {
+        return this.isSubsectionOpen;
+    }
+
+    setSubsection(setOpen: boolean) {
+        this.isSubsectionOpen = setOpen;
+    }
+
+    get currentListLevel(): number | null {
+        return this.listLevel;
+    }
+
+    setListLevel(indentation: number | null) {
+        this.listLevel = indentation;
+    }
 }
-type Header = Record<string, string | string[]>;
-type SectionData = Map<string, string>;
-type ListState = (number | null)[];
-type LinkProps = Record<'download' | 'type' | 'target' | 'href', string>;
-type ImgProps = Record<'src' | 'alt', string>;
-type HeadingProps = Record<'id', string>;
-type SectionProps = Record<'id' | 'class', string>;
-interface ParserState {
-    isSubSectionOpen: boolean;
-    listState: ListState;
-}
 
-const parserState: ParserState = {
-    isSubSectionOpen: false,
-    listState: [null],
-};
+const sectionParser: Parser = (sectionData) => {
+    const sectionRegex = /---\((.+)\)/;
+    const section = sectionData.match(sectionRegex);
 
-const createElement = (
-    tag: string,
-    content: string,
-    attributes: Record<string, string> = {},
-    selfClosing = false,
-): string => {
-    const attrs = Object.entries(attributes)
-        .filter(([, value]) => value !== undefined)
-        .map(([key, value]) => `${key}="${value}"`)
-        .join(' ');
-
-    return selfClosing
-        ? `<${tag} ${attrs}/> `
-        : `<${tag} ${attrs}>${content}</${tag}>`;
-};
-
-const closeSubSection = (): string => {
-    if (parserState.isSubSectionOpen) {
-        parserState.isSubSectionOpen = false;
-        return '</div>\n';
-    }
-    return '';
-};
-
-const openSubsection = (): string => {
-    let prefix = '';
-    if (parserState.isSubSectionOpen) {
-        prefix += closeSubSection();
-    }
-    parserState.isSubSectionOpen = true;
-    return `${prefix}<div class="sub lala">\n`;
-};
-
-const parseDocument = (loadedData: string): [Header, string] => {
-    const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
-    const dataSplit = loadedData.match(headerRegex);
-    if (!dataSplit || dataSplit.length !== 3) {
-        throw new Error('Invalid frontmatter format');
+    if (!section) {
+        return;
     }
 
-    const [, headerString, bodyString] = dataSplit;
-    const currentLevel: string[] = [];
-    const header: Header = {};
-
-    const headerLines = headerString.split('\n').map((line) => {
-        const regexIndent = /^\s+/;
-        return {
-            string: line.trim(),
-            indent: line.match(regexIndent)?.[0].length || 0,
-        };
-    });
-
-    for (const { string: line, indent } of headerLines) {
-        if (!line) {
-            continue;
-        }
-
-        if (line.includes(': ')) {
-            const [key, ...value] = line.split(': ');
-            header[key] = value.join(': ').trim();
-            continue;
-        }
-
-        if (line.endsWith(':')) {
-            const hasParent = indent > 0;
-            const level = hasParent ? line.slice(2, -1) : line.slice(0, -1);
-            currentLevel.length = hasParent ? 1 : 0;
-            currentLevel.push(level);
-            continue;
-        }
-
-        const text = line.match(/^-\s*(.+)$/);
-
-        if (!text) {
-            throw new Error(`Invalid line format: ${text}`);
-        }
-
-        const cleanText = text[1];
-
-        header[currentLevel[0]] = header[currentLevel[0]] ?? [];
-        const targetArr = header[currentLevel[0]];
-
-        if (!Array.isArray(targetArr)) {
-            throw new Error(`Expected an Array but found ${typeof targetArr}`);
-        }
-
-        targetArr.push(cleanText);
-    }
-
-    return [header, bodyString];
+    return { label: 'section', name: section[1] };
 };
-
-const parseSections = (bodyString: string): SectionData => {
-    const sectionRegex = /---\((.+)\)\n+([\S\s]+?)---\(\1\)/g;
-
-    const sections = new Map();
-    Array.from(bodyString.matchAll(sectionRegex)).forEach((section) => {
-        const [, sectionName, sectionData] = section;
-        sections.set(sectionName, sectionData);
-    });
-
-    return sections;
-};
-
-const parseHeadings = (sectionData: string): string | void => {
+const headingsParser: Parser = (sectionData) => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
     if (!headingArray) {
         return;
     }
-    if (headingArray.length < 3) {
-        throw new Error(`Could not parse the heading string ${sectionData}`);
-    }
+
     const [, hashes, heading] = headingArray;
-    const hLevel = hashes.length;
-    const headingProps: Partial<HeadingProps> = {};
-    headingProps.id = heading
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^\w-]/g, '');
 
-    let baseHeading = createElement(`h${hLevel}`, heading.trim(), headingProps);
-
-    if (parserState.isSubSectionOpen && hLevel > 3) {
-        baseHeading = `${closeSubSection()}${baseHeading}`;
-        return baseHeading;
+    if (hashes.length < 1 || hashes.length > 6) {
+        throw new Error(`Invalid Headin level: ${hashes.length}`);
     }
 
-    if (hLevel === 3) {
-        return `${openSubsection()}${baseHeading}`;
-    }
-
-    return baseHeading;
+    return {
+        label: `h${hashes.length}` as HeadingLevel,
+        content: heading,
+        id: heading
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]/g, ''),
+    };
 };
 
-const parseDecorator = (sectionData: string): string | void => {
+const decoratorParser: Parser = (sectionData) => {
     const decoratorRegex = /^\/\/\s(.+)$/;
     const decoratorArray = sectionData.match(decoratorRegex);
     if (!decoratorArray) {
         return;
     }
-    if (decoratorArray.length < 2) {
-        console.log(decoratorArray);
-        throw new Error(`Could not parse the decorator string ${sectionData}`);
-    }
-    const decorator = decoratorArray[1];
-    return createElement('div', decorator, { class: 'decorator' });
+
+    return {
+        label: 'div',
+        class: 'decorator',
+        content: decoratorArray[1],
+    };
 };
 
-const parseLink = (sectionData: string): string | void => {
+const linkParser: Parser = (sectionData) => {
     const linkRegex = /^\[(.+)\]\((.+)\)([DB])?/;
+    const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
     const linkArray = sectionData.match(linkRegex);
     if (!linkArray) {
         return;
     }
-    if (linkArray.length < 4) {
-        throw new Error(`Could not parse the link string ${sectionData}`);
-    }
 
     const [, linkTxt, link, linkType] = linkArray;
-    if (!linkTxt.trim() || !link.trim()) {
-        throw new Error(`Invalid link or text in: "${sectionData}"`);
+    if (!link.trim()) {
+        throw new Error(`Invalid link in: "${sectionData}"`);
     }
 
-    const linkProps: Partial<LinkProps> = {};
-    linkProps.href = link;
+    const linkProps: ParsedToken = {
+        label: 'a',
+        href: link.trim(),
+        content: linkTxt.trim() || link.trim(),
+    };
     if (linkType === 'D') {
-        const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
-        const filename = link.match(filenameRegex)?.[1] || '';
+        const filename = link.match(filenameRegex)?.[1] || 'myDownload.pdf';
         linkProps.download = filename;
         linkProps.type = 'application/pdf';
     } else if (linkType === 'B') {
         linkProps.target = '_blank';
     }
 
-    return createElement('a', linkTxt, linkProps);
+    return linkProps;
 };
 
-const parseImg = (sectionData: string): string | void => {
+const imgParser: Parser = (sectionData) => {
     const imgRegex = /!\[(.+)\]\((.+)\)/;
     const imgArray = sectionData.match(imgRegex);
     if (!imgArray) {
         return;
     }
-    if (imgArray.length < 3) {
-        throw new Error(`Could not parse the link string ${sectionData}`);
-    }
 
     const [, imgAlt, imgSrc] = imgArray;
-
-    const imgProps: Partial<ImgProps> = {};
-
-    imgProps.alt = imgAlt.trim().replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    imgProps.src = imgSrc.trim().replace(/"/g, '&quot;');
-
-    if (!imgProps.alt || !imgProps.src) {
+    if (!imgAlt.trim() || !imgSrc.trim()) {
         throw new Error(`Invalid image or alternate text in: "${sectionData}"`);
     }
 
-    return createElement('img', '', imgProps, true);
+    return {
+        label: 'img',
+        alt: imgAlt.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        src: imgSrc.replace(/"/g, '&quot;'),
+    };
 };
 
-const parseDivider = (sectionData: string): string | void => {
+const hrParser: Parser = (sectionData) => {
     const dividerRegex = /^---$/;
     if (!sectionData.match(dividerRegex)) {
         return;
     }
 
-    return `${closeSubSection()}${createElement('hr', '', {}, true)}`;
+    return { label: 'hr' };
 };
 
-const parseList = (
-    sectionData: string,
-    listState: ListState,
-): string | void => {
+const listParser: Parser = (sectionData) => {
     const listRegex = /^( +)?[-] +(.+)$/;
     const listItem = sectionData.match(listRegex);
 
     if (!listItem) {
-        if (listState[0] !== null) {
-            listState[0] = null;
-            return '</ul>';
-        }
         return;
     }
 
-    let listRender = '';
     const [, indent, item] = listItem;
-    const indentCount = indent?.length || 0;
+    const indentCount = Math.floor(indent?.length / 4) || 0;
 
-    if (listState[0] === null || listState[0] < indentCount) {
-        listRender += '<ul>\n';
-    } else if (listState[0] > indentCount) {
-        listRender += '\n</ul>';
-    }
-    listState[0] = indentCount;
-
-    listRender += createElement('li', item.trim());
-
-    return listRender;
+    return {
+        label: 'li',
+        content: item,
+        indent: indentCount,
+    };
 };
 
-const parseParagraph = (sectionData: string): string | void => {
+const paragraphParser: Parser = (sectionData) => {
     const strongRegex = /\*\*([\w\s]+)\*\*/g;
     const emphasisRegex = /\*(.+)\*/g;
-    const linkInParRegex = /\[.+\]\(.+\)[BD]?/g;
+    const linkInParRegex = /\[(.+)\]\((.+)\)([BD])?/g;
     const text = sectionData.trim();
 
     if (!text) {
         return;
     }
 
-    const sanitizedText = text
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt')
-        .replace(strongRegex, '<strong>$1</strong>')
-        .replace(emphasisRegex, '<em>$1</em>')
-        .replace(linkInParRegex, (match) => parseLink(match) || '');
-
-    let prefix = '';
-    if (!parserState.isSubSectionOpen) {
-        prefix += openSubsection();
-    }
-
-    return `${prefix}${createElement('p', sanitizedText)}`;
-};
-
-const parsers = [
-    parseHeadings,
-    parseDecorator,
-    parseLink,
-    parseImg,
-    parseDivider,
-    (line: string) => parseList(line, parserState.listState),
-    parseParagraph,
-];
-
-const processLine = (line: string): string => {
-    for (const parser of parsers) {
-        const parsedLine = parser(line);
-        if (parsedLine) {
-            return parsedLine;
+    const replaceLink = (text: string, href: string, type?: string): string => {
+        let attr = '';
+        if (type === 'B') {
+            attr = ' target="_blank"';
+        } else if (type === 'D') {
+            const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
+            const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
+            attr = ` download="${filename}" type="application/pdf"`;
         }
-    }
-
-    return line;
-};
-
-const makeMenu = (sections: SectionData): string => {
-    let menu = '<ul class="menu__links">\n';
-    for (const section of sections.keys()) {
-        menu += `<li><a href="#${section}">${section}</a></li>\n`;
-    }
-    menu += '</ul>';
-
-    return menu;
-};
-
-const makeSection = (sections: SectionData): string => {
-    let mainDocument = '';
-
-    for (const [name, section] of sections.entries()) {
-        let sectionParsed = section.split('\n').map(processLine).join('\n');
-        sectionParsed += closeSubSection();
-        const sectionProps: Partial<SectionProps> = {};
-        sectionProps.id = name;
-        mainDocument += createElement('section', sectionParsed, sectionProps);
-    }
-
-    return mainDocument;
-};
-
-const makeDocument = (loadedData: string): Page => {
-    const [header, bodyString] = parseDocument(loadedData);
-    const sectionsData = parseSections(bodyString);
-    const menu = makeMenu(sectionsData);
-    const mainDocument = createElement('main', makeSection(sectionsData));
-
-    console.log(header);
+        return `<a href="${href.trim()}"${attr}>${text.trim() || href.trim()}</a>`;
+    };
 
     return {
-        menu,
-        document: mainDocument,
-        header,
+        label: 'p',
+        content: text
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt')
+            .replace(strongRegex, '<strong>$1</strong>')
+            .replace(emphasisRegex, '<em>$1</em>')
+            .replace(linkInParRegex, replaceLink),
     };
 };
 
-export { makeDocument };
+export {
+    ParserState,
+    sectionParser,
+    headingsParser,
+    hrParser,
+    listParser,
+    linkParser,
+    imgParser,
+    decoratorParser,
+    paragraphParser,
+};
