@@ -61,6 +61,42 @@ type Parser = (
 ) => ParsedToken | void;
 type Render = (data: ParsedToken) => string;
 
+class ParserState {
+    private isSubsectionOpen: boolean;
+    private listLevel: number | null;
+    private tokens: ParsedToken[];
+
+    constructor() {
+        this.isSubsectionOpen = false;
+        this.listLevel = null;
+        this.tokens = [];
+    }
+
+    set addToken(token: ParsedToken) {
+        this.tokens.push(token);
+    }
+
+    get parsedTokens(): ParsedToken[] {
+        return this.tokens;
+    }
+
+    set setSubsection(setOpen: boolean) {
+        this.isSubsectionOpen = setOpen;
+    }
+
+    get inSubsection(): boolean {
+        return this.isSubsectionOpen;
+    }
+
+    get currentListLevel(): number | null {
+        return this.listLevel;
+    }
+
+    set setListLevel(indentation: number | null) {
+        this.listLevel = indentation;
+    }
+}
+
 const headingsParser: Parser = (sectionData) => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
