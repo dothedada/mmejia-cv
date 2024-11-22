@@ -10,9 +10,9 @@ type ParsedToken =
     | HeadingToken
     | LinkToken
     | ImgToken
-    | TextToken
-    | LiToken
-    | HrToken;
+    | ParagraphToken
+    | ListToken
+    | HorizontalRuleToken;
 
 interface WrapperToken {
     label: 'section' | 'div';
@@ -39,26 +39,19 @@ interface ImgToken {
     src: string;
     alt: string;
 }
-interface TextToken {
+interface ParagraphToken {
     label: 'p';
     content: string;
 }
-interface LiToken {
+interface ListToken {
     label: 'li';
     content: string;
     indent: number;
 }
-interface HrToken {
+interface HorizontalRuleToken {
     label: 'hr';
 }
-interface ParsingContext {
-    listIndent: (number | null)[];
-    isSubsectionOpen: boolean;
-}
-type Parser = (
-    sectionData: string,
-    context?: ParsingContext,
-) => ParsedToken | void;
+type Parser = (sectionData: string) => ParsedToken | void;
 type Render = (data: ParsedToken) => string;
 
 class ParserState {
@@ -97,14 +90,113 @@ class ParserState {
     }
 }
 
+class Renderer {
+    private parsers: Parser[];
+    private state: ParserState;
+
+    constructor() {
+        this.state = new ParserState();
+        this.parsers = [
+            headingsParser,
+            hrParser,
+            listParser,
+            linkParser,
+            imgParser,
+            decoratorParser,
+            paragraphParser,
+        ];
+    }
+
+    private renderToken(token: ParsedToken): string {
+        const renderers: Record<string, (t: ParsedToken) => string> = {
+            h1: (t) => this.headingRenderer(t as HeadingToken),
+            h2: (t) => this.headingRenderer(t as HeadingToken),
+            h3: (t) => this.headingRenderer(t as HeadingToken),
+            h4: (t) => this.headingRenderer(t as HeadingToken),
+            h5: (t) => this.headingRenderer(t as HeadingToken),
+            h6: (t) => this.headingRenderer(t as HeadingToken),
+            a: (t) => this.linkRenderer(t as LinkToken),
+            hr: () => this.ruleRenderer(),
+            img: (t) => this.imgRenderer(t as ImgToken),
+            div: (t) => this.wrapperRenderer(t as WrapperToken),
+            section: (t) => this.wrapperRenderer(t as WrapperToken),
+            p: (t) => this.paragraphRenderer(t as ParagraphToken),
+            li: (t) => this.listRenderer(t as ListToken),
+        };
+
+        return renderers[token.label](token) || '';
+    }
+
+    private closeSubsection(): string {
+        if (this.state.inSubsection) {
+            this.state.setSubsection(false);
+            return '\t</div>\n\n';
+        }
+        return '';
+    }
+
+    private openSubsection(): string {
+        let prefix = '';
+        if (this.state.inSubsection) {
+            prefix += this.closeSubsection();
+        }
+        this.state.setSubsection(true);
+        return `${prefix}\n\n\t<div class="sub lala">\n`;
+    }
+
+    private headingRenderer(token: HeadingToken): string {
+        // NOTE: cierre de subsección
+        // NOTE: apertura subseccion
+        return `<${token.label} id="${token.id}">${token.content}</${token.label}>`;
+    }
+
+    private linkRenderer(token: LinkToken): string {
+        let attr = '';
+        if (token.target) {
+            attr = ` target="_blank"`;
+        } else if (token.type) {
+            attr = ` download="${token.download} type="application/pdf"`;
+        }
+        return `<a href="${token.href}"${attr}>${token.content}</a>`;
+    }
+
+    private ruleRenderer(): string {
+        // NOTE: cierre de subsección
+        return '<hr>';
+    }
+
+    private imgRenderer(token: ImgToken): string {
+        return `<img alt="${token.alt}" src="${token.src}">`;
+    }
+
+    private wrapperRenderer(token: WrapperToken): string {
+        let attr = '';
+        if (token.id) {
+            attr += ` id="${token.id}"`;
+        }
+        if (token.class) {
+            attr += ` class="${token.class}"`;
+        }
+        return `<${token.label}${attr}>${token.content}</${token.label}>`;
+    }
+
+    private paragraphRenderer(token: ParagraphToken): string {
+        // NOTE: apertura subseccion
+        return `<p>${token.content}</p>`;
+    }
+
+    private listRenderer(token: ListToken): string {
+        // NOTE: apertura ul
+        // NOTE: cierre sub ul
+        return `<li>${token.label}</li>`;
+    }
+}
+
 const headingsParser: Parser = (sectionData) => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
     if (!headingArray) {
         return;
-    }
-    if (headingArray.length < 3) {
-        throw new Error(`Could not parse the heading string ${sectionData}`);
     }
 
     const [, hashes, heading] = headingArray;
@@ -130,9 +222,6 @@ const decoratorParser: Parser = (sectionData) => {
     if (!decoratorArray) {
         return;
     }
-    if (decoratorArray.length < 2) {
-        throw new Error(`Could not parse the decorator string ${sectionData}`);
-    }
 
     return {
         label: 'div',
@@ -148,19 +237,16 @@ const linkParser: Parser = (sectionData) => {
     if (!linkArray) {
         return;
     }
-    if (linkArray.length < 4) {
-        throw new Error(`Could not parse the link string ${sectionData}`);
-    }
 
     const [, linkTxt, link, linkType] = linkArray;
-    if (!linkTxt.trim() || !link.trim()) {
-        throw new Error(`Invalid link or text in: "${sectionData}"`);
+    if (!link.trim()) {
+        throw new Error(`Invalid link in: "${sectionData}"`);
     }
 
-    const linkProps: Partial<ParsedToken> = {
+    const linkProps: ParsedToken = {
         label: 'a',
-        href: link,
-        content: linkTxt,
+        href: link.trim(),
+        content: linkTxt.trim() || link.trim(),
     };
     if (linkType === 'D') {
         const filename = link.match(filenameRegex)?.[1] || 'myDownload.pdf';
@@ -170,7 +256,7 @@ const linkParser: Parser = (sectionData) => {
         linkProps.target = '_blank';
     }
 
-    return linkProps as ParsedToken;
+    return linkProps;
 };
 
 const imgParser: Parser = (sectionData) => {
@@ -178,9 +264,6 @@ const imgParser: Parser = (sectionData) => {
     const imgArray = sectionData.match(imgRegex);
     if (!imgArray) {
         return;
-    }
-    if (imgArray.length < 3) {
-        throw new Error(`Could not parse the link string ${sectionData}`);
     }
 
     const [, imgAlt, imgSrc] = imgArray;
@@ -201,7 +284,7 @@ const hrParser: Parser = (sectionData) => {
         return;
     }
 
-    return { type: 'hr' };
+    return { label: 'hr' };
 };
 
 const listParser: Parser = (sectionData) => {
@@ -241,7 +324,7 @@ const paragraphParser: Parser = (sectionData) => {
             const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
             attr = ` download="${filename}" type="application/pdf"`;
         }
-        return `<a href="${href}"${attr}>${text}</a>`;
+        return `<a href="${href.trim()}"${attr}>${text.trim() || href.trim()}</a>`;
     };
 
     return {
@@ -255,19 +338,19 @@ const paragraphParser: Parser = (sectionData) => {
     };
 };
 
-const createElement: Render = (data) => {
-    const { label, ...rest } = data;
-
-    let attr = '';
-    for (const [key, value] of Object.entries(rest)) {
-        if (key === 'indent' || key === 'content') continue;
-        attr += ` ${key}="${value}"`;
-    }
-    if (!('content' in rest)) {
-        return `<${label}${attr}/>`;
-    }
-
-    const { content } = rest;
-
-    return `<${label}${attr}>${content}</${label}>`;
-};
+// const createElement: Render = (data) => {
+//     const { label, ...rest } = data;
+//
+//     let attr = '';
+//     for (const [key, value] of Object.entries(rest)) {
+//         if (key === 'indent' || key === 'content') continue;
+//         attr += ` ${key}="${value}"`;
+//     }
+//     if (!('content' in rest)) {
+//         return `<${label}${attr}/>`;
+//     }
+//
+//     const { content } = rest;
+//
+//     return `<${label}${attr}>${content}</${label}>`;
+// };
