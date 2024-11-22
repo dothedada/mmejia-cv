@@ -233,8 +233,13 @@ export class Renderer {
         if (this.state.currentListLevel === null) {
             return ``;
         }
+        let prefix = '';
+        while (this.state.currentListLevel > 0) {
+            prefix += '</ul>\n</li>\n';
+            this.state.setListLevel(this.state.currentListLevel - 1);
+        }
         this.state.setListLevel(null);
-        return '</ul>\n';
+        return `${prefix}</ul>\n`;
     }
 
     private closeSubsection(): string {
@@ -260,7 +265,7 @@ export class Renderer {
             return `${prefix}</section>\n\n`;
         } else {
             this.state.setSection(token.name);
-            return `<section id="${token.name}>\n`;
+            return `<section id="${token.name}">\n`;
         }
     }
 
@@ -282,7 +287,7 @@ export class Renderer {
         if (token.target) {
             attr = ` target="_blank"`;
         } else if (token.type) {
-            attr = ` download="${token.download} type="application/pdf"`;
+            attr = ` download="${token.download}" type="application/pdf"`;
         }
         return `<a href="${token.href}"${attr}>${token.content}</a>\n`;
     }
@@ -323,13 +328,12 @@ export class Renderer {
 
     private listRenderer(token: ListToken): string {
         let prefix = '';
-        if (
-            this.state.currentListLevel === null ||
-            token.indent > this.state.currentListLevel
-        ) {
+        if (this.state.currentListLevel === null) {
             prefix = '<ul>\n';
+        } else if (token.indent > this.state.currentListLevel) {
+            prefix = '<li>\n<ul>\n';
         } else if (token.indent < this.state.currentListLevel) {
-            prefix = '\n</ul>\n';
+            prefix = '\n</ul>\n</li>\n';
         }
         this.state.setListLevel(token.indent);
 
@@ -451,7 +455,7 @@ const listParser: Parser = (sectionData) => {
     }
 
     const [, indent, item] = listItem;
-    const indentCount = indent?.length || 0;
+    const indentCount = Math.floor(indent?.length / 4) || 0;
 
     return {
         label: 'li',
