@@ -6,7 +6,8 @@ interface Page {
 type Header = Record<string, string | string[]>;
 type SectionData = Map<string, string>;
 type ParsedToken =
-    | WrapperToken
+    | SectionToken
+    | DivToken
     | HeadingToken
     | LinkToken
     | ImgToken
@@ -14,8 +15,12 @@ type ParsedToken =
     | ListToken
     | HorizontalRuleToken;
 
-interface WrapperToken {
-    label: 'section' | 'div';
+interface SectionToken {
+    label: 'section';
+    name: string;
+}
+interface DivToken {
+    label: 'div';
     id?: string;
     class?: string;
     content: string;
@@ -57,46 +62,61 @@ type Render = (data: ParsedToken) => string;
 class ParserState {
     private isSubsectionOpen: boolean;
     private listLevel: number | null;
-    private tokens: ParsedToken[];
+    private isHeader: boolean;
+    private sections: string[];
 
     constructor() {
         this.isSubsectionOpen = false;
         this.listLevel = null;
-        this.tokens = [];
+        this.isHeader = false;
+        this.sections = [];
     }
 
-    set addToken(token: ParsedToken) {
-        this.tokens.push(token);
+    get inHeader(): boolean {
+        return this.isHeader;
     }
 
-    get parsedTokens(): ParsedToken[] {
-        return this.tokens;
+    setHeader(inHeader: boolean) {
+        this.isHeader = inHeader;
     }
 
-    set setSubsection(setOpen: boolean) {
-        this.isSubsectionOpen = setOpen;
+    get currentSection(): string {
+        return this.sections[this.sections.length - 1];
+    }
+
+    get showSections(): string[] {
+        return this.sections;
+    }
+
+    setSection(section: string) {
+        this.sections.push(section);
     }
 
     get inSubsection(): boolean {
         return this.isSubsectionOpen;
     }
 
+    setSubsection(setOpen: boolean) {
+        this.isSubsectionOpen = setOpen;
+    }
+
     get currentListLevel(): number | null {
         return this.listLevel;
     }
 
-    set setListLevel(indentation: number | null) {
+    setListLevel(indentation: number | null) {
         this.listLevel = indentation;
     }
 }
 
-class Renderer {
+export class Renderer {
     private parsers: Parser[];
     private state: ParserState;
 
     constructor() {
         this.state = new ParserState();
         this.parsers = [
+            sectionParser,
             headingsParser,
             hrParser,
             listParser,
@@ -107,8 +127,92 @@ class Renderer {
         ];
     }
 
+    renderMarkdown(markdown: string): string {
+        const [header, body] = this.parseDocument(markdown);
+        const menuItems = this.state.showSections;
+
+        const lines = body.split('\n');
+        let html = '';
+
+        for (const line of lines) {
+            for (const parser of this.parsers) {
+                const token = parser(line);
+
+                if (token) {
+                    html += this.renderToken(token);
+                    break;
+                }
+            }
+        }
+
+        console.log(menuItems);
+        return html;
+    }
+
+    private parseDocument(markdown: string): [Header, string] {
+        const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
+        const dataSplit = markdown.match(headerRegex);
+        if (!dataSplit || dataSplit.length !== 3) {
+            throw new Error('Invalid frontmatter format');
+        }
+
+        const [, headerString, bodyString] = dataSplit;
+        const currentLevel: string[] = [];
+        const header: Header = {};
+
+        const headerLines = headerString.split('\n').map((line) => {
+            const regexIndent = /^\s+/;
+            return {
+                string: line.trim(),
+                indent: line.match(regexIndent)?.[0].length || 0,
+            };
+        });
+
+        for (const { string: line, indent } of headerLines) {
+            if (!line) {
+                continue;
+            }
+
+            if (line.includes(': ')) {
+                const [key, ...value] = line.split(': ');
+                header[key] = value.join(': ').trim();
+                continue;
+            }
+
+            if (line.endsWith(':')) {
+                const hasParent = indent > 0;
+                const level = hasParent ? line.slice(2, -1) : line.slice(0, -1);
+                currentLevel.length = hasParent ? 1 : 0;
+                currentLevel.push(level);
+                continue;
+            }
+
+            const text = line.match(/^-\s*(.+)$/);
+
+            if (!text) {
+                throw new Error(`Invalid line format: ${text}`);
+            }
+
+            const cleanText = text[1];
+
+            header[currentLevel[0]] = header[currentLevel[0]] ?? [];
+            const targetArr = header[currentLevel[0]];
+
+            if (!Array.isArray(targetArr)) {
+                throw new Error(
+                    `Expected an Array but found ${typeof targetArr}`,
+                );
+            }
+
+            targetArr.push(cleanText);
+        }
+
+        return [header, bodyString];
+    }
+
     private renderToken(token: ParsedToken): string {
-        const renderers: Record<string, (t: ParsedToken) => string> = {
+        const renderers: Record<string, Render> = {
+            section: (t) => this.sectionRenderer(t as SectionToken),
             h1: (t) => this.headingRenderer(t as HeadingToken),
             h2: (t) => this.headingRenderer(t as HeadingToken),
             h3: (t) => this.headingRenderer(t as HeadingToken),
@@ -118,8 +222,7 @@ class Renderer {
             a: (t) => this.linkRenderer(t as LinkToken),
             hr: () => this.ruleRenderer(),
             img: (t) => this.imgRenderer(t as ImgToken),
-            div: (t) => this.wrapperRenderer(t as WrapperToken),
-            section: (t) => this.wrapperRenderer(t as WrapperToken),
+            div: (t) => this.divRenderer(t as DivToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
         };
@@ -128,11 +231,8 @@ class Renderer {
     }
 
     private closeSubsection(): string {
-        if (this.state.inSubsection) {
-            this.state.setSubsection(false);
-            return '\t</div>\n\n';
-        }
-        return '';
+        this.state.setSubsection(false);
+        return '\t</div>\n\n';
     }
 
     private openSubsection(): string {
@@ -144,10 +244,26 @@ class Renderer {
         return `${prefix}\n\n\t<div class="sub lala">\n`;
     }
 
+    private sectionRenderer(token: SectionToken): string {
+        if (this.state.currentSection === token.name) {
+            const prefix = this.state.inSubsection
+                ? this.closeSubsection()
+                : '';
+            return `${prefix}</section>\n`;
+        } else {
+            this.state.setSection(token.name);
+            return `<section id="${token.name}>\n`;
+        }
+    }
+
     private headingRenderer(token: HeadingToken): string {
-        // NOTE: cierre de subsección
-        // NOTE: apertura subseccion
-        return `<${token.label} id="${token.id}">${token.content}</${token.label}>`;
+        let prefix = ``;
+        if (this.state.inSubsection && /^h[1-2]$/.test(token.label)) {
+            prefix = this.closeSubsection();
+        } else if (/^h3$/.test(token.label)) {
+            prefix = this.openSubsection();
+        }
+        return `${prefix}<${token.label} id="${token.id}">${token.content}</${token.label}>\n`;
     }
 
     private linkRenderer(token: LinkToken): string {
@@ -157,19 +273,23 @@ class Renderer {
         } else if (token.type) {
             attr = ` download="${token.download} type="application/pdf"`;
         }
-        return `<a href="${token.href}"${attr}>${token.content}</a>`;
+        return `<a href="${token.href}"${attr}>${token.content}</a>\n`;
     }
 
     private ruleRenderer(): string {
-        // NOTE: cierre de subsección
-        return '<hr>';
+        let prefix = '';
+        prefix += `${this.state.inSubsection} `;
+        if (this.state.inSubsection) {
+            prefix = this.closeSubsection();
+        }
+        return `${prefix}<hr>\n`;
     }
 
     private imgRenderer(token: ImgToken): string {
-        return `<img alt="${token.alt}" src="${token.src}">`;
+        return `<img alt="${token.alt}" src="${token.src}">\n`;
     }
 
-    private wrapperRenderer(token: WrapperToken): string {
+    private divRenderer(token: DivToken): string {
         let attr = '';
         if (token.id) {
             attr += ` id="${token.id}"`;
@@ -177,21 +297,34 @@ class Renderer {
         if (token.class) {
             attr += ` class="${token.class}"`;
         }
-        return `<${token.label}${attr}>${token.content}</${token.label}>`;
+        return `<${token.label}${attr}>${token.content}</${token.label}>\n`;
     }
 
     private paragraphRenderer(token: ParagraphToken): string {
-        // NOTE: apertura subseccion
-        return `<p>${token.content}</p>`;
+        let prefix = '';
+        if (!this.state.inSubsection) {
+            prefix = this.openSubsection();
+        }
+        return `${prefix}<p>${token.content}</p>\n`;
     }
 
     private listRenderer(token: ListToken): string {
         // NOTE: apertura ul
         // NOTE: cierre sub ul
-        return `<li>${token.label}</li>`;
+        return `<li>${token.content}</li>\n`;
     }
 }
 
+const sectionParser: Parser = (sectionData) => {
+    const sectionRegex = /---\((.+)\)/;
+    const section = sectionData.match(sectionRegex);
+
+    if (!section) {
+        return;
+    }
+
+    return { label: 'section', name: section[1] };
+};
 const headingsParser: Parser = (sectionData) => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
@@ -296,7 +429,7 @@ const listParser: Parser = (sectionData) => {
     }
 
     const [, indent, item] = listItem;
-    const indentCount = indent.length || 0;
+    const indentCount = indent?.length || 0;
 
     return {
         label: 'li',
@@ -337,20 +470,3 @@ const paragraphParser: Parser = (sectionData) => {
             .replace(linkInParRegex, replaceLink),
     };
 };
-
-// const createElement: Render = (data) => {
-//     const { label, ...rest } = data;
-//
-//     let attr = '';
-//     for (const [key, value] of Object.entries(rest)) {
-//         if (key === 'indent' || key === 'content') continue;
-//         attr += ` ${key}="${value}"`;
-//     }
-//     if (!('content' in rest)) {
-//         return `<${label}${attr}/>`;
-//     }
-//
-//     const { content } = rest;
-//
-//     return `<${label}${attr}>${content}</${label}>`;
-// };
