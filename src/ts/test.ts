@@ -1,10 +1,9 @@
 interface Page {
     menu: string;
-    document: string;
+    html: string;
     header: Header;
 }
 type Header = Record<string, string | string[]>;
-type SectionData = Map<string, string>;
 type ParsedToken =
     | SectionToken
     | DivToken
@@ -127,9 +126,9 @@ export class Renderer {
         ];
     }
 
-    renderMarkdown(markdown: string): string {
+    renderMarkdown(markdown: string): Page {
         const [header, body] = this.getDocumentStructure(markdown);
-        const menuItems = this.state.showSections;
+        const menuItems = this.state.showSections.join(' ');
 
         const lines = body.split('\n');
         let html = '';
@@ -145,32 +144,24 @@ export class Renderer {
             }
         }
 
-        return html;
+        return { html, menu: menuItems, header };
     }
 
     private getDocumentStructure(markdown: string): [Header, string] {
         const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
         const dataSplit = markdown.match(headerRegex);
+
         if (!dataSplit || dataSplit.length !== 3) {
             throw new Error('Invalid frontmatter format');
         }
 
         const [, headerString, bodyString] = dataSplit;
-        const currentLevel: string[] = [];
         const header: Header = {};
+        let currentList = '';
 
-        const headerLines = headerString.split('\n').map((line) => {
-            const regexIndent = /^\s+/;
-            return {
-                string: line.trim(),
-                indent: line.match(regexIndent)?.[0].length || 0,
-            };
-        });
-
-        for (const { string: line, indent } of headerLines) {
-            if (!line) {
-                continue;
-            }
+        for (const rawLine of headerString.split('\n')) {
+            const line = rawLine.trim();
+            if (!line) continue;
 
             if (line.includes(': ')) {
                 const [key, ...value] = line.split(': ');
@@ -179,31 +170,23 @@ export class Renderer {
             }
 
             if (line.endsWith(':')) {
-                const hasParent = indent > 0;
-                const level = hasParent ? line.slice(2, -1) : line.slice(0, -1);
-                currentLevel.length = hasParent ? 1 : 0;
-                currentLevel.push(level);
+                currentList = line.slice(0, -1);
+                header[currentList] = [];
                 continue;
             }
 
-            const text = line.match(/^-\s*(.+)$/);
+            const listItem = line.match(/^-\s*(.+)$/);
 
-            if (!text) {
-                throw new Error(`Invalid line format: ${text}`);
+            if (listItem) {
+                const array = header[currentList];
+                if (!Array.isArray(array)) {
+                    throw new Error(`Expected an Array`);
+                }
+                array.push(listItem[1]);
+                continue;
             }
 
-            const cleanText = text[1];
-
-            header[currentLevel[0]] = header[currentLevel[0]] ?? [];
-            const targetArr = header[currentLevel[0]];
-
-            if (!Array.isArray(targetArr)) {
-                throw new Error(
-                    `Expected an Array but found ${typeof targetArr}`,
-                );
-            }
-
-            targetArr.push(cleanText);
+            throw new Error(`Invalid item in list format: ${line}`);
         }
 
         return [header, bodyString];

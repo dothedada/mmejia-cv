@@ -1,7 +1,9 @@
 ---
 date: 16/11/2024
+laPendeja: NNNNNnnn
 portfolio:
     - base.md
+    - carajo.md
 ---
 
 ---(about)
@@ -40,6 +42,8 @@ Idiomas
     -   bla bla bla
         -   bla bla ble
         -   2313
+
+![texto alternativo](https://url.dela.img)
 
 ### Mi Perfíl
 
