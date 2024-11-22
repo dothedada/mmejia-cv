@@ -1,7 +1,6 @@
 import '../css/style.css';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
-import fileParser from './mdParser';
 import { makeDocument } from './parser';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
