@@ -163,7 +163,7 @@ const linkParser: Parser = (sectionData) => {
         content: linkTxt,
     };
     if (linkType === 'D') {
-        const filename = link.match(filenameRegex)?.[1] || '';
+        const filename = link.match(filenameRegex)?.[1] || 'myDownload.pdf';
         linkProps.download = filename;
         linkProps.type = 'application/pdf';
     } else if (linkType === 'B') {
@@ -225,12 +225,24 @@ const listParser: Parser = (sectionData) => {
 const paragraphParser: Parser = (sectionData) => {
     const strongRegex = /\*\*([\w\s]+)\*\*/g;
     const emphasisRegex = /\*(.+)\*/g;
-    const linkInParRegex = /\[.+\]\(.+\)[BD]?/g;
+    const linkInParRegex = /\[(.+)\]\((.+)\)([BD])?/g;
     const text = sectionData.trim();
 
     if (!text) {
         return;
     }
+
+    const replaceLink = (text: string, href: string, type?: string): string => {
+        let attr = '';
+        if (type === 'B') {
+            attr = ' target="_blank"';
+        } else if (type === 'D') {
+            const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
+            const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
+            attr = ` download="${filename}" type="application/pdf"`;
+        }
+        return `<a href="${href}"${attr}>${text}</a>`;
+    };
 
     return {
         label: 'p',
@@ -238,7 +250,8 @@ const paragraphParser: Parser = (sectionData) => {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt')
             .replace(strongRegex, '<strong>$1</strong>')
-            .replace(emphasisRegex, '<em>$1</em>'),
+            .replace(emphasisRegex, '<em>$1</em>')
+            .replace(linkInParRegex, replaceLink),
     };
 };
 
