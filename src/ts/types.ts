@@ -1,3 +1,27 @@
+import { ParserState } from './parser';
+
+export type HeaderParser = (
+    sectionData: string,
+    state: ParserState,
+) => HeaderToken | void;
+
+export type HeaderToken = {
+    indent: number;
+} & (
+    | {
+          type: 'keyValue';
+          key: string;
+          value: string;
+      }
+    | {
+          type: 'key';
+          key: string;
+      }
+    | {
+          type: 'value';
+          value: string;
+      }
+);
 export type ParsedToken =
     | SectionToken
     | DivToken
@@ -49,6 +73,7 @@ export interface ListToken {
 export interface HorizontalRuleToken {
     label: 'hr';
 }
+
 export type Parser = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => string;
 export type Header = Record<string, string | string[]>;

@@ -1,20 +1,21 @@
-import { Parser, ParsedToken, HeadingLevel } from './types';
+import { Parser, ParsedToken, HeaderParser } from './types';
+
 class ParserState {
+    private isHeader: boolean | null;
+    private sections: string[];
+    private isSectionOpen: boolean;
     private isSubsectionOpen: boolean;
     private listLevel: number | null;
-    private isHeader: boolean;
-    private isSectionOpen: boolean;
-    private sections: string[];
 
     constructor() {
+        this.isHeader = null;
+        this.sections = [];
+        this.isSectionOpen = false;
         this.isSubsectionOpen = false;
         this.listLevel = null;
-        this.isHeader = false;
-        this.isSectionOpen = false;
-        this.sections = [];
     }
 
-    get inHeader(): boolean {
+    get inHeader(): boolean | null {
         return this.isHeader;
     }
 
@@ -60,6 +61,82 @@ class ParserState {
     }
 }
 
+const hasFrontMatter: HeaderParser = (sectionData, state) => {
+    const frontMatterRegex = /^---$/;
+    if (frontMatterRegex.test(sectionData)) {
+        state.setHeader(true);
+    }
+};
+
+const fmKeyValueParser: HeaderParser = (sectionData, state) => {
+    if (!state.inHeader) {
+        return;
+    }
+    const fmKeyValueRegex = /^( +)?(.+):(?: +)(.+)$/;
+    const fmKeyValueMatch = sectionData.match(fmKeyValueRegex);
+
+    if (!fmKeyValueMatch) {
+        return;
+    }
+
+    const [, indent, key, value] = fmKeyValueMatch;
+
+    return {
+        type: 'keyValue',
+        indent: indent.length,
+        key: key
+            .replace(/[^\w0-9-_]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, ''),
+        value,
+    };
+};
+
+const fmDataContainerParser: HeaderParser = (sectionData, state) => {
+    if (!state.inHeader) {
+        return;
+    }
+
+    const fmDataContainerRegex = /^( +)?(.+):(?: +)?$/;
+    const fmDataContainerMatch = sectionData.match(fmDataContainerRegex);
+
+    if (!fmDataContainerMatch) {
+        return;
+    }
+
+    const [, indent, key] = fmDataContainerMatch;
+
+    return {
+        type: 'key',
+        indent: indent.length,
+        key: key
+            .replace(/[^\w0-9-_]/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, ''),
+    };
+};
+
+const fmDataItemParser: HeaderParser = (sectionData, state) => {
+    if (!state.inHeader) {
+        return;
+    }
+
+    const fmDataItemRegex = /^( +)?- *(.+)$/;
+    const fmDataItemMatch = sectionData.match(fmDataItemRegex);
+
+    if (!fmDataItemMatch) {
+        return;
+    }
+
+    const [, indent, value] = fmDataItemMatch;
+
+    return {
+        type: 'value',
+        indent: indent.length,
+        value,
+    };
+};
+
 const sectionParser: Parser = (sectionData) => {
     const sectionRegex = /---\((.*)\)/;
     const section = sectionData.match(sectionRegex);
@@ -67,8 +144,6 @@ const sectionParser: Parser = (sectionData) => {
     if (!section) {
         return;
     }
-
-    console.log(section);
 
     return { label: 'section', name: section[1] };
 };
@@ -222,6 +297,10 @@ const paragraphParser: Parser = (sectionData) => {
 
 export {
     ParserState,
+    hasFrontMatter,
+    fmKeyValueParser,
+    fmDataContainerParser,
+    fmDataItemParser,
     sectionParser,
     headingsParser,
     hrParser,
