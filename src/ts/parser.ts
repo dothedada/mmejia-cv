@@ -87,7 +87,8 @@ const headingsParser: Parser = (sectionData) => {
     }
 
     return {
-        label: `h${hashes.length}` as HeadingLevel,
+        label: 'h',
+        level: hashes.length,
         content: heading,
         id: heading
             .trim()

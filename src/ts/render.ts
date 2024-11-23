@@ -50,6 +50,11 @@ export class Renderer {
         const lines = body.split('\n');
         let html = '';
 
+        // NOTE:
+        // 1. hacer el parseo de las dependencias antes para inyectarlas en
+        //      el parseo del documento global
+        // 2. hacer el render del menu
+
         for (const line of lines) {
             for (const parser of this.parsers) {
                 const token = parser(line);
@@ -115,12 +120,7 @@ export class Renderer {
     private renderToken(token: ParsedToken): string {
         const renderers: Record<string, Render> = {
             section: (t) => this.sectionRenderer(t as SectionToken),
-            h1: (t) => this.headingRenderer(t as HeadingToken),
-            h2: (t) => this.headingRenderer(t as HeadingToken),
-            h3: (t) => this.headingRenderer(t as HeadingToken),
-            h4: (t) => this.headingRenderer(t as HeadingToken),
-            h5: (t) => this.headingRenderer(t as HeadingToken),
-            h6: (t) => this.headingRenderer(t as HeadingToken),
+            h: (t) => this.headingRenderer(t as HeadingToken),
             a: (t) => this.linkRenderer(t as LinkToken),
             hr: () => this.ruleRenderer(),
             img: (t) => this.imgRenderer(t as ImgToken),
@@ -183,14 +183,14 @@ export class Renderer {
 
     private headingRenderer(token: HeadingToken): string {
         let prefix = ``;
-        if (this.state.inSubsection && /^h[1-2]$/.test(token.label)) {
+        if (this.state.inSubsection && token.level < 3) {
             prefix = this.closeSubsection();
-        } else if (/^h3$/.test(token.label)) {
+        } else if (token.level === 3) {
             prefix = this.openSubsection();
         } else {
             prefix = this.closeList();
         }
-        return `${prefix}<${token.label} id="${token.id}">${token.content}</${token.label}>\n`;
+        return `${prefix}<h${token.level} id="${token.id}">${token.content}</h${token.level}>\n`;
     }
 
     private linkRenderer(token: LinkToken): string {

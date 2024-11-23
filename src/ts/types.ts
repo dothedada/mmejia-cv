@@ -18,9 +18,9 @@ export interface DivToken {
     class?: string;
     content: string;
 }
-export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 export interface HeadingToken {
-    label: HeadingLevel;
+    label: 'h';
+    level: number;
     id: string;
     content: string;
 }
