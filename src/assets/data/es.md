@@ -18,8 +18,6 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 
 [Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)D
 
----(about)
-
 ---(skills)
 
 ## Desarrollo front-end

@@ -159,14 +159,16 @@ export class Renderer {
     }
 
     private sectionRenderer(token: SectionToken): string {
-        if (this.state.currentSection === token.name) {
-            let prefix = '';
+        let prefix = '';
+        if (this.state.currentSection) {
             prefix += this.state.inSubsection ? this.closeSubsection() : '';
-            return `${prefix}</section>\n\n`;
-        } else {
-            this.state.setSection(token.name);
-            return `<section id="${token.name}">\n`;
+            prefix += '</section>\n\n';
         }
+        if (this.state.currentSection === token.name) {
+            return prefix;
+        }
+        this.state.setSection(token.name);
+        return `${prefix}<section id="${token.name}">\n`;
     }
 
     private headingRenderer(token: HeadingToken): string {
