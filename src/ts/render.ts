@@ -61,6 +61,9 @@ export class Renderer {
             }
         }
 
+        html += this.state.inSubsection ? this.closeSubsection() : '';
+        html += this.state.inSection ? this.closeSection() : '';
+
         return { html, menu: menuItems, header };
     }
 
@@ -143,10 +146,15 @@ export class Renderer {
     }
 
     private closeSubsection(): string {
-        let prefix = '';
         this.state.setSubsection(false);
-        prefix += this.closeList();
+        const prefix = this.closeList();
         return `${prefix}\t</div>\n`;
+    }
+
+    private closeSection(): string {
+        this.state.setInSection(false);
+        const prefix = this.state.inSubsection ? this.closeSubsection() : '';
+        return `${prefix}</section>\n\n`;
     }
 
     private openSubsection(): string {
@@ -160,9 +168,11 @@ export class Renderer {
 
     private sectionRenderer(token: SectionToken): string {
         let prefix = '';
-        if (this.state.currentSection) {
-            prefix += this.state.inSubsection ? this.closeSubsection() : '';
-            prefix += '</section>\n\n';
+        if (token.name === '') {
+            return this.closeSection();
+        }
+        if (this.state.inSection) {
+            prefix = this.closeSection();
         }
         if (this.state.currentSection === token.name) {
             return prefix;

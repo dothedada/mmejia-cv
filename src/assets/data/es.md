@@ -57,4 +57,6 @@ Tengo conocimientos sólidos en HTML y CSS, los cuales utilizo para la creación
 
 Fascinado por la semiótica, la diagramación y la tipografía, me formé como diseñador gráfico. Desde ahí, comencé a moverme hacia la fotografía editorial y la creación de narrativas visuales. La ejecución minuciosa y la necesidad de cuestionar tanto lo que observo como el lugar desde el cual lo hago, me permiten abordar con confianza temáticas complejas.
 
----(skills)
+---()
+
+bla bla bola

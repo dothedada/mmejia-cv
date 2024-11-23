@@ -3,12 +3,14 @@ class ParserState {
     private isSubsectionOpen: boolean;
     private listLevel: number | null;
     private isHeader: boolean;
+    private isSectionOpen: boolean;
     private sections: string[];
 
     constructor() {
         this.isSubsectionOpen = false;
         this.listLevel = null;
         this.isHeader = false;
+        this.isSectionOpen = false;
         this.sections = [];
     }
 
@@ -24,12 +26,21 @@ class ParserState {
         return this.sections[this.sections.length - 1];
     }
 
+    get inSection(): boolean {
+        return this.isSectionOpen;
+    }
+
+    setInSection(openSection: boolean) {
+        this.isSectionOpen = openSection;
+    }
+
     get showSections(): string[] {
         return this.sections;
     }
 
     setSection(section: string) {
         this.sections.push(section);
+        this.setInSection(true);
     }
 
     get inSubsection(): boolean {
@@ -50,15 +61,18 @@ class ParserState {
 }
 
 const sectionParser: Parser = (sectionData) => {
-    const sectionRegex = /---\((.+)\)/;
+    const sectionRegex = /---\((.*)\)/;
     const section = sectionData.match(sectionRegex);
 
     if (!section) {
         return;
     }
 
+    console.log(section);
+
     return { label: 'section', name: section[1] };
 };
+
 const headingsParser: Parser = (sectionData) => {
     const headingRegex = /^(#{1,6})\s*(.+)$/;
     const headingArray = sectionData.match(headingRegex);
