@@ -61,6 +61,35 @@ class ParserState {
     }
 }
 
+const htmlScapeChars: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;',
+    '`': '&#x60;',
+    '=': '&#x3D;',
+};
+
+const keySanitizer = (rawKey: string): string =>
+    rawKey
+        .trim()
+        .replace(/[^\w0-9-_]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+const textSanitizer = (rawTxt: string): string => {
+    const specialCharsRegex = new RegExp(
+        `[${Object.keys(htmlScapeChars).join('')}]`,
+        'g',
+    );
+
+    return rawTxt
+        .trim()
+        .replace(specialCharsRegex, (match) => htmlScapeChars[match]);
+};
+
 const hasFrontMatter: HeaderParser = (sectionData, state) => {
     const frontMatterRegex = /^---$/;
     if (frontMatterRegex.test(sectionData)) {
@@ -91,10 +120,7 @@ const fmKeyValueParser: HeaderParser = (sectionData, state) => {
     return {
         type: 'keyValue',
         indent: indent.length,
-        key: key
-            .replace(/[^\w0-9-_]/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, ''),
+        key: keySanitizer(key),
         value,
     };
 };
@@ -116,10 +142,7 @@ const fmDataContainerParser: HeaderParser = (sectionData, state) => {
     return {
         type: 'key',
         indent: indent.length,
-        key: key
-            .replace(/[^\w0-9-_]/g, '-')
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, ''),
+        key: keySanitizer(key),
     };
 };
 
