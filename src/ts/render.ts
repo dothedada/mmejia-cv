@@ -1,5 +1,9 @@
 import {
     ParserState,
+    frontMatterBoundaries,
+    fmKeyValueParser,
+    fmDataContainerParser,
+    fmDataItemParser,
     sectionParser,
     headingsParser,
     hrParser,
@@ -8,6 +12,7 @@ import {
     imgParser,
     decoratorParser,
     paragraphParser,
+    dataPointParser,
 } from './parser';
 
 import {
@@ -23,14 +28,24 @@ import {
     DivToken,
     ParagraphToken,
     ListToken,
+    HeaderParser,
 } from './types';
 
 export class Renderer {
-    private parsers: Parser[];
     private state: ParserState;
+    private headerParsers: HeaderParser[];
+    private parsers: Parser[];
 
     constructor() {
         this.state = new ParserState();
+
+        this.headerParsers = [
+            frontMatterBoundaries,
+            fmKeyValueParser,
+            fmDataContainerParser,
+            fmDataItemParser,
+        ];
+
         this.parsers = [
             sectionParser,
             headingsParser,
@@ -44,11 +59,16 @@ export class Renderer {
     }
 
     renderMarkdown(markdown: string): Page {
-        const [header, body] = this.getDocumentStructure(markdown);
+        const [header, lines] = this.getDocumentStructure(markdown);
         const menuItems = this.state.showSections.join(' ');
 
-        const lines = body.split('\n');
         let html = '';
+
+        // NOTE:
+        // 0. Evitar reprocesos en el parseo del header ((iniciar el parseador del header))
+        // 1. hacer el parseo de las dependencias antes para inyectarlas en
+        //      el parseo del documento global
+        // 2. hacer el render del menu
 
         for (const line of lines) {
             for (const parser of this.parsers) {
@@ -61,63 +81,59 @@ export class Renderer {
             }
         }
 
+        html += this.state.inSubsection ? this.closeSubsection() : '';
+        html += this.state.inSection ? this.closeSection() : '';
+
         return { html, menu: menuItems, header };
     }
 
-    private getDocumentStructure(markdown: string): [Header, string] {
-        const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
-        const dataSplit = markdown.match(headerRegex);
-
-        if (!dataSplit || dataSplit.length !== 3) {
-            throw new Error('Invalid frontmatter format');
+    private getDocumentStructure(markdown: string): [Header, string[]] {
+        const allLines = markdown.split('\n');
+        if (!allLines.length) {
+            throw new Error('Empty file');
         }
 
-        const [, headerString, bodyString] = dataSplit;
         const header: Header = {};
-        let currentList = '';
+        const [firstLine, ...lines] = allLines;
 
-        for (const rawLine of headerString.split('\n')) {
-            const line = rawLine.trim();
-            if (!line) continue;
-
-            if (line.includes(': ')) {
-                const [key, ...value] = line.split(': ');
-                header[key] = value.join(': ').trim();
-                continue;
-            }
-
-            if (line.endsWith(':')) {
-                currentList = line.slice(0, -1);
-                header[currentList] = [];
-                continue;
-            }
-
-            const listItem = line.match(/^-\s*(.+)$/);
-
-            if (listItem) {
-                const array = header[currentList];
-                if (!Array.isArray(array)) {
-                    throw new Error(`Expected an Array`);
-                }
-                array.push(listItem[1]);
-                continue;
-            }
-
-            throw new Error(`Invalid item in list format: ${line}`);
+        this.headerParsers[0](firstLine, this.state);
+        if (!this.state.inHeader) {
+            return [header, allLines];
         }
 
-        return [header, bodyString];
+        let currentLine = 0;
+        while (this.state.inHeader || currentLine === lines.length) {
+            for (const parser of this.headerParsers) {
+                const headerToken = parser(lines[currentLine], this.state);
+                if (headerToken) {
+                    console.log(headerToken);
+                    break;
+                }
+            }
+            currentLine++;
+        }
+        const markdownToRender = lines.slice(currentLine);
+        if (!markdownToRender.length) {
+            throw new Error('There is no markdown to parse');
+        }
+
+        return [header, markdownToRender];
+    }
+
+    private renderHeaderToken(
+        headerToken: HeaderToken,
+        headerObject: Record<
+            string,
+            string | string[] | Record<string, string>
+        >,
+    ): void {
+        //
     }
 
     private renderToken(token: ParsedToken): string {
         const renderers: Record<string, Render> = {
             section: (t) => this.sectionRenderer(t as SectionToken),
-            h1: (t) => this.headingRenderer(t as HeadingToken),
-            h2: (t) => this.headingRenderer(t as HeadingToken),
-            h3: (t) => this.headingRenderer(t as HeadingToken),
-            h4: (t) => this.headingRenderer(t as HeadingToken),
-            h5: (t) => this.headingRenderer(t as HeadingToken),
-            h6: (t) => this.headingRenderer(t as HeadingToken),
+            h: (t) => this.headingRenderer(t as HeadingToken),
             a: (t) => this.linkRenderer(t as LinkToken),
             hr: () => this.ruleRenderer(),
             img: (t) => this.imgRenderer(t as ImgToken),
@@ -143,10 +159,15 @@ export class Renderer {
     }
 
     private closeSubsection(): string {
-        let prefix = '';
         this.state.setSubsection(false);
-        prefix += this.closeList();
+        const prefix = this.closeList();
         return `${prefix}\t</div>\n`;
+    }
+
+    private closeSection(): string {
+        this.state.setInSection(false);
+        const prefix = this.state.inSubsection ? this.closeSubsection() : '';
+        return `${prefix}</section>\n\n`;
     }
 
     private openSubsection(): string {
@@ -159,26 +180,30 @@ export class Renderer {
     }
 
     private sectionRenderer(token: SectionToken): string {
-        if (this.state.currentSection === token.name) {
-            let prefix = '';
-            prefix += this.state.inSubsection ? this.closeSubsection() : '';
-            return `${prefix}</section>\n\n`;
-        } else {
-            this.state.setSection(token.name);
-            return `<section id="${token.name}">\n`;
+        let prefix = '';
+        if (token.name === '') {
+            return this.closeSection();
         }
+        if (this.state.inSection) {
+            prefix = this.closeSection();
+        }
+        if (this.state.currentSection === token.name) {
+            return prefix;
+        }
+        this.state.setSection(token.name);
+        return `${prefix}<section id="${token.name}">\n`;
     }
 
     private headingRenderer(token: HeadingToken): string {
         let prefix = ``;
-        if (this.state.inSubsection && /^h[1-2]$/.test(token.label)) {
+        if (this.state.inSubsection && token.level < 3) {
             prefix = this.closeSubsection();
-        } else if (/^h3$/.test(token.label)) {
+        } else if (token.level === 3) {
             prefix = this.openSubsection();
         } else {
             prefix = this.closeList();
         }
-        return `${prefix}<${token.label} id="${token.id}">${token.content}</${token.label}>\n`;
+        return `${prefix}<h${token.level} id="${token.id}">${token.content}</h${token.level}>\n`;
     }
 
     private linkRenderer(token: LinkToken): string {

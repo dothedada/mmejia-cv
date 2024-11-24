@@ -1,3 +1,22 @@
+import { ParserState } from './parser';
+
+export type HeaderToken = {
+    indent: number;
+} & (
+    | {
+          type: 'keyValue';
+          key: string;
+          value: string;
+      }
+    | {
+          type: 'key';
+          key: string;
+      }
+    | {
+          type: 'value';
+          value: string;
+      }
+);
 export type ParsedToken =
     | SectionToken
     | DivToken
@@ -6,7 +25,8 @@ export type ParsedToken =
     | ImgToken
     | ParagraphToken
     | ListToken
-    | HorizontalRuleToken;
+    | HorizontalRuleToken
+    | DataInjectionPointToken;
 
 export interface SectionToken {
     label: 'section';
@@ -18,9 +38,9 @@ export interface DivToken {
     class?: string;
     content: string;
 }
-export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 export interface HeadingToken {
-    label: HeadingLevel;
+    label: 'h';
+    level: number;
     id: string;
     content: string;
 }
@@ -49,9 +69,18 @@ export interface ListToken {
 export interface HorizontalRuleToken {
     label: 'hr';
 }
+export interface DataInjectionPointToken {
+    label: 'dataPoint';
+    content: string;
+}
+
 export type Parser = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => string;
 export type Header = Record<string, string | string[]>;
+export type HeaderParser = (
+    sectionData: string,
+    state: ParserState,
+) => HeaderToken | void;
 export interface Page {
     menu: string;
     html: string;
