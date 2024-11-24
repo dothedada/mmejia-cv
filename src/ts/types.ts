@@ -30,7 +30,8 @@ export type ParsedToken =
     | ImgToken
     | ParagraphToken
     | ListToken
-    | HorizontalRuleToken;
+    | HorizontalRuleToken
+    | DataInjectionPointToken;
 
 export interface SectionToken {
     label: 'section';
@@ -72,6 +73,10 @@ export interface ListToken {
 }
 export interface HorizontalRuleToken {
     label: 'hr';
+}
+export interface DataInjectionPointToken {
+    label: 'dataPoint';
+    content: string;
 }
 
 export type Parser = (sectionData: string) => ParsedToken | void;

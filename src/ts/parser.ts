@@ -302,8 +302,18 @@ const paragraphParser: Parser = (sectionData) => {
     };
 };
 
-const injectionPoint: Parser = (sectionData) => {
-    //
+const dataPointParser: Parser = (sectionData) => {
+    const injectionPointRegex = /^@@ *(.+)$/;
+    const injectionPointMatch = sectionData.match(injectionPointRegex);
+
+    if (!injectionPointMatch) {
+        return;
+    }
+
+    return {
+        label: 'dataPoint',
+        content: injectionPointMatch[1],
+    };
 };
 
 export {
@@ -321,4 +331,5 @@ export {
     imgParser,
     decoratorParser,
     paragraphParser,
+    dataPointParser as injectionDataPoint,
 };
