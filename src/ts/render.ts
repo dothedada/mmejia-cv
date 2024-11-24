@@ -1,5 +1,9 @@
 import {
     ParserState,
+    frontMatterBoundaries,
+    fmKeyValueParser,
+    fmDataContainerParser,
+    fmDataItemParser,
     sectionParser,
     headingsParser,
     hrParser,
@@ -8,6 +12,7 @@ import {
     imgParser,
     decoratorParser,
     paragraphParser,
+    dataPointParser,
 } from './parser';
 
 import {
@@ -23,14 +28,24 @@ import {
     DivToken,
     ParagraphToken,
     ListToken,
+    HeaderParser,
 } from './types';
 
 export class Renderer {
-    private parsers: Parser[];
     private state: ParserState;
+    private headerParsers: HeaderParser[];
+    private parsers: Parser[];
 
     constructor() {
         this.state = new ParserState();
+
+        this.headerParsers = [
+            frontMatterBoundaries,
+            fmKeyValueParser,
+            fmDataContainerParser,
+            fmDataItemParser,
+        ];
+
         this.parsers = [
             sectionParser,
             headingsParser,
@@ -44,10 +59,9 @@ export class Renderer {
     }
 
     renderMarkdown(markdown: string): Page {
-        const [header, body] = this.getDocumentStructure(markdown);
+        const [header, lines] = this.getDocumentStructure(markdown);
         const menuItems = this.state.showSections.join(' ');
 
-        const lines = body.split('\n');
         let html = '';
 
         // NOTE:
@@ -72,49 +86,42 @@ export class Renderer {
         return { html, menu: menuItems, header };
     }
 
-    private getDocumentStructure(markdown: string): [Header, string] {
-        const headerRegex = /---([\s\S]*?)---\n([\s\S]*)/;
-        const dataSplit = markdown.match(headerRegex);
-
-        if (!dataSplit || dataSplit.length !== 3) {
-            throw new Error('Invalid frontmatter format');
+    private getDocumentStructure(markdown: string): [Header, string[]] {
+        const allLines = markdown.split('\n');
+        if (!allLines.length) {
+            throw new Error('Empty file');
         }
 
-        const [, headerString, bodyString] = dataSplit;
         const header: Header = {};
-        let currentList = '';
+        const [firstLine, ...lines] = allLines;
 
-        for (const rawLine of headerString.split('\n')) {
-            const line = rawLine.trim();
-            if (!line) continue;
-
-            if (line.includes(': ')) {
-                const [key, ...value] = line.split(': ');
-                header[key] = value.join(': ').trim();
-                continue;
-            }
-
-            if (line.endsWith(':')) {
-                currentList = line.slice(0, -1);
-                header[currentList] = [];
-                continue;
-            }
-
-            const listItem = line.match(/^-\s*(.+)$/);
-
-            if (listItem) {
-                const array = header[currentList];
-                if (!Array.isArray(array)) {
-                    throw new Error(`Expected an Array`);
-                }
-                array.push(listItem[1]);
-                continue;
-            }
-
-            throw new Error(`Invalid item in list format: ${line}`);
+        this.headerParsers[0](firstLine, this.state);
+        if (!this.state.inHeader) {
+            return [header, allLines];
         }
 
-        return [header, bodyString];
+        let currentLine = 0;
+        while (this.state.inHeader || currentLine === lines.length) {
+            for (const parser of this.headerParsers) {
+                const headerToken = parser(lines[currentLine], this.state);
+
+                if (headerToken) {
+                    console.log(headerToken);
+                    break;
+                }
+
+                console.log('bla bla bla ');
+            }
+            currentLine++;
+        }
+
+        const markdownToRender = lines.slice(currentLine);
+
+        if (!markdownToRender.length) {
+            throw new Error('There is no markdown to parse');
+        }
+
+        return [header, markdownToRender];
     }
 
     private renderToken(token: ParsedToken): string {

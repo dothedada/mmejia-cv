@@ -123,10 +123,16 @@ const textFormatter = (text: string): string => {
         .replace(linkInParRegex, replaceLinkInString);
 };
 
-const hasFrontMatter: HeaderParser = (sectionData, state) => {
+const frontMatterBoundaries: HeaderParser = (sectionData, state) => {
     const frontMatterRegex = /^---$/;
-    if (frontMatterRegex.test(sectionData)) {
+    if (!frontMatterRegex.test(sectionData)) {
+        return;
+    }
+
+    if (state.inHeader === null) {
         state.setHeader(true);
+    } else if (state.inHeader === true) {
+        state.setHeader(false);
     }
 };
 
@@ -152,7 +158,7 @@ const fmKeyValueParser: HeaderParser = (sectionData, state) => {
 
     return {
         type: 'keyValue',
-        indent: indent.length,
+        indent: indent?.length ?? 0,
         key: keySanitizer(key),
         value,
     };
@@ -174,7 +180,7 @@ const fmDataContainerParser: HeaderParser = (sectionData, state) => {
 
     return {
         type: 'key',
-        indent: indent.length,
+        indent: indent?.length ?? 0,
         key: keySanitizer(key),
     };
 };
@@ -357,8 +363,7 @@ const dataPointParser: Parser = (sectionData) => {
 
 export {
     ParserState,
-    hasFrontMatter,
-    fmCloseFrontMatter,
+    frontMatterBoundaries,
     fmKeyValueParser,
     fmDataContainerParser,
     fmDataItemParser,
