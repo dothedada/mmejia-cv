@@ -68,6 +68,13 @@ const hasFrontMatter: HeaderParser = (sectionData, state) => {
     }
 };
 
+const fmCloseFrontMatter: HeaderParser = (sectionData, state) => {
+    const frontMatterRegex = /^---$/;
+    if (state.inHeader && sectionData.match(frontMatterRegex)) {
+        state.setHeader(false);
+    }
+};
+
 const fmKeyValueParser: HeaderParser = (sectionData, state) => {
     if (!state.inHeader) {
         return;
@@ -295,9 +302,14 @@ const paragraphParser: Parser = (sectionData) => {
     };
 };
 
+const injectionPoint: Parser = (sectionData) => {
+    //
+};
+
 export {
     ParserState,
     hasFrontMatter,
+    fmCloseFrontMatter,
     fmKeyValueParser,
     fmDataContainerParser,
     fmDataItemParser,
