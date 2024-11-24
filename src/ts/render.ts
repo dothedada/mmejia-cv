@@ -65,6 +65,7 @@ export class Renderer {
         let html = '';
 
         // NOTE:
+        // 0. Evitar reprocesos en el parseo del header ((iniciar el parseador del header))
         // 1. hacer el parseo de las dependencias antes para inyectarlas en
         //      el parseo del documento global
         // 2. hacer el render del menu
@@ -104,24 +105,29 @@ export class Renderer {
         while (this.state.inHeader || currentLine === lines.length) {
             for (const parser of this.headerParsers) {
                 const headerToken = parser(lines[currentLine], this.state);
-
                 if (headerToken) {
                     console.log(headerToken);
                     break;
                 }
-
-                console.log('bla bla bla ');
             }
             currentLine++;
         }
-
         const markdownToRender = lines.slice(currentLine);
-
         if (!markdownToRender.length) {
             throw new Error('There is no markdown to parse');
         }
 
         return [header, markdownToRender];
+    }
+
+    private renderHeaderToken(
+        headerToken: HeaderToken,
+        headerObject: Record<
+            string,
+            string | string[] | Record<string, string>
+        >,
+    ): void {
+        //
     }
 
     private renderToken(token: ParsedToken): string {

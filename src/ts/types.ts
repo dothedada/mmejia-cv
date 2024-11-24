@@ -1,10 +1,5 @@
 import { ParserState } from './parser';
 
-export type HeaderParser = (
-    sectionData: string,
-    state: ParserState,
-) => HeaderToken | void;
-
 export type HeaderToken = {
     indent: number;
 } & (
@@ -82,6 +77,10 @@ export interface DataInjectionPointToken {
 export type Parser = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => string;
 export type Header = Record<string, string | string[]>;
+export type HeaderParser = (
+    sectionData: string,
+    state: ParserState,
+) => HeaderToken | void;
 export interface Page {
     menu: string;
     html: string;
