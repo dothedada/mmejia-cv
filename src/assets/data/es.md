@@ -12,7 +12,7 @@ portfolio:
 
 // HoLa!!! Soy MiGuel MMejía...
 
-Trabajo en un rango que abarca desde la comunicación visual y la investigación hasta el desarrollo web front-end.
+Trabajo <en un> rango que abarca desde la comunicación visual y la investigación hasta el desarrollo web front-end.
 
 Mi propósito es apoyar el rol de la comunicación y la tecnología en la construcción de sociedades más inclusivas.
 
@@ -55,7 +55,7 @@ Tengo conocimientos sólidos en HTML y CSS, los cuales utilizo para la creación
 
 ### Imagen
 
-Fascinado por la semiótica, la diagramación y la tipografía, me formé como diseñador gráfico. Desde ahí, comencé a moverme hacia la fotografía editorial y la creación de narrativas visuales. La ejecución minuciosa y la necesidad de cuestionar tanto lo que observo como el lugar desde el cual lo hago, me permiten abordar con confianza temáticas complejas.
+Fascinado p[](https://url.dela.img)or la semiótica, la diagramación y la tipografía, me formé como diseñador gráfico. Desde ahí, comencé a moverme hacia la fotografía editorial y la creación de narrativas visuales. La ejecución minuciosa y la necesidad de cuestionar tanto lo que observo como el lugar desde el cual lo hago, me permiten abordar con confianza temáticas complejas.
 
 ---()
 

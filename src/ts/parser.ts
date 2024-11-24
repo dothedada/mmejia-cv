@@ -67,7 +67,7 @@ const htmlScapeChars: Record<string, string> = {
     '>': '&gt;',
     '"': '&quot;',
     "'": '&#x27;',
-    '/': '&#x2F;',
+    // '/': '&#x2F;',
     '`': '&#x60;',
     '=': '&#x3D;',
 };
@@ -75,7 +75,7 @@ const htmlScapeChars: Record<string, string> = {
 const keySanitizer = (rawKey: string): string =>
     rawKey
         .trim()
-        .replace(/[^\w0-9-_]/g, '-')
+        .replace(/ (\w)/g, (match) => match.toUpperCase())
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '');
 
@@ -88,6 +88,39 @@ const textSanitizer = (rawTxt: string): string => {
     return rawTxt
         .trim()
         .replace(specialCharsRegex, (match) => htmlScapeChars[match]);
+};
+
+const replaceLinkInString = (
+    _: string,
+    text: string,
+    href: string,
+    type?: string,
+): string => {
+    let attr = '';
+    if (type === 'B') {
+        attr = ' target="_blank"';
+    } else if (type === 'D') {
+        const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
+        const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
+        attr = ` download="${filename}" type="application/pdf"`;
+    }
+    return `<a href="${href.trim()}"${attr}>${text.trim() || href.trim()}</a>`;
+};
+
+const textFormatter = (text: string): string => {
+    const strongRegex = /\*\*([\w\s]+)\*\*/g;
+    const emphasisRegex = /\*(.+)\*/g;
+    const linkInParRegex = /\[(.*?)\]\((.+?)\)([BD])?/g;
+
+    const simpleWrapper = (label: string) => (text: string) =>
+        `<${label}>${text}</${label}>`;
+    const replaceStrong = simpleWrapper('strong');
+    const replaceEmphasis = simpleWrapper('em');
+
+    return text
+        .replace(strongRegex, replaceStrong)
+        .replace(emphasisRegex, replaceEmphasis)
+        .replace(linkInParRegex, replaceLinkInString);
 };
 
 const hasFrontMatter: HeaderParser = (sectionData, state) => {
@@ -293,35 +326,18 @@ const listParser: Parser = (sectionData) => {
 };
 
 const paragraphParser: Parser = (sectionData) => {
-    const strongRegex = /\*\*([\w\s]+)\*\*/g;
-    const emphasisRegex = /\*(.+)\*/g;
-    const linkInParRegex = /\[(.+)\]\((.+)\)([BD])?/g;
     const text = sectionData.trim();
 
     if (!text) {
         return;
     }
 
-    const replaceLink = (text: string, href: string, type?: string): string => {
-        let attr = '';
-        if (type === 'B') {
-            attr = ' target="_blank"';
-        } else if (type === 'D') {
-            const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
-            const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
-            attr = ` download="${filename}" type="application/pdf"`;
-        }
-        return `<a href="${href.trim()}"${attr}>${text.trim() || href.trim()}</a>`;
-    };
+    const textSanitized = textSanitizer(text);
+    const textFormatted = textFormatter(textSanitized);
 
     return {
         label: 'p',
-        content: text
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt')
-            .replace(strongRegex, '<strong>$1</strong>')
-            .replace(emphasisRegex, '<em>$1</em>')
-            .replace(linkInParRegex, replaceLink),
+        content: textFormatted,
     };
 };
 
@@ -354,5 +370,5 @@ export {
     imgParser,
     decoratorParser,
     paragraphParser,
-    dataPointParser as injectionDataPoint,
+    dataPointParser,
 };
