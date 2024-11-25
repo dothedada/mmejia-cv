@@ -76,7 +76,10 @@ export interface DataInjectionPointToken {
 
 export type Parser = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => string;
-export type Header = Record<string, string | string[]>;
+export type HeaderValue = string | string[] | Header;
+export interface Header {
+    [key: string]: HeaderValue;
+}
 export type HeaderParser = (
     sectionData: string,
     state: ParserState,

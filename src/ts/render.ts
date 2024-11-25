@@ -1,6 +1,6 @@
 import {
     ParserState,
-    frontMatterBoundaries,
+    fmBoundariesParser,
     fmKeyValueParser,
     fmDataContainerParser,
     fmDataItemParser,
@@ -15,6 +15,7 @@ import {
     dataPointParser,
 } from './parser';
 
+type HeaderSetter = (token: HeaderToken, header: Header) => void;
 import {
     Parser,
     Page,
@@ -29,6 +30,7 @@ import {
     ParagraphToken,
     ListToken,
     HeaderParser,
+    HeaderToken,
 } from './types';
 
 export class Renderer {
@@ -40,7 +42,7 @@ export class Renderer {
         this.state = new ParserState();
 
         this.headerParsers = [
-            frontMatterBoundaries,
+            fmBoundariesParser,
             fmKeyValueParser,
             fmDataContainerParser,
             fmDataItemParser,
@@ -94,6 +96,7 @@ export class Renderer {
         }
 
         const header: Header = {};
+        const parent: string[] = [];
         const [firstLine, ...lines] = allLines;
 
         this.headerParsers[0](firstLine, this.state);
@@ -106,12 +109,13 @@ export class Renderer {
             for (const parser of this.headerParsers) {
                 const headerToken = parser(lines[currentLine], this.state);
                 if (headerToken) {
-                    console.log(headerToken);
+                    this.insertHeaderToken(headerToken, header, parent);
                     break;
                 }
             }
             currentLine++;
         }
+
         const markdownToRender = lines.slice(currentLine);
         if (!markdownToRender.length) {
             throw new Error('There is no markdown to parse');
@@ -120,14 +124,39 @@ export class Renderer {
         return [header, markdownToRender];
     }
 
-    private renderHeaderToken(
-        headerToken: HeaderToken,
-        headerObject: Record<
-            string,
-            string | string[] | Record<string, string>
-        >,
+    private insertHeaderToken(
+        token: HeaderToken,
+        header: Header,
+        parent: string[],
     ): void {
-        //
+        if (token.indent <= parent.length) {
+            parent.length = token.indent;
+        }
+
+        if (token.type === 'key') {
+            parent.push(token.key);
+            return;
+        }
+
+        const insertionPoint = parent.length
+            ? parent.reduce((current, key) => {
+                  if (!current[key]) {
+                      current[key] = {};
+                  }
+                  return current[key] as Header;
+              }, header)
+            : header;
+
+        const key = parent[parent.length - 1];
+
+        if (token.type === 'keyValue') {
+            insertionPoint[token.key] = token.value;
+        } else {
+            if (!Array.isArray(insertionPoint[key])) {
+                insertionPoint[key] = [];
+            }
+            (insertionPoint[key] as string[]).push(token.value);
+        }
     }
 
     private renderToken(token: ParsedToken): string {

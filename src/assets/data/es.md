@@ -1,6 +1,5 @@
 ---
 date: 16/11/2024
-laPendeja: NNNNNnnn
 portfolio:
     - base.md
     - carajo.md

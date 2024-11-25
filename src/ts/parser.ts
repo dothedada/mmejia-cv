@@ -123,7 +123,7 @@ const textFormatter = (text: string): string => {
         .replace(linkInParRegex, replaceLinkInString);
 };
 
-const frontMatterBoundaries: HeaderParser = (sectionData, state) => {
+const fmBoundariesParser: HeaderParser = (sectionData, state) => {
     const frontMatterRegex = /^---$/;
     if (!frontMatterRegex.test(sectionData)) {
         return;
@@ -132,13 +132,6 @@ const frontMatterBoundaries: HeaderParser = (sectionData, state) => {
     if (state.inHeader === null) {
         state.setHeader(true);
     } else if (state.inHeader === true) {
-        state.setHeader(false);
-    }
-};
-
-const fmCloseFrontMatter: HeaderParser = (sectionData, state) => {
-    const frontMatterRegex = /^---$/;
-    if (state.inHeader && sectionData.match(frontMatterRegex)) {
         state.setHeader(false);
     }
 };
@@ -155,10 +148,11 @@ const fmKeyValueParser: HeaderParser = (sectionData, state) => {
     }
 
     const [, indent, key, value] = fmKeyValueMatch;
+    const indentCount = Math.floor(indent?.length / 4) || 0;
 
     return {
         type: 'keyValue',
-        indent: indent?.length ?? 0,
+        indent: indentCount,
         key: keySanitizer(key),
         value,
     };
@@ -177,10 +171,11 @@ const fmDataContainerParser: HeaderParser = (sectionData, state) => {
     }
 
     const [, indent, key] = fmDataContainerMatch;
+    const indentCount = Math.floor(indent?.length / 4) || 0;
 
     return {
         type: 'key',
-        indent: indent?.length ?? 0,
+        indent: indentCount,
         key: keySanitizer(key),
     };
 };
@@ -198,10 +193,11 @@ const fmDataItemParser: HeaderParser = (sectionData, state) => {
     }
 
     const [, indent, value] = fmDataItemMatch;
+    const indentCount = Math.floor(indent?.length / 4) || 0;
 
     return {
         type: 'value',
-        indent: indent.length,
+        indent: indentCount,
         value,
     };
 };
@@ -363,7 +359,7 @@ const dataPointParser: Parser = (sectionData) => {
 
 export {
     ParserState,
-    frontMatterBoundaries,
+    fmBoundariesParser,
     fmKeyValueParser,
     fmDataContainerParser,
     fmDataItemParser,

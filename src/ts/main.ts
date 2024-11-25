@@ -50,4 +50,4 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 
 const initialData = await dataLoader(getLang());
 const renderDom = new Renderer();
-console.log(renderDom.renderMarkdown(initialData).html);
+console.log(renderDom.renderMarkdown(initialData).header);
