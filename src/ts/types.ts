@@ -26,7 +26,7 @@ export type ParsedToken =
     | ParagraphToken
     | ListToken
     | HorizontalRuleToken
-    | DataInjectionPointToken;
+    | DataPointToken;
 
 export interface SectionToken {
     label: 'section';
@@ -69,7 +69,7 @@ export interface ListToken {
 export interface HorizontalRuleToken {
     label: 'hr';
 }
-export interface DataInjectionPointToken {
+export interface DataPointToken {
     label: 'dataPoint';
     content: string;
 }

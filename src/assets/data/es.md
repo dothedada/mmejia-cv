@@ -2,7 +2,6 @@
 date: 16/11/2024
 portfolio:
     - base.md
-    - carajo.md
 ---
 
 ---(about)
@@ -31,16 +30,6 @@ Idiomas
 -   JavaScript / TypeScipt
 -   CSS
 -   HTML
-    -   carajo
-    -   sub
--   Bash
--   Lua
-    -   nenenene
-    -   bla bla bla
-        -   bla bla ble
-        -   2313
-
-![texto alternativo](https://url.dela.img)
 
 ### Mi Perfíl
 
@@ -49,6 +38,8 @@ Tengo conocimientos sólidos en HTML y CSS, los cuales utilizo para la creación
 ---
 
 ## Antes del front-end
+
+@@ portfolio
 
 // y aptitudes
 

@@ -1,3 +1,4 @@
+import { dataLoader } from './loader';
 import {
     ParserState,
     fmBoundariesParser,
@@ -15,7 +16,6 @@ import {
     dataPointParser,
 } from './parser';
 
-type HeaderSetter = (token: HeaderToken, header: Header) => void;
 import {
     Parser,
     Page,
@@ -31,15 +31,18 @@ import {
     ListToken,
     HeaderParser,
     HeaderToken,
+    DataPointToken,
 } from './types';
 
 export class Renderer {
     private state: ParserState;
+    private header: Header;
     private headerParsers: HeaderParser[];
     private parsers: Parser[];
 
     constructor() {
         this.state = new ParserState();
+        this.header = {};
 
         this.headerParsers = [
             fmBoundariesParser,
@@ -56,18 +59,18 @@ export class Renderer {
             linkParser,
             imgParser,
             decoratorParser,
+            dataPointParser,
             paragraphParser,
         ];
     }
 
     renderMarkdown(markdown: string): Page {
-        const [header, lines] = this.getDocumentStructure(markdown);
+        const lines = this.getDocumentStructure(markdown);
         const menuItems = this.state.showSections.join(' ');
 
         let html = '';
 
         // NOTE:
-        // 0. Evitar reprocesos en el parseo del header ((iniciar el parseador del header))
         // 1. hacer el parseo de las dependencias antes para inyectarlas en
         //      el parseo del documento global
         // 2. hacer el render del menu
@@ -86,22 +89,22 @@ export class Renderer {
         html += this.state.inSubsection ? this.closeSubsection() : '';
         html += this.state.inSection ? this.closeSection() : '';
 
-        return { html, menu: menuItems, header };
+        return { html, menu: menuItems, header: this.header };
     }
 
-    private getDocumentStructure(markdown: string): [Header, string[]] {
+    private getDocumentStructure(markdown: string): string[] {
+        console.log(markdown);
         const allLines = markdown.split('\n');
         if (!allLines.length) {
             throw new Error('Empty file');
         }
 
-        const header: Header = {};
         const parent: string[] = [];
         const [firstLine, ...lines] = allLines;
 
         this.headerParsers[0](firstLine, this.state);
         if (!this.state.inHeader) {
-            return [header, allLines];
+            return allLines;
         }
 
         let currentLine = 0;
@@ -109,7 +112,7 @@ export class Renderer {
             for (const parser of this.headerParsers) {
                 const headerToken = parser(lines[currentLine], this.state);
                 if (headerToken) {
-                    this.insertHeaderToken(headerToken, header, parent);
+                    this.insertHeaderToken(headerToken, parent);
                     break;
                 }
             }
@@ -121,14 +124,10 @@ export class Renderer {
             throw new Error('There is no markdown to parse');
         }
 
-        return [header, markdownToRender];
+        return markdownToRender;
     }
 
-    private insertHeaderToken(
-        token: HeaderToken,
-        header: Header,
-        parent: string[],
-    ): void {
+    private insertHeaderToken(token: HeaderToken, parent: string[]): void {
         if (token.indent <= parent.length) {
             parent.length = token.indent;
         }
@@ -144,18 +143,18 @@ export class Renderer {
                       current[key] = {};
                   }
                   return current[key] as Header;
-              }, header)
-            : header;
+              }, this.header)
+            : this.header;
 
-        const key = parent[parent.length - 1];
+        const keyName = parent[parent.length - 1];
 
         if (token.type === 'keyValue') {
             insertionPoint[token.key] = token.value;
         } else {
-            if (!Array.isArray(insertionPoint[key])) {
-                insertionPoint[key] = [];
+            if (!Array.isArray(insertionPoint[keyName])) {
+                insertionPoint[keyName] = [];
             }
-            (insertionPoint[key] as string[]).push(token.value);
+            (insertionPoint[keyName] as string[]).push(token.value);
         }
     }
 
@@ -169,6 +168,7 @@ export class Renderer {
             div: (t) => this.divRenderer(t as DivToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
+            dataPoint: (t) => this.dataPointRenderer(t as DataPointToken),
         };
 
         return renderers[token.label](token) || '\n';
@@ -292,5 +292,29 @@ export class Renderer {
         this.state.setListLevel(token.indent);
 
         return `${prefix}<li>${token.content}</li>\n`;
+    }
+
+    private async dataPointRenderer(token: DataPointToken): Promise<string> {
+        if (!(token.content in this.header)) {
+            throw new Error(
+                `there is key ${token.content} to inkject in frontmatter`,
+            );
+        }
+        const cards = Object.values(this.header[token.content]);
+
+        const loadedCards = await Promise.all(
+            cards.map((card) => {
+                return dataLoader('es', token.content, card as string);
+            }),
+        );
+
+        const renderCards = loadedCards.map((card) => {
+            const renderer = new Renderer();
+            return renderer.renderMarkdown(card).header.stack.stack;
+        });
+
+        console.log(renderCards);
+
+        return `\n\n<div id="${token.content}">${cards.join(' ')}</div>\n\n\n`;
     }
 }
