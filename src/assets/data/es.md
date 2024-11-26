@@ -35,11 +35,11 @@ Idiomas
 
 Tengo conocimientos sólidos en HTML y CSS, los cuales utilizo para la creación de sitios accesibles y fluidos para la mayor cantidad de personas y dispositivos. Aunque avanzo con rapidez, sigo fortaleciendo mis bases en JavaScript, estructuras de datos y algoritmos.
 
----
-
-## Antes del front-end
+--- (portfolio)
 
 @@ portfolio
+
+## Antes del front-end
 
 // y aptitudes
 

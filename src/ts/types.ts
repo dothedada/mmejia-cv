@@ -75,7 +75,7 @@ export interface DataPointToken {
 }
 
 export type Parser = (sectionData: string) => ParsedToken | void;
-export type Render = (data: ParsedToken) => string;
+export type Render = (data: ParsedToken) => Promise<string> | string;
 export type HeaderValue = string | string[] | Header;
 export interface Header {
     [key: string]: HeaderValue;

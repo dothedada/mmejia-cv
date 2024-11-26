@@ -1,3 +1,4 @@
+import { getLang } from './lang';
 import { dataLoader } from './loader';
 import {
     ParserState,
@@ -33,6 +34,7 @@ import {
     HeaderToken,
     DataPointToken,
 } from './types';
+import uiSr_txt from './ui-sr_txt';
 
 export class Renderer {
     private state: ParserState;
@@ -64,15 +66,13 @@ export class Renderer {
         ];
     }
 
-    renderMarkdown(markdown: string): Page {
+    async renderMarkdown(markdown: string): Promise<Page> {
         const lines = this.getDocumentStructure(markdown);
         const menuItems = this.state.showSections.join(' ');
 
         let html = '';
 
         // NOTE:
-        // 1. hacer el parseo de las dependencias antes para inyectarlas en
-        //      el parseo del documento global
         // 2. hacer el render del menu
 
         for (const line of lines) {
@@ -80,7 +80,7 @@ export class Renderer {
                 const token = parser(line);
 
                 if (token) {
-                    html += this.renderToken(token);
+                    html += await this.renderToken(token);
                     break;
                 }
             }
@@ -93,7 +93,6 @@ export class Renderer {
     }
 
     private getDocumentStructure(markdown: string): string[] {
-        console.log(markdown);
         const allLines = markdown.split('\n');
         if (!allLines.length) {
             throw new Error('Empty file');
@@ -158,7 +157,7 @@ export class Renderer {
         }
     }
 
-    private renderToken(token: ParsedToken): string {
+    private async renderToken(token: ParsedToken): Promise<string> {
         const renderers: Record<string, Render> = {
             section: (t) => this.sectionRenderer(t as SectionToken),
             h: (t) => this.headingRenderer(t as HeadingToken),
@@ -168,10 +167,11 @@ export class Renderer {
             div: (t) => this.divRenderer(t as DivToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
-            dataPoint: (t) => this.dataPointRenderer(t as DataPointToken),
+            dataPoint: async (t) =>
+                await this.dataPointRenderer(t as DataPointToken),
         };
 
-        return renderers[token.label](token) || '\n';
+        return (await renderers[token.label](token)) || '\n';
     }
 
     private closeList(): string {
@@ -300,21 +300,45 @@ export class Renderer {
                 `there is key ${token.content} to inkject in frontmatter`,
             );
         }
-        const cards = Object.values(this.header[token.content]);
+        const items = Object.values(this.header[token.content]);
 
-        const loadedCards = await Promise.all(
-            cards.map((card) => {
-                return dataLoader('es', token.content, card as string);
+        const lang = getLang();
+        const loadedItems = await Promise.all(
+            items.map(async (card) => {
+                const data = await dataLoader(
+                    lang,
+                    token.content,
+                    card as string,
+                );
+                const renderer = new Renderer();
+                return await renderer.renderMarkdown(data);
             }),
         );
 
-        const renderCards = loadedCards.map((card) => {
-            const renderer = new Renderer();
-            return renderer.renderMarkdown(card).header.stack.stack;
+        const cardsHtml = loadedItems.map((item) => {
+            return this.cardRenderer(item.header);
         });
 
-        console.log(renderCards);
+        return `\n\n<div id="${token.content}">\n${cardsHtml.join(' ')}\n</div>\n\n\n`;
+    }
 
-        return `\n\n<div id="${token.content}">${cards.join(' ')}</div>\n\n\n`;
+    private cardRenderer(item: Header): string {
+        const lang = getLang();
+        return `
+        <div class="card">
+            <h3>${item.title}</h3>
+            <p>${item.summary}</p>
+            <img alt="${item.previewTxt}" src="${item.preview}">
+            <p>${item.additionalData}</p>
+            <p>${item.stack}</p>
+            <button type="button">${uiSr_txt[lang].card.viewMore}</button>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                ${uiSr_txt[lang].card.viewProject}
+            </a>
+            <a href="${item.repository}" target="_blank" rel="noopener noreferrer">
+                ${uiSr_txt[lang].card.viewRepository}
+            </a>
+        </div>
+    `.trim();
     }
 }
