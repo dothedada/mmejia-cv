@@ -129,7 +129,7 @@ li {
 }
 
 hr {
-    margin: calc(var(--line-height) * 3) 0 calc(var(--line-height) * 4);
+    margin: calc(var(--line-height) * 3) 0 calc(var(--line-height) * 4 - 1px);
     padding: 0;
     border: none;
     border-bottom: 1px dotted var(--text);

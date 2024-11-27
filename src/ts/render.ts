@@ -1,7 +1,7 @@
 import { getLang } from './lang';
 import { dataLoader } from './loader';
+import { ParserState } from './stateManager';
 import {
-    ParserState,
     fmBoundariesParser,
     fmKeyValueParser,
     fmDataContainerParser,
@@ -338,6 +338,7 @@ export class Renderer {
             <a href="${item.repository}" target="_blank" rel="noopener noreferrer">
                 ${uiSr_txt[lang].card.viewRepository}
             </a>
+            
         </div>
     `.trim();
     }

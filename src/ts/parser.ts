@@ -1,65 +1,5 @@
+import { ParserState } from './stateManager';
 import { Parser, ParsedToken, HeaderParser } from './types';
-
-class ParserState {
-    private isHeader: boolean | null;
-    private sections: string[];
-    private isSectionOpen: boolean;
-    private isSubsectionOpen: boolean;
-    private listLevel: number | null;
-
-    constructor() {
-        this.isHeader = null;
-        this.sections = [];
-        this.isSectionOpen = false;
-        this.isSubsectionOpen = false;
-        this.listLevel = null;
-    }
-
-    get inHeader(): boolean | null {
-        return this.isHeader;
-    }
-
-    setHeader(inHeader: boolean) {
-        this.isHeader = inHeader;
-    }
-
-    get currentSection(): string {
-        return this.sections[this.sections.length - 1];
-    }
-
-    get inSection(): boolean {
-        return this.isSectionOpen;
-    }
-
-    setInSection(openSection: boolean) {
-        this.isSectionOpen = openSection;
-    }
-
-    get showSections(): string[] {
-        return this.sections;
-    }
-
-    setSection(section: string) {
-        this.sections.push(section);
-        this.setInSection(true);
-    }
-
-    get inSubsection(): boolean {
-        return this.isSubsectionOpen;
-    }
-
-    setSubsection(setOpen: boolean) {
-        this.isSubsectionOpen = setOpen;
-    }
-
-    get currentListLevel(): number | null {
-        return this.listLevel;
-    }
-
-    setListLevel(indentation: number | null) {
-        this.listLevel = indentation;
-    }
-}
 
 const htmlScapeChars: Record<string, string> = {
     '&': '&amp;',
@@ -67,27 +7,40 @@ const htmlScapeChars: Record<string, string> = {
     '>': '&gt;',
     '"': '&quot;',
     "'": '&#x27;',
-    // '/': '&#x2F;',
     '`': '&#x60;',
     '=': '&#x3D;',
+    // '/': '&#x2F;',
 };
 
-const keySanitizer = (rawKey: string): string =>
-    rawKey
-        .trim()
+const keySanitizer = (rawKey: string): string => {
+    const keyToSanitize = rawKey.trim();
+
+    if (!keyToSanitize) {
+        new Error(`there is no text to sanitize: ${rawKey}`);
+    }
+
+    return keyToSanitize
         .replace(/ (\w)/g, (match) => match.toUpperCase())
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '');
+};
 
 const textSanitizer = (rawTxt: string): string => {
+    const textToSanitize = rawTxt.trim();
+
+    if (!textToSanitize) {
+        new Error(`there is no text to sanitize: ${rawTxt}`);
+    }
+
     const specialCharsRegex = new RegExp(
         `[${Object.keys(htmlScapeChars).join('')}]`,
         'g',
     );
 
-    return rawTxt
-        .trim()
-        .replace(specialCharsRegex, (match) => htmlScapeChars[match]);
+    return textToSanitize.replace(
+        specialCharsRegex,
+        (match) => htmlScapeChars[match],
+    );
 };
 
 const replaceLinkInString = (
@@ -154,7 +107,7 @@ const fmKeyValueParser: HeaderParser = (sectionData, state) => {
         type: 'keyValue',
         indent: indentCount,
         key: keySanitizer(key),
-        value,
+        value: textSanitizer(value),
     };
 };
 
@@ -198,7 +151,7 @@ const fmDataItemParser: HeaderParser = (sectionData, state) => {
     return {
         type: 'value',
         indent: indentCount,
-        value,
+        value: textSanitizer(value),
     };
 };
 
@@ -210,7 +163,10 @@ const sectionParser: Parser = (sectionData) => {
         return;
     }
 
-    return { label: 'section', name: section[1] };
+    return {
+        label: 'section',
+        name: keySanitizer(section[1]),
+    };
 };
 
 const headingsParser: Parser = (sectionData) => {
@@ -229,12 +185,8 @@ const headingsParser: Parser = (sectionData) => {
     return {
         label: 'h',
         level: hashes.length,
-        content: heading,
-        id: heading
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w-]/g, ''),
+        content: textFormatter(textSanitizer(heading)),
+        id: keySanitizer(heading),
     };
 };
 
@@ -248,7 +200,7 @@ const decoratorParser: Parser = (sectionData) => {
     return {
         label: 'div',
         class: 'decorator',
-        content: decoratorArray[1],
+        content: textSanitizer(decoratorArray[1]),
     };
 };
 
@@ -268,7 +220,9 @@ const linkParser: Parser = (sectionData) => {
     const linkProps: ParsedToken = {
         label: 'a',
         href: link.trim(),
-        content: linkTxt.trim() || link.trim(),
+        content:
+            textFormatter(textSanitizer(linkTxt)) ||
+            textFormatter(textSanitizer(link)),
     };
     if (linkType === 'D') {
         const filename = link.match(filenameRegex)?.[1] || 'myDownload.pdf';
@@ -295,7 +249,7 @@ const imgParser: Parser = (sectionData) => {
 
     return {
         label: 'img',
-        alt: imgAlt.replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+        alt: textSanitizer(imgAlt),
         src: imgSrc.replace(/"/g, '&quot;'),
     };
 };
@@ -322,7 +276,7 @@ const listParser: Parser = (sectionData) => {
 
     return {
         label: 'li',
-        content: item,
+        content: textFormatter(textSanitizer(item)),
         indent: indentCount,
     };
 };
@@ -334,12 +288,9 @@ const paragraphParser: Parser = (sectionData) => {
         return;
     }
 
-    const textSanitized = textSanitizer(text);
-    const textFormatted = textFormatter(textSanitized);
-
     return {
         label: 'p',
-        content: textFormatted,
+        content: textFormatter(textSanitizer(text)),
     };
 };
 
@@ -358,7 +309,6 @@ const dataPointParser: Parser = (sectionData) => {
 };
 
 export {
-    ParserState,
     fmBoundariesParser,
     fmKeyValueParser,
     fmDataContainerParser,

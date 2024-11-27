@@ -47,8 +47,24 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 });
 
 // data
+function initializePage() {
+    dataLoader(getLang())
+        .then((initialData) => {
+            const renderDom = new Renderer();
+            return renderDom.renderMarkdown(initialData);
+        })
+        .then((parsedData) => {
+            const main = document.querySelector('main')!;
+            main.innerHTML = parsedData.html;
+        })
+        .catch((error) => {
+            console.error('Error initializing the page:', error);
+        });
+}
 
-const initialData = await dataLoader(getLang());
-const renderDom = new Renderer();
-const parsedData = await renderDom.renderMarkdown(initialData);
-console.log(parsedData.html);
+initializePage();
+// const initialData = await dataLoader(getLang());
+// const renderDom = new Renderer();
+// const parsedData = await renderDom.renderMarkdown(initialData);
+// const main = document.querySelector('main')!;
+// main.innerHTML = parsedData.html;
