@@ -1,6 +1,7 @@
 import '../css/style.css';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
+import { Parser } from './parser';
 import { Renderer } from './render';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
@@ -47,7 +48,27 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 });
 
 // data
+function initializePage() {
+    dataLoader(getLang())
+        .then((data) => {
+            const parser = new Parser();
+            const parsed = parser.parseDocument(data);
+            return parsed;
+        })
+        .then((parsed) => {
+            const render = new Renderer();
+            const { html, menu } = render.renderMarkdown(parsed);
+            const main = document.querySelector<HTMLElement>('main')!;
+            const menuContainer =
+                document.querySelector<HTMLUListElement>('.menu__links')!;
+            menuContainer.innerHTML = menu;
+            main.innerHTML = html;
+        });
+}
 
-const initialData = await dataLoader(getLang());
-const renderDom = new Renderer();
-console.log(renderDom.renderMarkdown(initialData).html);
+initializePage();
+// const initialData = await dataLoader(getLang());
+// const renderDom = new Renderer();
+// const parsedData = await renderDom.renderMarkdown(initialData);
+// const main = document.querySelector('main')!;
+// main.innerHTML = parsedData.html;

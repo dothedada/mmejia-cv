@@ -1,23 +1,8 @@
-import {
-    ParserState,
-    frontMatterBoundaries,
-    fmKeyValueParser,
-    fmDataContainerParser,
-    fmDataItemParser,
-    sectionParser,
-    headingsParser,
-    hrParser,
-    listParser,
-    linkParser,
-    imgParser,
-    decoratorParser,
-    paragraphParser,
-    dataPointParser,
-} from './parser';
+import { getLang } from './lang';
+import { RenderState } from './stateManager';
+import { keySanitizer } from './textModifiers';
 
 import {
-    Parser,
-    Page,
     Header,
     ParsedToken,
     Render,
@@ -28,106 +13,53 @@ import {
     DivToken,
     ParagraphToken,
     ListToken,
-    HeaderParser,
+    DataPointToken,
+    ParsedDocument,
+    SideFile,
+    Page,
 } from './types';
+import uiSr_txt from './ui-sr_txt';
+
+// NOTE:
+// 1. arreglar lo de congelar el sitio cuando la pantalla esta en blur
+// 2. linkear los botones de ver mas
+// 3. crear el footer con la fecha
+// 4. implementar estilos de los elementos
+// poblar :D
 
 export class Renderer {
-    private state: ParserState;
-    private headerParsers: HeaderParser[];
-    private parsers: Parser[];
+    private state: RenderState;
+    private sideFiles: SideFile;
+    private modals: Record<string, string>;
 
     constructor() {
-        this.state = new ParserState();
-
-        this.headerParsers = [
-            frontMatterBoundaries,
-            fmKeyValueParser,
-            fmDataContainerParser,
-            fmDataItemParser,
-        ];
-
-        this.parsers = [
-            sectionParser,
-            headingsParser,
-            hrParser,
-            listParser,
-            linkParser,
-            imgParser,
-            decoratorParser,
-            paragraphParser,
-        ];
+        this.state = new RenderState();
+        this.modals = {};
     }
 
-    renderMarkdown(markdown: string): Page {
-        const [header, lines] = this.getDocumentStructure(markdown);
-        const menuItems = this.state.showSections.join(' ');
+    renderMarkdown(parsedDocument: ParsedDocument): Page {
+        const { body, sideFiles } = parsedDocument;
+        this.sideFiles = sideFiles;
 
         let html = '';
-
-        // NOTE:
-        // 0. Evitar reprocesos en el parseo del header ((iniciar el parseador del header))
-        // 1. hacer el parseo de las dependencias antes para inyectarlas en
-        //      el parseo del documento global
-        // 2. hacer el render del menu
-
-        for (const line of lines) {
-            for (const parser of this.parsers) {
-                const token = parser(line);
-
-                if (token) {
-                    html += this.renderToken(token);
-                    break;
-                }
-            }
+        for (const line of body) {
+            html += this.renderToken(line);
         }
 
         html += this.state.inSubsection ? this.closeSubsection() : '';
         html += this.state.inSection ? this.closeSection() : '';
-
-        return { html, menu: menuItems, header };
-    }
-
-    private getDocumentStructure(markdown: string): [Header, string[]] {
-        const allLines = markdown.split('\n');
-        if (!allLines.length) {
-            throw new Error('Empty file');
-        }
-
-        const header: Header = {};
-        const [firstLine, ...lines] = allLines;
-
-        this.headerParsers[0](firstLine, this.state);
-        if (!this.state.inHeader) {
-            return [header, allLines];
-        }
-
-        let currentLine = 0;
-        while (this.state.inHeader || currentLine === lines.length) {
-            for (const parser of this.headerParsers) {
-                const headerToken = parser(lines[currentLine], this.state);
-                if (headerToken) {
-                    console.log(headerToken);
-                    break;
-                }
+        if (Object.keys(this.modals).length) {
+            for (const modal of Object.keys(this.modals)) {
+                html += `<dialog id="${modal}">${this.modals[modal]}</dialog>`;
             }
-            currentLine++;
-        }
-        const markdownToRender = lines.slice(currentLine);
-        if (!markdownToRender.length) {
-            throw new Error('There is no markdown to parse');
         }
 
-        return [header, markdownToRender];
-    }
+        let menuItems = '\n';
+        for (const section of this.state.showSections) {
+            menuItems += `<li><a href="#${section[0]}">${section[1]}</a></li>\n`;
+        }
 
-    private renderHeaderToken(
-        headerToken: HeaderToken,
-        headerObject: Record<
-            string,
-            string | string[] | Record<string, string>
-        >,
-    ): void {
-        //
+        return { html, menu: menuItems };
     }
 
     private renderToken(token: ParsedToken): string {
@@ -140,6 +72,7 @@ export class Renderer {
             div: (t) => this.divRenderer(t as DivToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
+            dataPoint: (t) => this.dataPointRenderer(t as DataPointToken),
         };
 
         return renderers[token.label](token) || '\n';
@@ -161,13 +94,13 @@ export class Renderer {
     private closeSubsection(): string {
         this.state.setSubsection(false);
         const prefix = this.closeList();
-        return `${prefix}\t</div>\n`;
+        return `${prefix}</div>\n`;
     }
 
     private closeSection(): string {
         this.state.setInSection(false);
         const prefix = this.state.inSubsection ? this.closeSubsection() : '';
-        return `${prefix}</section>\n\n`;
+        return `${prefix}</section>\n`;
     }
 
     private openSubsection(): string {
@@ -176,7 +109,7 @@ export class Renderer {
             prefix += this.closeSubsection();
         }
         this.state.setSubsection(true);
-        return `${prefix}\n\n\t<div class="sub lala">\n`;
+        return `${prefix}<div class="sub lala">\n`;
     }
 
     private sectionRenderer(token: SectionToken): string {
@@ -187,10 +120,10 @@ export class Renderer {
         if (this.state.inSection) {
             prefix = this.closeSection();
         }
-        if (this.state.currentSection === token.name) {
+        if (this.state.currentSection?.[1] === token.name) {
             return prefix;
         }
-        this.state.setSection(token.name);
+        this.state.setSection([token.id, token.name]);
         return `${prefix}<section id="${token.name}">\n`;
     }
 
@@ -203,6 +136,7 @@ export class Renderer {
         } else {
             prefix = this.closeList();
         }
+
         return `${prefix}<h${token.level} id="${token.id}">${token.content}</h${token.level}>\n`;
     }
 
@@ -228,7 +162,11 @@ export class Renderer {
 
     private imgRenderer(token: ImgToken): string {
         const prefix = this.closeList();
-        return `${prefix}<img alt="${token.alt}" src="${token.src}">\n`;
+        const img = `<img alt="${token.alt}" src="${token.src}">\n`;
+        if (token.figCaption) {
+            return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n<figure>`;
+        }
+        return `${prefix}${img}`;
     }
 
     private divRenderer(token: DivToken): string {
@@ -263,5 +201,59 @@ export class Renderer {
         this.state.setListLevel(token.indent);
 
         return `${prefix}<li>${token.content}</li>\n`;
+    }
+
+    private dataPointRenderer(token: DataPointToken): string {
+        if (!this.sideFiles) {
+            return 'no sidefile to inject';
+        }
+
+        if (!(token.content in this.sideFiles)) {
+            throw new Error(
+                `there is ${token.content} in the parsed files to inkject in frontmatter`,
+            );
+        }
+
+        let html = '';
+        const sideFilesToInject = this.sideFiles[token.content];
+
+        for (const file of sideFilesToInject) {
+            const { header, body } = file;
+
+            if (header) {
+                const id = keySanitizer(
+                    `${header.title}${Math.round(Math.random() * 100)}`,
+                );
+                let modalBody = '';
+                for (const line of body) {
+                    modalBody += this.renderToken(line);
+                }
+                this.modals[id] = modalBody;
+                html += this.cardRenderer(header, id);
+            }
+        }
+
+        return `\t<div id="${token.content}">\n${html}\n\t</div>\n`;
+    }
+
+    private cardRenderer(item: Header, id: string): string {
+        const lang = getLang();
+        return `
+        <div class="card" data-modal="${id}">
+            <h3>${item.title}</h3>
+            <p>${item.summary}</p>
+            <img alt="${item.previewTxt}" src="${item.preview}">
+            <p>${item.aditionalData}</p>
+            <p>${item.stack}</p>
+            <button type="button">${uiSr_txt[lang].card.viewMore}</button>
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                ${uiSr_txt[lang].card.viewProject}
+            </a>
+            <a href="${item.repository}" target="_blank" rel="noopener noreferrer">
+                ${uiSr_txt[lang].card.viewRepository}
+            </a>
+
+        </div>
+    `.trim();
     }
 }

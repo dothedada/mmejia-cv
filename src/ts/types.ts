@@ -1,5 +1,3 @@
-import { ParserState } from './parser';
-
 export type HeaderToken = {
     indent: number;
 } & (
@@ -26,11 +24,12 @@ export type ParsedToken =
     | ParagraphToken
     | ListToken
     | HorizontalRuleToken
-    | DataInjectionPointToken;
+    | DataPointToken;
 
 export interface SectionToken {
     label: 'section';
     name: string;
+    id: string;
 }
 export interface DivToken {
     label: 'div';
@@ -56,6 +55,7 @@ export interface ImgToken {
     label: 'img';
     src: string;
     alt: string;
+    figCaption: string | undefined;
 }
 export interface ParagraphToken {
     label: 'p';
@@ -69,20 +69,25 @@ export interface ListToken {
 export interface HorizontalRuleToken {
     label: 'hr';
 }
-export interface DataInjectionPointToken {
+export interface DataPointToken {
     label: 'dataPoint';
     content: string;
 }
 
-export type Parser = (sectionData: string) => ParsedToken | void;
+export type Parsers = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => string;
-export type Header = Record<string, string | string[]>;
-export type HeaderParser = (
-    sectionData: string,
-    state: ParserState,
-) => HeaderToken | void;
+export type HeaderValue = string | string[] | Record<string, HeaderValue[]>;
+export interface Header {
+    [key: string]: HeaderValue;
+}
+export type SideFile = Record<string, ParsedDocument[]> | null | undefined;
+export interface ParsedDocument {
+    header: Header | null;
+    body: ParsedToken[];
+    sideFiles?: SideFile;
+}
+export type HeaderParser = (sectionData: string) => HeaderToken | void;
 export interface Page {
     menu: string;
     html: string;
-    header: Header;
 }

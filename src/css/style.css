@@ -5,7 +5,7 @@
     --links: #ffbf00;
     --secondary: #ceaef5;
     --backup: #a0f3de;
-    --grid-lines: rgb(0 0 0 / 0.3);
+    --grid-lines-color: rgb(0 0 0 / 0.3);
     --transparent: rgb(0 0 0 / 0);
 
     --font-text: 'Martian Mono', monospace;
@@ -15,12 +15,12 @@
     --grid: linear-gradient(
             to right,
             transparent calc(var(--line-height) - 1px),
-            var(--grid-lines) 1px
+            var(--grid-lines-color) 1px
         ),
         linear-gradient(
             to bottom,
             transparent calc(var(--line-height) - 1px),
-            var(--grid-lines) 1px
+            var(--grid-lines-color) 1px
         );
     --grid-offset: 0 calc(var(--base-size) * -0.25);
     --line-height: calc(var(--base-size) * 1.5);
@@ -108,19 +108,32 @@ body {
     background-image: linear-gradient(
             to right,
             transparent calc(var(--line-height) - 1px),
-            var(--grid-lines) 1px
+            var(--grid-lines-color) 1px
         ),
         linear-gradient(
             to bottom,
             transparent calc(var(--line-height) - 1px),
-            var(--grid-lines) 1px
+            var(--grid-lines-color) 1px
         );
     background-size: var(--line-height) var(--line-height);
     background-position: var(--grid-offset);
 }
 
-main {
-    /* background: red; */
+ul,
+li {
+    margin: 0;
+    padding: 0;
+    line-height: var(--line-height);
+    border: none;
+    list-style: none;
+}
+
+hr {
+    margin: calc(var(--line-height) * 3) 0 calc(var(--line-height) * 4 - 1px);
+    padding: 0;
+    border: none;
+    border-bottom: 1px dotted var(--text);
+    transform: translateY(calc(var(--line-height) * -0.2));
 }
 
 .menu {

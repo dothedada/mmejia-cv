@@ -1,13 +1,23 @@
 type Lang = 'es' | 'en';
 
-const dataLoader = async (lang: Lang): Promise<string> => {
-    const mdFiles = import.meta.glob('../assets/data/*.md', {
+const dataLoader = async (
+    lang: Lang,
+    folder?: string,
+    filename?: string,
+): Promise<string> => {
+    const mdFiles = import.meta.glob('../assets/data/**/*.md', {
         query: '?raw',
         import: 'default',
     });
-    const filePath = `../assets/data/${lang}.md`;
+
+    let filePath = '../assets/data/';
     const fileFallback = '../assets/data/fallback.md';
-    const loader = mdFiles[filePath] || mdFiles[fileFallback];
+    if (!folder) {
+        filePath += `${lang}.md`;
+    } else {
+        filePath += `${folder}/${lang}/${filename}`;
+    }
+    const loader = mdFiles[filePath]; //|| mdFiles[fileFallback];
 
     if (!loader) {
         throw new Error(
