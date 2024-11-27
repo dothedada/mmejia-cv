@@ -1,7 +1,7 @@
 import '../css/style.css';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
-import { Renderer } from './render';
+import { Parser } from './parser';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
@@ -49,17 +49,11 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 // data
 function initializePage() {
     dataLoader(getLang())
-        .then((initialData) => {
-            const renderDom = new Renderer();
-            return renderDom.renderMarkdown(initialData);
+        .then((data) => {
+            const parser = new Parser();
+            return parser.parseDocument(data);
         })
-        .then((parsedData) => {
-            const main = document.querySelector('main')!;
-            main.innerHTML = parsedData.html;
-        })
-        .catch((error) => {
-            console.error('Error initializing the page:', error);
-        });
+        .then((parsed) => console.log(parsed));
 }
 
 initializePage();

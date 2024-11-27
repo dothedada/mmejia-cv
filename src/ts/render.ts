@@ -1,24 +1,9 @@
 import { getLang } from './lang';
 import { dataLoader } from './loader';
 import { ParserState } from './stateManager';
-import {
-    fmBoundariesParser,
-    fmKeyValueParser,
-    fmDataContainerParser,
-    fmDataItemParser,
-    sectionParser,
-    headingsParser,
-    hrParser,
-    listParser,
-    linkParser,
-    imgParser,
-    decoratorParser,
-    paragraphParser,
-    dataPointParser,
-} from './parser';
 
 import {
-    Parser,
+    Parsers,
     Page,
     Header,
     ParsedToken,
@@ -40,7 +25,7 @@ export class Renderer {
     private state: ParserState;
     private header: Header;
     private headerParsers: HeaderParser[];
-    private parsers: Parser[];
+    private parsers: Parsers[];
 
     constructor() {
         this.state = new ParserState();
@@ -68,7 +53,7 @@ export class Renderer {
 
     async renderMarkdown(markdown: string): Promise<Page> {
         const lines = this.getDocumentStructure(markdown);
-        const menuItems = this.state.showSections.join(' ');
+        const menuItems = this.state.findSection.join(' ');
 
         let html = '';
 

@@ -1,5 +1,3 @@
-import { ParserState } from './parser';
-
 export type HeaderToken = {
     indent: number;
 } & (
@@ -74,16 +72,18 @@ export interface DataPointToken {
     content: string;
 }
 
-export type Parser = (sectionData: string) => ParsedToken | void;
+export type Parsers = (sectionData: string) => ParsedToken | void;
 export type Render = (data: ParsedToken) => Promise<string> | string;
-export type HeaderValue = string | string[] | Header;
+export type HeaderValue = string | string[] | Record<string, HeaderValue[]>;
 export interface Header {
     [key: string]: HeaderValue;
 }
-export type HeaderParser = (
-    sectionData: string,
-    state: ParserState,
-) => HeaderToken | void;
+export interface ParsedDocument {
+    header: Header | null;
+    body: ParsedToken[];
+    subSections?: Record<string, ParsedToken[]> | null;
+}
+export type HeaderParser = (sectionData: string) => HeaderToken | void;
 export interface Page {
     menu: string;
     html: string;
