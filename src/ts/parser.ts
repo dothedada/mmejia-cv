@@ -1,19 +1,15 @@
 import { getLang } from './lang';
 import { dataLoader } from './loader';
 import { ParserState } from './stateManager';
+import { keySanitizer, textSanitizer, textFormatter } from './textModifiers';
 import {
     Parsers,
     ParsedToken,
     HeaderParser,
     Header,
     HeaderToken,
+    ParsedDocument,
 } from './types';
-
-interface ParsedDocument {
-    header: Header | null;
-    body: ParsedToken[];
-    subSections?: Record<string, ParsedDocument[]> | null;
-}
 
 export class Parser {
     private state: ParserState;
@@ -60,10 +56,10 @@ export class Parser {
         }
 
         for (const key of Object.keys(this.header)) {
-            if (!this.state.findSection(key)) {
+            if (!this.state.findDataInjector(key)) {
                 continue;
             }
-            parsedDocument.subSections = parsedDocument.subSections ?? {};
+            parsedDocument.sideFiles = parsedDocument.sideFiles ?? {};
 
             const files = header[key] as string[];
             const lang = getLang();
@@ -75,7 +71,7 @@ export class Parser {
                 }),
             );
 
-            parsedDocument.subSections[key] = loadItems;
+            parsedDocument.sideFiles[key] = loadItems;
         }
 
         return parsedDocument;
@@ -192,8 +188,8 @@ export class Parser {
         return {
             type: 'keyValue',
             indent: indentCount,
-            key: this.keySanitizer(key),
-            value: this.textSanitizer(value),
+            key: keySanitizer(key),
+            value: textSanitizer(value),
         };
     };
 
@@ -215,7 +211,7 @@ export class Parser {
         return {
             type: 'key',
             indent: indentCount,
-            key: this.keySanitizer(key),
+            key: keySanitizer(key),
         };
     };
 
@@ -237,7 +233,7 @@ export class Parser {
         return {
             type: 'value',
             indent: indentCount,
-            value: this.textSanitizer(value),
+            value: textSanitizer(value),
         };
     };
 
@@ -249,12 +245,9 @@ export class Parser {
             return;
         }
 
-        const sectionSanitized = this.keySanitizer(section[1]);
-        this.state.setSection(sectionSanitized);
-
         return {
             label: 'section',
-            name: sectionSanitized,
+            name: keySanitizer(section[1]),
         };
     };
 
@@ -274,8 +267,8 @@ export class Parser {
         return {
             label: 'h',
             level: hashes.length,
-            content: this.textFormatter(this.textSanitizer(heading)),
-            id: this.keySanitizer(heading),
+            content: textFormatter(textSanitizer(heading)),
+            id: keySanitizer(heading),
         };
     };
 
@@ -289,7 +282,7 @@ export class Parser {
         return {
             label: 'div',
             class: 'decorator',
-            content: this.textSanitizer(decoratorArray[1]),
+            content: textSanitizer(decoratorArray[1]),
         };
     };
 
@@ -310,8 +303,8 @@ export class Parser {
             label: 'a',
             href: link.trim(),
             content:
-                this.textFormatter(this.textSanitizer(linkTxt)) ||
-                this.textFormatter(this.textSanitizer(link)),
+                textFormatter(textSanitizer(linkTxt)) ||
+                textFormatter(textSanitizer(link)),
         };
         if (linkType === 'D') {
             const filename = link.match(filenameRegex)?.[1] || 'myDownload.pdf';
@@ -340,7 +333,7 @@ export class Parser {
 
         return {
             label: 'img',
-            alt: this.textSanitizer(imgAlt),
+            alt: textSanitizer(imgAlt),
             src: imgSrc.replace(/"/g, '&quot;'),
         };
     };
@@ -367,7 +360,7 @@ export class Parser {
 
         return {
             label: 'li',
-            content: this.textFormatter(this.textSanitizer(item)),
+            content: textFormatter(textSanitizer(item)),
             indent: indentCount,
         };
     };
@@ -381,7 +374,7 @@ export class Parser {
 
         return {
             label: 'p',
-            content: this.textFormatter(this.textSanitizer(text)),
+            content: textFormatter(textSanitizer(text)),
         };
     };
 
@@ -393,86 +386,11 @@ export class Parser {
             return;
         }
 
-        this.state.setSection(injectionPointMatch[1]);
+        this.state.setDataInjector(injectionPointMatch[1]);
 
         return {
             label: 'dataPoint',
             content: injectionPointMatch[1],
         };
     };
-
-    private htmlScapeChars: Record<string, string> = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#x27;',
-        '`': '&#x60;',
-        '=': '&#x3D;',
-        // '/': '&#x2F;',
-    };
-
-    private keySanitizer(rawKey: string): string {
-        const keyToSanitize = rawKey.trim();
-
-        if (!keyToSanitize) {
-            new Error(`there is no text to sanitize: ${rawKey}`);
-        }
-
-        return keyToSanitize
-            .replace(/ (\w)/g, (match) => match.toUpperCase())
-            .replace(/-+/g, '-')
-            .replace(/^-+|-+$/g, '');
-    }
-
-    private textSanitizer(rawTxt: string): string {
-        const textToSanitize = rawTxt.trim();
-
-        if (!textToSanitize) {
-            new Error(`there is no text to sanitize: ${rawTxt}`);
-        }
-
-        const specialCharsRegex = new RegExp(
-            `[${Object.keys(this.htmlScapeChars).join('')}]`,
-            'g',
-        );
-
-        return textToSanitize.replace(
-            specialCharsRegex,
-            (match) => this.htmlScapeChars[match],
-        );
-    }
-
-    private replaceLinkInString(
-        _: string,
-        text: string,
-        href: string,
-        type?: string,
-    ): string {
-        let attr = '';
-        if (type === 'B') {
-            attr = ' target="_blank"';
-        } else if (type === 'D') {
-            const filenameRegex = /\/((?!.+\/).+\.[\w\d]{3})/;
-            const filename = href.match(filenameRegex)?.[1] || 'myDownload.pdf';
-            attr = ` download="${filename}" type="application/pdf"`;
-        }
-        return `<a href="${href.trim()}"${attr}>${text.trim() || href.trim()}</a>`;
-    }
-
-    private textFormatter(text: string): string {
-        const strongRegex = /\*\*([\w\s]+)\*\*/g;
-        const emphasisRegex = /\*(.+)\*/g;
-        const linkInParRegex = /\[(.*?)\]\((.+?)\)([BD])?/g;
-
-        const simpleWrapper = (label: string) => (text: string) =>
-            `<${label}>${text}</${label}>`;
-        const replaceStrong = simpleWrapper('strong');
-        const replaceEmphasis = simpleWrapper('em');
-
-        return text
-            .replace(strongRegex, replaceStrong)
-            .replace(emphasisRegex, replaceEmphasis)
-            .replace(linkInParRegex, this.replaceLinkInString);
-    }
 }
