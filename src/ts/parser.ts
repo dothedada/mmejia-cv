@@ -318,13 +318,13 @@ export class Parser {
     };
 
     private imgParser: Parsers = (sectionData) => {
-        const imgRegex = /!\[(.+)\]\((.+)\)/;
+        const imgRegex = /^!\[(.*)\]\((.+)\)(?:\{(.+)\})?$/;
         const imgArray = sectionData.match(imgRegex);
         if (!imgArray) {
             return;
         }
 
-        const [, imgAlt, imgSrc] = imgArray;
+        const [, imgAlt, imgSrc, figCaption] = imgArray;
         if (!imgAlt.trim() || !imgSrc.trim()) {
             throw new Error(
                 `Invalid image or alternate text in: "${sectionData}"`,
@@ -335,6 +335,7 @@ export class Parser {
             label: 'img',
             alt: textSanitizer(imgAlt),
             src: imgSrc.replace(/"/g, '&quot;'),
+            figCaption: figCaption ? textSanitizer(figCaption) : undefined,
         };
     };
 

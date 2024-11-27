@@ -25,7 +25,7 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 
 ### Stack
 
-![texto alternativo](https://url.dela.img)
+![texto alternativo](https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png){mengano y pendejo}
 Idiomas
 
 -   JavaScript / TypeScipt

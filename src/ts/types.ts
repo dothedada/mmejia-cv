@@ -54,6 +54,7 @@ export interface ImgToken {
     label: 'img';
     src: string;
     alt: string;
+    figCaption: string | undefined;
 }
 export interface ParagraphToken {
     label: 'p';

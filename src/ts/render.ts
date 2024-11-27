@@ -152,7 +152,11 @@ export class Renderer {
 
     private imgRenderer(token: ImgToken): string {
         const prefix = this.closeList();
-        return `${prefix}<img alt="${token.alt}" src="${token.src}">\n`;
+        const img = `<img alt="${token.alt}" src="${token.src}">\n`;
+        if (token.figCaption) {
+            return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n<figure>`;
+        }
+        return `${prefix}${img}`;
     }
 
     private divRenderer(token: DivToken): string {
@@ -224,12 +228,13 @@ export class Renderer {
 
     private cardRenderer(item: Header, id: string): string {
         const lang = getLang();
+        console.log(item);
         return `
         <div class="card" data-modal="${id}">
             <h3>${item.title}</h3>
             <p>${item.summary}</p>
             <img alt="${item.previewTxt}" src="${item.preview}">
-            <p>${item.additionalData}</p>
+            <p>${item.aditionalData}</p>
             <p>${item.stack}</p>
             <button type="button">${uiSr_txt[lang].card.viewMore}</button>
             <a href="${item.url}" target="_blank" rel="noopener noreferrer">
