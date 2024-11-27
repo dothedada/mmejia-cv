@@ -73,19 +73,19 @@ export interface DataPointToken {
 }
 
 export type Parsers = (sectionData: string) => ParsedToken | void;
-export type Render = (data: ParsedToken) => Promise<string> | string;
+export type Render = (data: ParsedToken) => string;
 export type HeaderValue = string | string[] | Record<string, HeaderValue[]>;
 export interface Header {
     [key: string]: HeaderValue;
 }
+export type SideFile = Record<string, ParsedDocument[]> | null | undefined;
 export interface ParsedDocument {
     header: Header | null;
     body: ParsedToken[];
-    subSections?: Record<string, ParsedToken[]> | null;
+    sideFiles?: SideFile;
 }
 export type HeaderParser = (sectionData: string) => HeaderToken | void;
 export interface Page {
     menu: string;
     html: string;
-    header: Header;
 }

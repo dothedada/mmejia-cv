@@ -1,23 +1,20 @@
 ---
 date: 2024-11-10
-title: project title
-summary: Summary, or short text
-aditionalData: ''
+title: ConTrato Digno
+summary: Como apoyo a la segunda etapa de ConTrato Digno para la formalización de la contratación de las trabajadoras del Hogar en México y Guatemala, creé la narrativa, estructuré y redacté los contenidos. También programé el sitio web que centraliza toda la información de la campaña.
+aditionalData: Desarrollo web y arquitectura de información
 stack:
-    - react
-    - typescrip
+    - CSS
+    - JavaScript
     - semantic HTML
-preview: path/to/image.jpg
-url: https://mmejia.com
+preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
+url: https://contratodigno.org/
 repository: https://github.com
 ---
 
 # title
 
 varied text...
-
-![alt text for image // relative](folder/image.jpg)
-![alt text for image // absolute](https://url.to/image.jpg)
 
 [link text](https://link.to/site)
 

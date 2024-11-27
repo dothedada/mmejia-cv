@@ -1,10 +1,8 @@
 import { getLang } from './lang';
-import { dataLoader } from './loader';
-import { ParserState } from './stateManager';
+import { RenderState } from './stateManager';
+import { keySanitizer } from './textModifiers';
 
 import {
-    Parsers,
-    Page,
     Header,
     ParsedToken,
     Render,
@@ -15,134 +13,46 @@ import {
     DivToken,
     ParagraphToken,
     ListToken,
-    HeaderParser,
-    HeaderToken,
     DataPointToken,
+    ParsedDocument,
+    SideFile,
+    Page,
 } from './types';
 import uiSr_txt from './ui-sr_txt';
 
 export class Renderer {
-    private state: ParserState;
-    private header: Header;
-    private headerParsers: HeaderParser[];
-    private parsers: Parsers[];
+    private state: RenderState;
+    private sideFiles: SideFile;
+    private modals: Record<string, string>;
 
     constructor() {
-        this.state = new ParserState();
-        this.header = {};
-
-        this.headerParsers = [
-            fmBoundariesParser,
-            fmKeyValueParser,
-            fmDataContainerParser,
-            fmDataItemParser,
-        ];
-
-        this.parsers = [
-            sectionParser,
-            headingsParser,
-            hrParser,
-            listParser,
-            linkParser,
-            imgParser,
-            decoratorParser,
-            dataPointParser,
-            paragraphParser,
-        ];
+        this.state = new RenderState();
+        this.modals = {};
     }
 
-    async renderMarkdown(markdown: string): Promise<Page> {
-        const lines = this.getDocumentStructure(markdown);
-        const menuItems = this.state.findSection.join(' ');
+    renderMarkdown(parsedDocument: ParsedDocument): Page {
+        const { body, sideFiles } = parsedDocument;
+        this.sideFiles = sideFiles;
 
         let html = '';
-
-        // NOTE:
-        // 2. hacer el render del menu
-
-        for (const line of lines) {
-            for (const parser of this.parsers) {
-                const token = parser(line);
-
-                if (token) {
-                    html += await this.renderToken(token);
-                    break;
-                }
-            }
+        for (const line of body) {
+            html += this.renderToken(line);
         }
 
         html += this.state.inSubsection ? this.closeSubsection() : '';
         html += this.state.inSection ? this.closeSection() : '';
-
-        return { html, menu: menuItems, header: this.header };
-    }
-
-    private getDocumentStructure(markdown: string): string[] {
-        const allLines = markdown.split('\n');
-        if (!allLines.length) {
-            throw new Error('Empty file');
-        }
-
-        const parent: string[] = [];
-        const [firstLine, ...lines] = allLines;
-
-        this.headerParsers[0](firstLine, this.state);
-        if (!this.state.inHeader) {
-            return allLines;
-        }
-
-        let currentLine = 0;
-        while (this.state.inHeader || currentLine === lines.length) {
-            for (const parser of this.headerParsers) {
-                const headerToken = parser(lines[currentLine], this.state);
-                if (headerToken) {
-                    this.insertHeaderToken(headerToken, parent);
-                    break;
-                }
+        if (Object.keys(this.modals).length) {
+            for (const modal of Object.keys(this.modals)) {
+                html += `<dialog id="${modal}">${this.modals[modal]}</dialog>`;
             }
-            currentLine++;
         }
 
-        const markdownToRender = lines.slice(currentLine);
-        if (!markdownToRender.length) {
-            throw new Error('There is no markdown to parse');
-        }
+        const menu = this.state.showSections.join(' ');
 
-        return markdownToRender;
+        return { html, menu };
     }
 
-    private insertHeaderToken(token: HeaderToken, parent: string[]): void {
-        if (token.indent <= parent.length) {
-            parent.length = token.indent;
-        }
-
-        if (token.type === 'key') {
-            parent.push(token.key);
-            return;
-        }
-
-        const insertionPoint = parent.length
-            ? parent.reduce((current, key) => {
-                  if (!current[key]) {
-                      current[key] = {};
-                  }
-                  return current[key] as Header;
-              }, this.header)
-            : this.header;
-
-        const keyName = parent[parent.length - 1];
-
-        if (token.type === 'keyValue') {
-            insertionPoint[token.key] = token.value;
-        } else {
-            if (!Array.isArray(insertionPoint[keyName])) {
-                insertionPoint[keyName] = [];
-            }
-            (insertionPoint[keyName] as string[]).push(token.value);
-        }
-    }
-
-    private async renderToken(token: ParsedToken): Promise<string> {
+    private renderToken(token: ParsedToken): string {
         const renderers: Record<string, Render> = {
             section: (t) => this.sectionRenderer(t as SectionToken),
             h: (t) => this.headingRenderer(t as HeadingToken),
@@ -152,11 +62,10 @@ export class Renderer {
             div: (t) => this.divRenderer(t as DivToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
-            dataPoint: async (t) =>
-                await this.dataPointRenderer(t as DataPointToken),
+            dataPoint: (t) => this.dataPointRenderer(t as DataPointToken),
         };
 
-        return (await renderers[token.label](token)) || '\n';
+        return renderers[token.label](token) || '\n';
     }
 
     private closeList(): string {
@@ -175,13 +84,13 @@ export class Renderer {
     private closeSubsection(): string {
         this.state.setSubsection(false);
         const prefix = this.closeList();
-        return `${prefix}\t</div>\n`;
+        return `${prefix}</div>\n`;
     }
 
     private closeSection(): string {
         this.state.setInSection(false);
         const prefix = this.state.inSubsection ? this.closeSubsection() : '';
-        return `${prefix}</section>\n\n`;
+        return `${prefix}</section>\n`;
     }
 
     private openSubsection(): string {
@@ -190,7 +99,7 @@ export class Renderer {
             prefix += this.closeSubsection();
         }
         this.state.setSubsection(true);
-        return `${prefix}\n\n\t<div class="sub lala">\n`;
+        return `${prefix}<div class="sub lala">\n`;
     }
 
     private sectionRenderer(token: SectionToken): string {
@@ -217,6 +126,7 @@ export class Renderer {
         } else {
             prefix = this.closeList();
         }
+
         return `${prefix}<h${token.level} id="${token.id}">${token.content}</h${token.level}>\n`;
     }
 
@@ -279,38 +189,43 @@ export class Renderer {
         return `${prefix}<li>${token.content}</li>\n`;
     }
 
-    private async dataPointRenderer(token: DataPointToken): Promise<string> {
-        if (!(token.content in this.header)) {
+    private dataPointRenderer(token: DataPointToken): string {
+        if (!this.sideFiles) {
+            return 'no sidefile to inject';
+        }
+
+        if (!(token.content in this.sideFiles)) {
             throw new Error(
-                `there is key ${token.content} to inkject in frontmatter`,
+                `there is ${token.content} in the parsed files to inkject in frontmatter`,
             );
         }
-        const items = Object.values(this.header[token.content]);
 
-        const lang = getLang();
-        const loadedItems = await Promise.all(
-            items.map(async (card) => {
-                const data = await dataLoader(
-                    lang,
-                    token.content,
-                    card as string,
+        let html = '';
+        const sideFilesToInject = this.sideFiles[token.content];
+
+        for (const file of sideFilesToInject) {
+            const { header, body } = file;
+
+            if (header) {
+                const id = keySanitizer(
+                    `${header.title}${Math.round(Math.random() * 100)}`,
                 );
-                const renderer = new Renderer();
-                return await renderer.renderMarkdown(data);
-            }),
-        );
+                let modalBody = '';
+                for (const line of body) {
+                    modalBody += this.renderToken(line);
+                }
+                this.modals[id] = modalBody;
+                html += this.cardRenderer(header, id);
+            }
+        }
 
-        const cardsHtml = loadedItems.map((item) => {
-            return this.cardRenderer(item.header);
-        });
-
-        return `\n\n<div id="${token.content}">\n${cardsHtml.join(' ')}\n</div>\n\n\n`;
+        return `\t<div id="${token.content}">\n${html}\n\t</div>\n`;
     }
 
-    private cardRenderer(item: Header): string {
+    private cardRenderer(item: Header, id: string): string {
         const lang = getLang();
         return `
-        <div class="card">
+        <div class="card" data-modal="${id}">
             <h3>${item.title}</h3>
             <p>${item.summary}</p>
             <img alt="${item.previewTxt}" src="${item.preview}">
@@ -323,7 +238,7 @@ export class Renderer {
             <a href="${item.repository}" target="_blank" rel="noopener noreferrer">
                 ${uiSr_txt[lang].card.viewRepository}
             </a>
-            
+
         </div>
     `.trim();
     }

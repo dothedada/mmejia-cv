@@ -1,7 +1,8 @@
 ---
 date: 16/11/2024
 portfolio:
-    - base.md
+    - conTratoDigno.md
+    - mmejia.md
 ---
 
 ---(about)

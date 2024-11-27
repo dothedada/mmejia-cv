@@ -1,7 +1,9 @@
 import '../css/style.css';
+import { HTMLMainElement } from 'typescript';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
 import { Parser } from './parser';
+import { Renderer } from './render';
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
@@ -51,9 +53,15 @@ function initializePage() {
     dataLoader(getLang())
         .then((data) => {
             const parser = new Parser();
-            return parser.parseDocument(data);
+            const parsed = parser.parseDocument(data);
+            return parsed;
         })
-        .then((parsed) => console.log(parsed));
+        .then((parsed) => {
+            const render = new Renderer();
+            const { html, menu } = render.renderMarkdown(parsed);
+            const main = document.querySelector<HTMLMainElement>('main')!;
+            main.innerHTML = html;
+        });
 }
 
 initializePage();

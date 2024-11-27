@@ -1,50 +1,40 @@
 export class ParserState {
     private isHeader: boolean | null;
-    private sections: Set<string>;
+    private dataInjector: Set<string>;
 
     constructor() {
         this.isHeader = null;
-        this.sections = new Set();
+        this.dataInjector = new Set();
     }
 
     get inHeader(): boolean | null {
         return this.isHeader;
     }
 
+    setDataInjector(dataPoint: string) {
+        this.dataInjector.add(dataPoint);
+    }
+
+    findDataInjector(datapoint: string) {
+        return this.dataInjector.has(datapoint);
+    }
+
     setHeader(inHeader: boolean) {
         this.isHeader = inHeader;
-    }
-
-    findSection(section: string): boolean {
-        return this.sections.has(section);
-    }
-
-    setSection(section: string) {
-        this.sections.add(section);
     }
 }
 
 export class RenderState {
-    private isHeader: boolean | null;
     private sections: string[];
     private isSectionOpen: boolean;
     private isSubsectionOpen: boolean;
     private listLevel: number | null;
 
     constructor() {
-        this.isHeader = null;
         this.sections = [];
         this.isSectionOpen = false;
         this.isSubsectionOpen = false;
         this.listLevel = null;
-    }
-
-    get inHeader(): boolean | null {
-        return this.isHeader;
-    }
-
-    setHeader(inHeader: boolean) {
-        this.isHeader = inHeader;
     }
 
     get currentSection(): string {

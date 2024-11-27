@@ -17,6 +17,7 @@ const keySanitizer = (rawKey: string): string => {
 
     return keyToSanitize
         .replace(/ (\w)/g, (match) => match.toUpperCase())
+        .replace(/ +/g, '')
         .replace(/-+/g, '-')
         .replace(/^-+|-+$/g, '');
 };
