@@ -1,5 +1,4 @@
 import '../css/style.css';
-import { HTMLMainElement } from 'typescript';
 import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
 import { Parser } from './parser';
@@ -59,7 +58,10 @@ function initializePage() {
         .then((parsed) => {
             const render = new Renderer();
             const { html, menu } = render.renderMarkdown(parsed);
-            const main = document.querySelector<HTMLMainElement>('main')!;
+            const main = document.querySelector<HTMLElement>('main')!;
+            const menuContainer =
+                document.querySelector<HTMLUListElement>('.menu__links')!;
+            menuContainer.innerHTML = menu;
             main.innerHTML = html;
         });
 }

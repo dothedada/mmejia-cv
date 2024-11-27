@@ -29,6 +29,7 @@ export type ParsedToken =
 export interface SectionToken {
     label: 'section';
     name: string;
+    id: string;
 }
 export interface DivToken {
     label: 'div';

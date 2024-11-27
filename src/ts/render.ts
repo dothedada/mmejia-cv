@@ -20,6 +20,13 @@ import {
 } from './types';
 import uiSr_txt from './ui-sr_txt';
 
+// NOTE:
+// 1. arreglar lo de congelar el sitio cuando la pantalla esta en blur
+// 2. linkear los botones de ver mas
+// 3. crear el footer con la fecha
+// 4. implementar estilos de los elementos
+// poblar :D
+
 export class Renderer {
     private state: RenderState;
     private sideFiles: SideFile;
@@ -47,9 +54,12 @@ export class Renderer {
             }
         }
 
-        const menu = this.state.showSections.join(' ');
+        let menuItems = '\n';
+        for (const section of this.state.showSections) {
+            menuItems += `<li><a href="#${section[0]}">${section[1]}</a></li>\n`;
+        }
 
-        return { html, menu };
+        return { html, menu: menuItems };
     }
 
     private renderToken(token: ParsedToken): string {
@@ -110,10 +120,10 @@ export class Renderer {
         if (this.state.inSection) {
             prefix = this.closeSection();
         }
-        if (this.state.currentSection === token.name) {
+        if (this.state.currentSection?.[1] === token.name) {
             return prefix;
         }
-        this.state.setSection(token.name);
+        this.state.setSection([token.id, token.name]);
         return `${prefix}<section id="${token.name}">\n`;
     }
 
@@ -228,7 +238,6 @@ export class Renderer {
 
     private cardRenderer(item: Header, id: string): string {
         const lang = getLang();
-        console.log(item);
         return `
         <div class="card" data-modal="${id}">
             <h3>${item.title}</h3>

@@ -24,8 +24,9 @@ export class ParserState {
     }
 }
 
+type ParsedSection = [id: string, name: string];
 export class RenderState {
-    private sections: string[];
+    private sections: ParsedSection[];
     private isSectionOpen: boolean;
     private isSubsectionOpen: boolean;
     private listLevel: number | null;
@@ -37,7 +38,7 @@ export class RenderState {
         this.listLevel = null;
     }
 
-    get currentSection(): string {
+    get currentSection(): ParsedSection {
         return this.sections[this.sections.length - 1];
     }
 
@@ -49,11 +50,11 @@ export class RenderState {
         this.isSectionOpen = openSection;
     }
 
-    get showSections(): string[] {
+    get showSections(): ParsedSection[] {
         return this.sections;
     }
 
-    setSection(section: string) {
+    setSection(section: ParsedSection) {
         this.sections.push(section);
         this.setInSection(true);
     }

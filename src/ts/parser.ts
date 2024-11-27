@@ -248,6 +248,7 @@ export class Parser {
         return {
             label: 'section',
             name: keySanitizer(section[1]),
+            id: textSanitizer(section[1]),
         };
     };
 
