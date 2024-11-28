@@ -1,6 +1,6 @@
 import { getLang } from './lang';
 import { RenderState } from './stateManager';
-import { keySanitizer } from './textModifiers';
+import { keySanitizer, textFormatter, textSanitizer } from './textModifiers';
 
 import {
     Header,
@@ -17,6 +17,7 @@ import {
     ParsedDocument,
     SideFile,
     Page,
+    HeaderValue,
 } from './types';
 import uiSr_txt from './ui-sr_txt';
 
@@ -238,22 +239,39 @@ export class Renderer {
 
     private cardRenderer(item: Header, id: string): string {
         const lang = getLang();
-        return `
-        <div class="card" data-modal="${id}">
-            <h3>${item.title}</h3>
-            <p>${item.summary}</p>
-            <img alt="${item.previewTxt}" src="${item.preview}">
-            <p>${item.aditionalData}</p>
-            <p>${item.stack}</p>
-            <button type="button">${uiSr_txt[lang].card.viewMore}</button>
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer">
-                ${uiSr_txt[lang].card.viewProject}
-            </a>
-            <a href="${item.repository}" target="_blank" rel="noopener noreferrer">
-                ${uiSr_txt[lang].card.viewRepository}
-            </a>
 
-        </div>
-    `.trim();
+        const displayText = (item: HeaderValue): string => {
+            let text = '';
+            if (Array.isArray(item)) {
+                text = item.reduce((string, current, index, { length }) => {
+                    string += current;
+                    if (index === length - 1) {
+                        string += '.';
+                    } else if (index === length - 2) {
+                        string += lang === 'es' ? ' y ' : ' and ';
+                    } else {
+                        string += ', ';
+                    }
+                    return string;
+                }, '');
+            } else if (typeof item === 'string') {
+                text = item;
+            }
+
+            return textFormatter(textSanitizer(text));
+        };
+
+        let html = `<div class="card" data-modal="${id}">\n`;
+        html += `<h3>${displayText(item.title)}</h3>\n`;
+        html += `<p>${displayText(item.summary)}</p>\n`;
+        html += `<img alt="${item.previewTxt}" src="${item.preview}">\n`;
+        html += `${item.aditionalData ? `<p>${displayText(item.aditionalData)}</p>\n` : ''}`;
+        html += `${item.stack ? `<p>${displayText(item.stack)}</p>\n` : ''}`;
+        html += `<button type="button">${uiSr_txt[lang].card.viewMore}</button>\n`;
+        html += `${item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewProject}</a>\n` : ''}`;
+        html += `${item.repository ? `<a href="${item.repository}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewRepository}</a>\n` : ''}`;
+        html += '</div>\n';
+
+        return html;
     }
 }
