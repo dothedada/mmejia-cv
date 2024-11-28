@@ -1,5 +1,5 @@
 import txtSR from './ui-sr_txt';
-type Lang = 'es' | 'en';
+import { Lang } from './types';
 
 const getLang = (): Lang => {
     let lang = localStorage.getItem('lang') || navigator.language.slice(0, 2);
@@ -30,12 +30,6 @@ const setLang = (lang: Lang): void => {
     document.documentElement.setAttribute('lang', lang);
 };
 
-const toggleLang = (): void => {
-    const currentLang = getLang();
-    const newLang: Lang = currentLang === 'es' ? 'en' : 'es';
-    setLang(newLang);
-};
-
 const initializeLang = () => setLang(getLang());
 
-export { getLang, initializeLang, toggleLang };
+export { getLang, initializeLang, setLang };

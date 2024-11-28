@@ -1,16 +1,39 @@
 import '../css/style.css';
-import { getLang, initializeLang, toggleLang } from './lang';
+import { getLang, initializeLang, setLang } from './lang';
 import { dataLoader } from './loader';
 import { Parser } from './parser';
 import { Renderer } from './render';
+import { Lang } from './types';
+
+const loadPage = async () => {
+    try {
+        const lang = getLang();
+        const data = await dataLoader(lang);
+        const parser = new Parser();
+        const parsed = await parser.parseDocument(data);
+        const render = new Renderer();
+        const { html, menu: menuItems } = render.renderMarkdown(parsed);
+
+        const main = document.querySelector<HTMLElement>('main')!;
+        const menu = document.querySelector<HTMLUListElement>('.menu__links')!;
+
+        main.innerHTML = html;
+        menu.innerHTML = menuItems;
+    } catch {
+        throw new Error('Could not load the page');
+    }
+};
+
+// page setup
+initializeLang();
+loadPage();
 
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
 const menuLinks = document.querySelector<HTMLUListElement>('.menu__links')!;
-
-// lang
-initializeLang();
-
+const cards = document.querySelector('.card');
+// const cards = document.querySelector('[data-modal]');
+console.log(cards);
 // UI
 const blockPageMove = (): void => {
     const bloqued = document.body.style.overflow === 'hidden';
@@ -34,6 +57,12 @@ window.addEventListener('scroll', () => {
     });
 });
 
+const toggleLang = (): void => {
+    const currentLang = getLang();
+    const newLang: Lang = currentLang === 'es' ? 'en' : 'es';
+    setLang(newLang);
+    loadPage();
+};
 menuLang.addEventListener('pointerdown', toggleLang);
 menuBtn.addEventListener('pointerdown', () => {
     menuLinks.classList.toggle('visible');
@@ -48,25 +77,7 @@ menuLinks.querySelectorAll('a').forEach((btn) => {
 });
 
 // data
-function initializePage() {
-    dataLoader(getLang())
-        .then((data) => {
-            const parser = new Parser();
-            const parsed = parser.parseDocument(data);
-            return parsed;
-        })
-        .then((parsed) => {
-            const render = new Renderer();
-            const { html, menu } = render.renderMarkdown(parsed);
-            const main = document.querySelector<HTMLElement>('main')!;
-            const menuContainer =
-                document.querySelector<HTMLUListElement>('.menu__links')!;
-            menuContainer.innerHTML = menu;
-            main.innerHTML = html;
-        });
-}
 
-initializePage();
 // const initialData = await dataLoader(getLang());
 // const renderDom = new Renderer();
 // const parsedData = await renderDom.renderMarkdown(initialData);
