@@ -30,6 +30,13 @@ const setLang = (lang: Lang): void => {
     document.documentElement.setAttribute('lang', lang);
 };
 
+const toggleLang = (callback: Function): void => {
+    const currentLang = getLang();
+    const newLang: Lang = currentLang === 'es' ? 'en' : 'es';
+    setLang(newLang);
+    callback();
+};
+
 const initializeLang = () => setLang(getLang());
 
-export { getLang, initializeLang, setLang };
+export { getLang, initializeLang, toggleLang };
