@@ -1,3 +1,4 @@
+export type Lang = 'es' | 'en';
 export type HeaderToken = {
     indent: number;
 } & (

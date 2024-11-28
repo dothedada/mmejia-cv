@@ -23,7 +23,6 @@ import uiSr_txt from './ui-sr_txt';
 
 // NOTE:
 // 1. arreglar lo de congelar el sitio cuando la pantalla esta en blur
-// 2. linkear los botones de ver mas
 // 3. crear el footer con la fecha
 // 4. implementar estilos de los elementos
 // poblar :D
@@ -51,7 +50,7 @@ export class Renderer {
         html += this.state.inSection ? this.closeSection() : '';
         if (Object.keys(this.modals).length) {
             for (const modal of Object.keys(this.modals)) {
-                html += `<dialog id="${modal}">${this.modals[modal]}</dialog>`;
+                html += this.dialogRenderer(modal, this.modals[modal]);
             }
         }
 
@@ -237,6 +236,15 @@ export class Renderer {
         return `\t<div id="${token.content}">\n${html}\n\t</div>\n`;
     }
 
+    private dialogRenderer(id: string, contentHtml: string): string {
+        const lang = getLang();
+        let html = `<dialog id="${id}">\n`;
+        html += `<button type="button" class="dialog__closeBtn">${uiSr_txt[lang].closeBtn}</button>\n`;
+        html += contentHtml;
+        html += '</dialog>';
+        return html;
+    }
+
     private cardRenderer(item: Header, id: string): string {
         const lang = getLang();
 
@@ -267,7 +275,7 @@ export class Renderer {
         html += `<img alt="${item.previewTxt}" src="${item.preview}">\n`;
         html += `${item.aditionalData ? `<p>${displayText(item.aditionalData)}</p>\n` : ''}`;
         html += `${item.stack ? `<p>${displayText(item.stack)}</p>\n` : ''}`;
-        html += `<button type="button">${uiSr_txt[lang].card.viewMore}</button>\n`;
+        html += `<button type="button" class="card__btn" data-target="${id}">${uiSr_txt[lang].card.viewMore}</button>\n`;
         html += `${item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewProject}</a>\n` : ''}`;
         html += `${item.repository ? `<a href="${item.repository}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewRepository}</a>\n` : ''}`;
         html += '</div>\n';

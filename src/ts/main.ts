@@ -16,9 +16,28 @@ const loadPage = async () => {
 
         const main = document.querySelector<HTMLElement>('main')!;
         const menu = document.querySelector<HTMLUListElement>('.menu__links')!;
-
         main.innerHTML = html;
         menu.innerHTML = menuItems;
+
+        const moreBtn = document.querySelectorAll('.card__btn');
+        const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
+
+        moreBtn.forEach((btn) => {
+            const id = btn.getAttribute('data-target')!;
+            const modal = document.getElementById(id)!;
+            (btn as HTMLButtonElement).addEventListener('pointerdown', () => {
+                (modal as HTMLDialogElement).showModal();
+                blockPageMove();
+            });
+        });
+
+        closeBtn.forEach((btn) => {
+            const modal = btn.parentNode;
+            (btn as HTMLButtonElement).addEventListener('pointerdown', () => {
+                (modal as HTMLDialogElement).close();
+                blockPageMove();
+            });
+        });
     } catch {
         throw new Error('Could not load the page');
     }
@@ -31,9 +50,7 @@ loadPage();
 const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 const menuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
 const menuLinks = document.querySelector<HTMLUListElement>('.menu__links')!;
-const cards = document.querySelector('.card');
-// const cards = document.querySelector('[data-modal]');
-console.log(cards);
+
 // UI
 const blockPageMove = (): void => {
     const bloqued = document.body.style.overflow === 'hidden';
