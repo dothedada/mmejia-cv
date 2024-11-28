@@ -1,5 +1,6 @@
 ---
 date: 16/11/2024
+footerTxt: Miguel Mejía
 portfolio:
     - conTratoDigno.md
     - mmejia.md

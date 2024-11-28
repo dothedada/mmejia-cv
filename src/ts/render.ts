@@ -21,12 +21,6 @@ import {
 } from './types';
 import uiSr_txt from './ui-sr_txt';
 
-// NOTE:
-// 1. arreglar lo de congelar el sitio cuando la pantalla esta en blur
-// 3. crear el footer con la fecha
-// 4. implementar estilos de los elementos
-// poblar :D
-
 export class Renderer {
     private state: RenderState;
     private sideFiles: SideFile;
@@ -38,7 +32,7 @@ export class Renderer {
     }
 
     renderMarkdown(parsedDocument: ParsedDocument): Page {
-        const { body, sideFiles } = parsedDocument;
+        const { body, sideFiles, header } = parsedDocument;
         this.sideFiles = sideFiles;
 
         let html = '';
@@ -53,6 +47,9 @@ export class Renderer {
                 html += this.dialogRenderer(modal, this.modals[modal]);
             }
         }
+        if (header) {
+            html += this.footerRender(header);
+        }
 
         let menuItems = '\n';
         for (const section of this.state.showSections) {
@@ -60,6 +57,11 @@ export class Renderer {
         }
 
         return { html, menu: menuItems };
+    }
+
+    private footerRender(header: Header): string {
+        const { date, footerTxt } = header;
+        return `<footer>${footerTxt} - ${date}`;
     }
 
     private renderToken(token: ParsedToken): string {

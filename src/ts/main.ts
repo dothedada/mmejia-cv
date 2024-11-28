@@ -10,6 +10,7 @@ const showMenuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
 
 const loadPage = async () => {
     try {
+        // carga de información
         const lang = getLang();
         const data = await dataLoader(lang);
         const parser = new Parser();
@@ -20,6 +21,7 @@ const loadPage = async () => {
         main.innerHTML = html;
         menu.innerHTML = menuItems;
 
+        // visibilidad del menu
         const moreBtn = document.querySelectorAll('.card__btn');
         const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
         moreBtn.forEach((btn) => {
@@ -29,6 +31,14 @@ const loadPage = async () => {
             btn.addEventListener('pointerdown', closeModal);
         });
         showMenuBtn.addEventListener('pointerdown', showMenu);
+
+        // Cambiar de idioma
+        const langBtn =
+            document.querySelector<HTMLButtonElement>('.menu__lang')!;
+        langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
+
+        // Reajuste de interfase
+        window.addEventListener('resize', debounce(refreshMenu, 500));
     } catch {
         throw new Error('Could not load the page');
     }
@@ -91,8 +101,3 @@ const debounce = (callback: Function, miliseconds: number) => {
         timer = setTimeout(callback, miliseconds);
     };
 };
-
-window.addEventListener('resize', debounce(refreshMenu, 500));
-
-const menuLang = document.querySelector<HTMLButtonElement>('.menu__lang')!;
-menuLang.addEventListener('pointerdown', () => toggleLang(loadPage));
