@@ -167,7 +167,10 @@ export class Renderer {
     }
 
     private imgRenderer(token: ImgToken): string {
-        const prefix = this.closeList();
+        let prefix = this.closeList();
+        if (this.state.inSubsection) {
+            prefix += this.closeSubsection();
+        }
         const img = `<img alt="${token.alt}" src="${token.src}">\n`;
         if (token.figCaption) {
             return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n<figure>`;
@@ -279,12 +282,16 @@ export class Renderer {
         html += `<h3>${displayText(item.title)}</h3>\n`;
         html += `<p>${displayText(item.summary)}</p>\n`;
         html += `<img alt="${item.previewTxt}" src="${item.preview}">\n`;
+        html += `<div>\n`;
         html += `${item.aditionalData ? `<p>${displayText(item.aditionalData)}</p>\n` : ''}`;
         html += `${item.stack ? `<p>${displayText(item.stack)}</p>\n` : ''}`;
+        html += `</div>\n`;
+        html += `<div class="card__links">\n`;
         html += `<button type="button" class="card__btn" data-target="${id}">${uiSr_txt[lang].card.viewMore}</button>\n`;
         html += `${item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewProject}</a>\n` : ''}`;
         html += `${item.repository ? `<a href="${item.repository}" target="_blank" rel="noopener noreferrer">${uiSr_txt[lang].card.viewRepository}</a>\n` : ''}`;
         html += '</div>\n';
+        html += `</div>\n`;
 
         return html;
     }

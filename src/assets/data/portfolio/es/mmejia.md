@@ -15,7 +15,14 @@ repository: 'github'
 
 ## mmejia.com
 
-![La retícula del sitio permite la libre disposición y jerarquización de las imágenes sin perder su estructura.](https://cv.mmejia.com/assets/img/mmejia-1_w_627.jpg)
+Desarrollo web + Información
+
+-   Figma
+-   HTML
+-   SCSS
+-   JavaScript
+
+![La retícula del sitio permite la libre disposición y jerarquización de las imágenes sin perder su estructura.](https://cv.mmejia.com/assets/img/mmejia-1_w_627.jpg){Esta es una nota de la imagen}
 
 l rediseño y programación de mi portafolio de fotografía era necesario luego de más de 10 años de trabajo constante.
 

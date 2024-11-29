@@ -30,6 +30,7 @@ const loadPage = async () => {
         });
         closeBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', closeModal);
+            console.log(btn);
         });
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
@@ -97,6 +98,8 @@ const refreshMenu = () => {
         blockWheel(false);
     }
 };
+
+console.log(document.body.innerHTML);
 
 const debounce = (callback: Function, miliseconds: number) => {
     let timer: number;
