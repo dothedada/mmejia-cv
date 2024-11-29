@@ -24,13 +24,14 @@
         );
     --grid-offset: 0 calc(var(--base-size) * -0.25);
     --line-height: calc(var(--base-size) * 1.5);
+    --baseline-offset: calc(var(--line-height) * -0.2);
     --blur: 10px;
 }
 h1 {
     font-family: var(--font-display);
     font-size: calc(var(--line-height) * 3);
     line-height: calc(var(--line-height) * 3);
-    margin: 0 0 var(--line-height);
+    margin: 0 0 calc(var(--line-height) * 2);
     color: var(--secondary);
 }
 
@@ -83,6 +84,11 @@ button {
 }
 
 a {
+    &:not(p a) {
+        display: block;
+        text-align: right;
+    }
+
     &:not([target='_blank'])::after {
         content: ' *';
     }
@@ -133,7 +139,7 @@ hr {
     padding: 0;
     border: none;
     border-bottom: 1px dotted var(--text);
-    transform: translateY(calc(var(--line-height) * -0.2));
+    transform: translateY(var(--baseline-offset));
 }
 
 .menu {
@@ -306,6 +312,52 @@ hr {
 }
 
 main {
-    margin: calc(var(--line-height) * 2) auto 0;
+    margin: calc(var(--line-height) * 3) auto 0;
     max-width: 1200px;
+}
+
+.decorator {
+    display: none;
+}
+
+section {
+    position: relative;
+    padding: 0 0 calc(var(--line-height) * 3);
+    margin: 0 auto calc(var(--line-height) * 2);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--line-height);
+
+    & h1,
+    & h2,
+    & h3,
+    & hr {
+        grid-column: 1 / -1;
+    }
+
+    & .subsection {
+        grid-column: 1 / span 4;
+    }
+
+    &::after {
+        position: absolute;
+        display: block;
+        content: '';
+        background-color: var(--text);
+        height: 1px;
+        width: 100%;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, var(--baseline-offset));
+    }
+
+    &:first-child p {
+    }
+}
+
+img {
+    object-fit: cover;
+    height: calc(var(--line-height) * 5);
+    aspect-ratio: 3 / 2;
+    transform: translateY(var(--baseline-offset));
 }

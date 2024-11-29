@@ -111,7 +111,7 @@ export class Renderer {
             prefix += this.closeSubsection();
         }
         this.state.setSubsection(true);
-        return `${prefix}<div class="sub lala">\n`;
+        return `${prefix}<div class="subsection">\n`;
     }
 
     private sectionRenderer(token: SectionToken): string {
@@ -144,13 +144,18 @@ export class Renderer {
 
     private linkRenderer(token: LinkToken): string {
         let attr = '';
+        let prefix = '';
+
+        if (this.state.inSubsection) {
+            prefix = this.closeSubsection();
+        }
 
         if (token.target) {
             attr = ` target="_blank"`;
         } else if (token.type) {
             attr = ` download="${token.download}" type="application/pdf"`;
         }
-        return `<a href="${token.href}"${attr}>${token.content}</a>\n`;
+        return `${prefix}<a href="${token.href}"${attr}>${token.content}</a>\n`;
     }
 
     private ruleRenderer(): string {
