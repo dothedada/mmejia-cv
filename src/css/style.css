@@ -326,7 +326,7 @@ section {
     margin: 0 auto calc(var(--line-height) * 2);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--line-height);
+    column-gap: var(--line-height);
 
     & h1,
     & h2,
@@ -335,8 +335,18 @@ section {
         grid-column: 1 / -1;
     }
 
-    & .subsection {
-        grid-column: 1 / span 4;
+    .subsection {
+        grid-column: 1 / -1;
+    }
+
+    & .subsection p {
+        padding: 0 0 0 calc(var(--line-height) * 2);
+    }
+
+    & > a {
+        display: block;
+        grid-column: 1 / -1;
+        margin: 0;
     }
 
     &::after {
@@ -351,7 +361,8 @@ section {
         transform: translate(-50%, var(--baseline-offset));
     }
 
-    &:first-child p {
+    &:first-child .subsection p {
+        padding: 0;
     }
 }
 

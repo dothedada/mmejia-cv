@@ -160,7 +160,6 @@ export class Renderer {
 
     private ruleRenderer(): string {
         let prefix = '';
-        prefix += `${this.state.inSubsection} `;
         if (this.state.inSubsection) {
             prefix = this.closeSubsection();
         }
