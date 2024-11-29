@@ -24,18 +24,16 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 
 // Mis Habilidadess
 
-### Stack
+### Tecnologías con las que trabajo:
 
-![texto alternativo](https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png){mengano y pendejo}
-Idiomas
-
--   JavaScript / TypeScipt
--   CSS
--   HTML
-    -   carajo
-    -   sub
--   Bash
--   Lua
+-   JavaScript / TypeScript
+-   React (Vite, Webpack, React-Router)
+-   HTML / CSS (w3c-a11y)
+-   -> Patrones de diseño, Algoritmos
+-   -> Estructuras de datos
+-   -> Lua, Bash
+-   -> 11ty, Jeckyll, WordPress
+-   -> AWS, Vercel
 
 ### Mi Perfíl
 

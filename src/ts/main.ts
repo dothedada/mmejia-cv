@@ -24,11 +24,15 @@ const loadPage = async () => {
         // visibilidad del menu
         const moreBtn = document.querySelectorAll('.card__btn');
         const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
+        const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
         moreBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', openModal);
         });
         closeBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', closeModal);
+        });
+        anchors.forEach((anchor) => {
+            anchor.addEventListener('click', showMenu);
         });
         showMenuBtn.addEventListener('pointerdown', showMenu);
 
