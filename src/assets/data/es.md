@@ -29,11 +29,11 @@ Mi propósito es apoyar el rol de la comunicación y la tecnología en la constr
 -   JavaScript / TypeScript
 -   React (Vite, Webpack, React-Router)
 -   HTML / CSS (w3c-a11y)
--   -> Patrones de diseño, Algoritmos
--   -> Estructuras de datos
--   -> Lua, Bash
--   -> 11ty, Jeckyll, WordPress
--   -> AWS, Vercel
+-   Patrones de diseño, Algoritmos
+-   Estructuras de datos
+-   Lua, Bash
+-   11ty, Jeckyll, WordPress
+-   AWS, Vercel
 
 ### Mi Perfíl
 
@@ -93,11 +93,12 @@ Este portafolio es una muestra de los trabajos y ejercicios que he llevado a cab
 
 ### Redes Sociales:
 
-[LinkedIn](https://www.linkedin.com/in/-mmejia/)B
-[GitHub](https://github.com/dothedada)B
+-   [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
+-   [GitHub](https://github.com/dothedada)B
 
 ### Información de contacto:
 
-[info@mmejia.com](mailto:info@mmejia.com)
-[(+57) 304 383 9127](tel:3043839127)
-[WhatsApp](https://wa.me/573043839127)B
+-   [info@mmejia.com](mailto:info@mmejia.com)B
+-   [(+57) 304 383 9127](tel:3043839127)B
+-   [WhatsApp](https://wa.me/573043839127)B
+    Bogotá, Colombia.
