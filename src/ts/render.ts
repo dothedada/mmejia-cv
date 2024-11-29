@@ -59,11 +59,6 @@ export class Renderer {
         return { html, menu: menuItems };
     }
 
-    private footerRender(header: Header): string {
-        const { date, footerTxt } = header;
-        return `<footer>${footerTxt} - ${date}`;
-    }
-
     private renderToken(token: ParsedToken): string {
         const renderers: Record<string, Render> = {
             section: (t) => this.sectionRenderer(t as SectionToken),
@@ -173,7 +168,7 @@ export class Renderer {
         }
         const img = `<img alt="${token.alt}" src="${token.src}">\n`;
         if (token.figCaption) {
-            return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n<figure>`;
+            return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n</figure>`;
         }
         return `${prefix}${img}`;
     }
@@ -294,5 +289,10 @@ export class Renderer {
         html += `</div>\n`;
 
         return html;
+    }
+
+    private footerRender(header: Header): string {
+        const { date, footerTxt } = header;
+        return `<footer>${footerTxt} - ${date}</footer>`;
     }
 }

@@ -291,8 +291,13 @@ body {
 
 main {
     max-width: 1200px;
+    margin: 0 auto;
 }
 
+footer {
+    padding: var(--line-height);
+    text-align: center;
+}
 .decorator {
     display: none;
 }
@@ -475,10 +480,12 @@ dialog {
         margin: calc(var(--line-height) * -1) 0 calc(var(--line-height) * 2);
         list-style: none;
         display: flex;
+        flex-wrap: wrap;
         flex-direction: row;
 
         li + li::before {
-            content: ' | ';
+            content: '|';
+            margin: 1ch;
         }
     }
 
@@ -581,8 +588,6 @@ dialog {
     }
 
     dialog {
-        /* display: grid; */
-        /* grid-template-columns: repeat(7, 1fr); */
         width: calc(90% - var(--line-height) * 2);
         margin: calc(var(--line-height) * 3) auto;
         border: none;
@@ -629,5 +634,163 @@ dialog {
                 calc(var(--line-height) * 2);
         }
     }
-    /**/
+}
+
+@media (min-width: 1100px) {
+    section {
+        grid-template-columns: repeat(12, 1fr);
+
+        a,
+        button {
+            grid-column: 9 / -1;
+            text-wrap: balance;
+            align-self: end;
+        }
+
+        &::after {
+            width: 84%;
+        }
+
+        &:first-child {
+            a,
+            button {
+                grid-column: 2 / -1;
+                text-wrap: balance;
+            }
+            & .subsection {
+                align-self: end;
+                grid-column: 7 / span 6;
+                > p {
+                    margin: 0 0 var(--line-height);
+                    grid-column: 2 / -2;
+                }
+            }
+        }
+    }
+
+    .subsection {
+        grid-column: span 6;
+        align-self: start;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        column-gap: var(--line-height);
+
+        h3 {
+            grid-column: 2 / -1;
+        }
+
+        h3 ~ p,
+        h3 + ul {
+            grid-column: 3 / -1;
+        }
+
+        p {
+            grid-column: 3 / -1;
+        }
+    }
+
+    h1 {
+        grid-column: 2 / span 3;
+    }
+
+    hr {
+        grid-column: 2 / -2;
+    }
+
+    section li {
+        margin: 0;
+    }
+
+    .card {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+
+        & h3 {
+            grid-column: 2 / -1;
+        }
+
+        & img {
+            grid-column: 7 / span 3;
+            transform: translateY(var(--baseline-offset));
+        }
+
+        & div {
+            grid-column: 10 / span 3;
+            align-self: end;
+        }
+
+        & p {
+            grid-column: 3 / span 4;
+        }
+
+        & .card__links {
+            grid-column: 9 / -1;
+
+            & * {
+                width: 100%;
+                display: block;
+                text-wrap: balance;
+                text-align: right;
+                text-decoration: underline;
+            }
+        }
+
+        & button::after {
+            content: ' *';
+        }
+    }
+
+    dialog {
+        width: min(calc(84dvw - var(--line-height) * 2), 1080px);
+        height: calc(100dvh - var(--line-height) * 4);
+        margin: calc(var(--line-height) * 3) auto;
+        border: none;
+        padding: var(--line-height);
+        background: var(--text);
+        color: var(--background);
+
+        img {
+            width: 100%;
+            height: auto;
+            outline: 1px solid var(--background);
+            margin: 0 0 var(--line-height);
+        }
+
+        a {
+            color: var(--background);
+            display: block;
+            text-align: right;
+        }
+
+        .subsection p {
+            grid-column: 1 / -1;
+        }
+
+        & .dialog__closeBtn {
+            align-self: flex-end;
+            text-decoration: underline;
+            display: block;
+            margin: 0 0 0 auto;
+            position: fixed;
+            top: var(--line-height);
+            right: calc(8vw + var(--line-height) * 2);
+
+            &::after {
+                content: ' X';
+            }
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            flex-direction: row;
+        }
+
+        figcaption {
+            text-align: right;
+            margin: calc(var(--line-height) * -1) 5%
+                calc(var(--line-height) * 1);
+            font-size: calc(var(--base-size) * 0.8);
+        }
+    }
 }

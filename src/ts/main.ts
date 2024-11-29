@@ -30,7 +30,6 @@ const loadPage = async () => {
         });
         closeBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', closeModal);
-            console.log(btn);
         });
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
@@ -60,12 +59,17 @@ const openModal = (e: Event): void => {
 };
 
 const closeModal = (e: Event): void => {
+    e.stopPropagation();
     const target = e.currentTarget as HTMLButtonElement;
     (target.parentNode as HTMLDialogElement).close();
     blockWheel(false);
 };
 
 const showMenu = (): void => {
+    const showMenuBtnStyles = getComputedStyle(showMenuBtn);
+    if (showMenuBtnStyles.getPropertyValue('display') !== 'block') {
+        return;
+    }
     menu.classList.toggle('visible');
     blockWheel(menu.classList.contains('visible'));
 };
@@ -98,8 +102,6 @@ const refreshMenu = () => {
         blockWheel(false);
     }
 };
-
-console.log(document.body.innerHTML);
 
 const debounce = (callback: Function, miliseconds: number) => {
     let timer: number;
