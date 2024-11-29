@@ -13,7 +13,7 @@ url: https://mmejia.com/
 repository: 'github'
 ---
 
-# mmejia.com
+## mmejia.com
 
 ![La retícula del sitio permite la libre disposición y jerarquización de las imágenes sin perder su estructura.](https://cv.mmejia.com/assets/img/mmejia-1_w_627.jpg)
 
@@ -27,5 +27,5 @@ Conocer Grid ayudó a que esa transición de diseño editorial a web fuera más 
 
 Fue un lindo reencuentro con el diseño web y el aprendizaje, desde ese entonces el diseño y desarrollo web volvieron a ser parte de mi vida.
 
-[Ir al micrositio de mmejia.com](https://contratodigno.org/)B
-[Ir al repositorio de mmejia.com](https://contratodigno.org/)B
+[Ir a mmejia.com](https://contratodigno.org/)B
+[Ir al repositorio](https://contratodigno.org/)B

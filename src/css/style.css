@@ -369,8 +369,9 @@ hr {
 
 ul {
     list-style: none;
+    margin: 0 0 var(--line-height);
 }
-li {
+section li {
     position: relative;
     margin: 0 0 0 calc(var(--line-height) * 2);
 
@@ -407,6 +408,11 @@ li {
         grid-column: 1 / -1;
         text-wrap: balance;
         text-align: right;
+        text-decoration: underline;
+    }
+
+    & button::after {
+        content: ' *';
     }
 }
 section {
@@ -414,5 +420,46 @@ section {
     button {
         grid-column: 1 / -1;
         text-wrap: balance;
+    }
+}
+
+::backdrop {
+    backdrop-filter: blur(var(--blur));
+}
+dialog {
+    box-sizing: border-box;
+    width: calc(100dvw - var(--line-height) * 2);
+    height: calc(100dvh - var(--line-height) * 4);
+    margin: calc(var(--line-height) * 3) auto;
+    border: none;
+    padding: var(--line-height);
+    position: fixed;
+    background: var(--text);
+    color: var(--background);
+
+    img {
+        width: 100%;
+        height: auto;
+        outline: 1px solid var(--background);
+    }
+
+    > a {
+        color: var(--background);
+        display: block;
+        text-align: right;
+    }
+
+    & .dialog__closeBtn {
+        align-self: flex-end;
+        text-decoration: underline;
+        display: block;
+        margin: 0 0 0 auto;
+        position: fixed;
+        top: var(--line-height);
+        right: var(--line-height);
+
+        &::after {
+            content: ' X';
+        }
     }
 }
