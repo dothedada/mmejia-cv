@@ -126,7 +126,7 @@ body {
     left: 0;
     padding: var(--line-height) var(--line-height) 0;
     height: calc(var(--line-height) * 3);
-    backdrop-filter: blur(var(--blur));
+    background-color: var(--background);
     background-image: var(--grid);
     background-size: var(--line-height) var(--line-height);
     background-position: var(--grid-offset);
@@ -254,6 +254,8 @@ body {
 @media (min-width: 650px) {
     .menu {
         grid-template-columns: 46px 1fr min-content;
+        backdrop-filter: blur(var(--blur));
+        background-color: unset;
     }
 
     .menu__show {
@@ -497,6 +499,26 @@ dialog {
 }
 
 @media (min-width: 700px) {
+    .decorator {
+        display: block;
+        position: absolute;
+
+        font-family: var(--font-display);
+        font-size: calc(var(--line-height) * 10);
+        line-height: calc(var(--line-height) * 10);
+        z-index: -10;
+        transform: translateY(var(--baseline-offset));
+        top: 0;
+        color: var(--grid-lines-color);
+        word-break: break-all;
+        pointer-events: none;
+        user-select: none;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+        width: 100%;
+        height: 100%;
+    }
     section {
         grid-template-columns: repeat(8, 1fr);
 
