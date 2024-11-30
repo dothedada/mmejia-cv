@@ -10,7 +10,7 @@ import {
     HeadingToken,
     LinkToken,
     ImgToken,
-    DivToken,
+    DecoratorToken,
     ParagraphToken,
     ListToken,
     DataPointToken,
@@ -66,7 +66,7 @@ export class Renderer {
             a: (t) => this.linkRenderer(t as LinkToken),
             hr: () => this.ruleRenderer(),
             img: (t) => this.imgRenderer(t as ImgToken),
-            div: (t) => this.divRenderer(t as DivToken),
+            decorator: (t) => this.decoratorRenderer(t as DecoratorToken),
             p: (t) => this.paragraphRenderer(t as ParagraphToken),
             li: (t) => this.listRenderer(t as ListToken),
             dataPoint: (t) => this.dataPointRenderer(t as DataPointToken),
@@ -173,15 +173,12 @@ export class Renderer {
         return `${prefix}${img}`;
     }
 
-    private divRenderer(token: DivToken): string {
+    private decoratorRenderer(token: DecoratorToken): string {
         let attr = '';
-        if (token.id) {
-            attr += ` id="${token.id}"`;
-        }
         if (token.class) {
             attr += ` class="${token.class}"`;
         }
-        return `<${token.label}${attr}>${token.content}</${token.label}>\n`;
+        return `<div${attr} aria-hidden="true">${token.content}</div>\n`;
     }
 
     private paragraphRenderer(token: ParagraphToken): string {

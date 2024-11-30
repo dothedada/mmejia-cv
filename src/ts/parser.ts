@@ -281,7 +281,7 @@ export class Parser {
         }
 
         return {
-            label: 'div',
+            label: 'decorator',
             class: 'decorator',
             content: textSanitizer(decoratorArray[1]),
         };

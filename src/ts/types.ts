@@ -18,7 +18,7 @@ export type HeaderToken = {
 );
 export type ParsedToken =
     | SectionToken
-    | DivToken
+    | DecoratorToken
     | HeadingToken
     | LinkToken
     | ImgToken
@@ -32,9 +32,8 @@ export interface SectionToken {
     name: string;
     id: string;
 }
-export interface DivToken {
-    label: 'div';
-    id?: string;
+export interface DecoratorToken {
+    label: 'decorator';
     class?: string;
     content: string;
 }
