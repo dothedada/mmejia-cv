@@ -25,11 +25,10 @@ const loadPage = async () => {
 
         main.innerHTML = html;
         menu.innerHTML = menuItems;
-
-        // visibilidad del menu
         const moreBtn = document.querySelectorAll('.card__btn');
         const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
         const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
+        menu.ariaHidden = `${document.documentElement.clientWidth < 650}`;
 
         if (!moreBtn || !closeBtn || !anchors) {
             throw new Error('Can not render the UI');
@@ -75,14 +74,18 @@ const showMenu = (): void => {
         return;
     }
     menu.classList.toggle('visible');
-    showMenuBtn.ariaLabel = menu.classList.contains('visible')
+    const visible = menu.classList.contains('visible');
+    menu.ariaHidden = `${!visible}`;
+    showMenuBtn.ariaLabel = visible
         ? uiSr_txt[getLang()].menu.BtnClose
         : uiSr_txt[getLang()].menu.BtnOpen;
-    blockWheel(menu.classList.contains('visible'));
+    showMenuBtn.ariaExpanded = `${visible}`;
+    blockWheel(visible);
 };
 
 showMenuBtn.addEventListener('pointerdown', showMenu);
 showMenuBtn.ariaLabel = uiSr_txt[getLang()].menu.BtnOpen;
+showMenuBtn.ariaExpanded = 'false';
 
 const blockWheel = (freeze: boolean): void => {
     document.body.style.overflow = freeze ? 'hidden' : 'unset';
@@ -107,9 +110,12 @@ const refreshMenu = () => {
     const availableSpace = document.documentElement.clientWidth;
     if (availableSpace > 650) {
         menu.classList.remove('visible');
+        menu.ariaHidden = 'false';
         const modal = document.querySelector<HTMLDialogElement>('dialog[open]');
         modal?.close();
         blockWheel(false);
+    } else {
+        menu.ariaHidden = 'true';
     }
 };
 
