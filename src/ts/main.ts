@@ -3,6 +3,7 @@ import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
 import { Parser } from './parser';
 import { Renderer } from './render';
+import uiSr_txt from './ui-sr_txt';
 
 const main = document.querySelector<HTMLElement>('main')!;
 const menu = document.querySelector<HTMLUListElement>('.menu__links')!;
@@ -18,6 +19,10 @@ const loadPage = async () => {
         const render = new Renderer();
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
 
+        if (!html || !menuItems) {
+            throw new Error('Can not load the data');
+        }
+
         main.innerHTML = html;
         menu.innerHTML = menuItems;
 
@@ -25,6 +30,11 @@ const loadPage = async () => {
         const moreBtn = document.querySelectorAll('.card__btn');
         const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
         const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
+
+        if (!moreBtn || !closeBtn || !anchors) {
+            throw new Error('Can not render the UI');
+        }
+
         moreBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', openModal);
         });
@@ -34,21 +44,15 @@ const loadPage = async () => {
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
         });
-        showMenuBtn.addEventListener('pointerdown', showMenu);
-
-        // Cambiar de idioma
-        const langBtn =
-            document.querySelector<HTMLButtonElement>('.menu__lang')!;
-        langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
-
-        // Reajuste de interfase
-        window.addEventListener('resize', debounce(refreshMenu, 500));
     } catch {
         throw new Error('Could not load the page');
     }
 };
 initializeLang();
 loadPage();
+
+const langBtn = document.querySelector<HTMLButtonElement>('.menu__lang')!;
+langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
 
 const openModal = (e: Event): void => {
     const target = e.currentTarget as HTMLButtonElement;
@@ -71,8 +75,14 @@ const showMenu = (): void => {
         return;
     }
     menu.classList.toggle('visible');
+    showMenuBtn.ariaLabel = menu.classList.contains('visible')
+        ? uiSr_txt[getLang()].menu.BtnClose
+        : uiSr_txt[getLang()].menu.BtnOpen;
     blockWheel(menu.classList.contains('visible'));
 };
+
+showMenuBtn.addEventListener('pointerdown', showMenu);
+showMenuBtn.ariaLabel = uiSr_txt[getLang()].menu.BtnOpen;
 
 const blockWheel = (freeze: boolean): void => {
     document.body.style.overflow = freeze ? 'hidden' : 'unset';
@@ -110,3 +120,4 @@ const debounce = (callback: Function, miliseconds: number) => {
         timer = setTimeout(callback, miliseconds);
     };
 };
+window.addEventListener('resize', debounce(refreshMenu, 500));
