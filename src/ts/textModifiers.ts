@@ -16,10 +16,9 @@ const keySanitizer = (rawKey: string): string => {
     }
 
     return keyToSanitize
-        .replace(/ (\w)/g, (match) => match.toUpperCase())
-        .replace(/ +/g, '')
+        .replace(/ (\w)/g, (match) => match.toUpperCase().slice(1))
         .replace(/-+/g, '-')
-        .replace(/^-+|-+$/g, '');
+        .replace(/^-+|-+|[^\w]$/g, '');
 };
 
 const textSanitizer = (rawTxt: string): string => {

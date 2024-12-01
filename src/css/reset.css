@@ -10,12 +10,13 @@
 }
 @font-face {
     font-family: 'rock_3dregular';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
     src:
         local('rock_3dregular'),
         url('../assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
         url('../assets/fonts/rock3d-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
 }
 html {
     font-size: 100%;
