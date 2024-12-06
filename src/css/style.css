@@ -173,12 +173,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--line-height);
+    transform: translateX(0);
+    transition: transform 0.3s 0.1s ease-in-out;
 
-    &.noVisible {
-        animation: menu-out 0.2s ease-in-out 1 both;
-    }
     &.visible {
-        animation: menu-in 0.2s ease-in-out 0.2s 1 both;
+        transform: translateX(100%);
     }
 
     & a {
@@ -236,14 +235,14 @@ body {
         transform: scale(0.9);
     }
 
-    &.view .show__bar {
+    &[aria-expanded='true'] .show__bar {
         background-color: var(--transparent);
     }
 
-    &.view .show__bar::before {
+    &[aria-expanded='true'] .show__bar::before {
         transform: rotate(-45deg);
     }
-    &.view .show__bar::after {
+    &[aria-expanded='true'] .show__bar::after {
         transform: rotate(45deg);
     }
 }
@@ -441,12 +440,13 @@ section li {
 dialog {
     box-sizing: border-box;
     width: calc(100dvw - var(--line-height) * 2);
-    height: calc(100dvh - var(--line-height) * 4);
+    height: calc(100dvh - var(--line-height) * 5);
     margin: calc(var(--line-height) * 3) auto;
     border: none;
     padding: var(--line-height);
     background: var(--text);
     color: var(--background);
+    box-shadow: none;
 
     &[open] {
         animation: dialog-in 0.3s ease-in-out 0.2s 1 both;
@@ -470,13 +470,9 @@ dialog {
     }
 
     & .dialog__closeBtn {
-        align-self: flex-end;
         text-decoration: underline;
-        display: block;
         margin: 0 0 0 auto;
-        position: fixed;
-        top: var(--line-height);
-        right: var(--line-height);
+        display: block;
 
         &::after {
             content: ' X';
@@ -640,10 +636,6 @@ dialog {
             margin: 0 15% var(--line-height);
         }
 
-        & .dialog__closeBtn {
-            right: calc(5% + var(--line-height));
-        }
-
         ul {
             grid-column: 1 / -1;
             margin: calc(var(--line-height) * -1) 0 calc(var(--line-height) * 2)
@@ -793,20 +785,6 @@ dialog {
             grid-column: 1 / -1;
         }
 
-        & .dialog__closeBtn {
-            align-self: flex-end;
-            text-decoration: underline;
-            display: block;
-            margin: 0 0 0 auto;
-            position: fixed;
-            top: var(--line-height);
-            right: calc(8vw + var(--line-height) * 2);
-
-            &::after {
-                content: ' X';
-            }
-        }
-
         ul {
             list-style: none;
             display: flex;
@@ -821,64 +799,47 @@ dialog {
         }
     }
 }
-.second_plane {
-    animation: unfocus 0.3s ease-in-out 1 forwards;
-}
 .first_plane {
     animation: focus 0.3s ease-in-out 1 forwards;
+}
+.second_plane {
+    animation: unfocus 0.3s ease-in-out 1 forwards;
 }
 
 @keyframes focus {
     0% {
-        filter: blur(var(--blur));
-        transform: scale(0.97);
+        filter: blur(var(--blur)) contrast(50%);
+        transform: scaleX(0.9);
     }
     100% {
-        filter: blur(0px);
-        transform: scale(1);
+        filter: blur(0px) contrast(100%);
+        transform: scaleX(1);
     }
 }
 @keyframes unfocus {
     0% {
-        filter: blur(0px);
-        transform: scale(1);
+        filter: blur(0px) contrast(100%);
+        transform: scaleX(1);
     }
     100% {
-        filter: blur(var(--blur));
-        transform: scale(0.97);
-    }
-}
-
-@keyframes menu-in {
-    0% {
-        transform: translateX(0%);
-    }
-    100% {
-        transform: translateX(100%);
-    }
-}
-@keyframes menu-out {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0%);
+        filter: blur(var(--blur)) contrast(50%);
+        transform: scaleX(0.9);
     }
 }
 
 @keyframes dialog-out {
     0% {
-        transform: translateY(0%);
+        transform: translateY(0%) scale(1);
     }
     100% {
-        transform: translateY(100vh);
+        transform: translateY(100vh) scale(0.7);
     }
 }
 @keyframes dialog-in {
     0% {
-        transform: translateY(100vh);
+        transform: translateY(100vh) scale(0.7);
     }
     100% {
-        transform: translateY(0%);
+        transform: translateY(0%) scale(1);
     }
 }
