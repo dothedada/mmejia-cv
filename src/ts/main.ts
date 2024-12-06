@@ -31,33 +31,33 @@ const loadPage = async () => {
             'dialog .dialog__closeBtn',
         );
         const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
-        const modals = document.querySelectorAll<HTMLDialogElement>('dialog');
-        hideMenu(document.documentElement.clientWidth < 650);
+        const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog');
+        hideMenuAria(document.documentElement.clientWidth < 650);
 
         if (!moreBtn || !closeBtn || !anchors) {
             throw new Error('Unable to render de UI');
         }
 
         moreBtn.forEach((btn) => {
-            btn.addEventListener('pointerdown', openModal);
+            btn.addEventListener('pointerdown', openDialog);
             btn.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Enter') {
-                    openModal(e);
+                    openDialog(e);
                 }
             });
         });
         closeBtn.forEach((btn) => {
-            btn.addEventListener('pointerdown', closeModal);
+            btn.addEventListener('pointerdown', closeDialog);
             btn.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Enter') {
-                    closeModal(e);
+                    closeDialog(e);
                 }
             });
         });
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
         });
-        modals.forEach((dialog) => {
+        dialogs.forEach((dialog) => {
             dialog.addEventListener('pointerdown', clickOutsideDialog);
         });
     } catch {
@@ -68,28 +68,43 @@ initializeLang();
 loadPage();
 
 document.body.addEventListener('keydown', (e) => {
+    if (e.key === 'a') {
+        main.classList.toggle('minify');
+    }
     if (e.key !== 'Escape') {
         return;
     }
-    blockWheel(false);
+    blockMain(false);
 });
 
 const langBtn = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
 
-const openModal = (e: Event): void => {
+const openDialog = (e: Event): void => {
+    const navBar = document.querySelector<HTMLMenuElement>('.menu')!;
+    navBar.classList.add('hide');
     const target = e.currentTarget as HTMLButtonElement;
     const id = target.getAttribute('data-target')!;
     const modal = document.getElementById(id)! as HTMLDialogElement;
     modal.showModal();
-    blockWheel(true);
+    blockMain(true);
 };
 
-const closeModal = (e: Event): void => {
+const closeDialog = (e: Event): void => {
     e.stopPropagation();
     const target = e.currentTarget as HTMLButtonElement;
-    (target.parentNode as HTMLDialogElement).close();
-    blockWheel(false);
+    const modal = target.parentNode as HTMLDialogElement;
+
+    modal.setAttribute('closing', '');
+    modal.addEventListener(
+        'animationend',
+        () => {
+            modal.removeAttribute('closing');
+            modal.close();
+        },
+        { once: true },
+    );
+    blockMain(false);
 };
 
 const clickOutsideDialog = (e: MouseEvent): void => {
@@ -102,7 +117,7 @@ const clickOutsideDialog = (e: MouseEvent): void => {
         e.clientX > dialogBoundaries.right
     ) {
         dialog.close();
-        blockWheel(false);
+        blockMain(false);
     }
 };
 
@@ -113,15 +128,15 @@ const showMenu = (): void => {
     }
     menu.classList.toggle('visible');
     const visible = menu.classList.contains('visible');
-    hideMenu(!visible);
+    hideMenuAria(!visible);
     showMenuBtn.ariaLabel = visible
         ? uiSr_txt[getLang()].menu.BtnClose
         : uiSr_txt[getLang()].menu.BtnOpen;
     showMenuBtn.ariaExpanded = `${visible}`;
-    blockWheel(visible);
+    blockMain(visible);
 };
 
-const hideMenu = (hide: boolean): void => {
+const hideMenuAria = (hide: boolean): void => {
     menu.ariaHidden = `${hide}`;
     if (hide) {
         menu.removeAttribute('aria-live');
@@ -143,10 +158,6 @@ showMenuBtn.addEventListener('keydown', (e) => {
 showMenuBtn.ariaLabel = uiSr_txt[getLang()].menu.BtnOpen;
 showMenuBtn.ariaExpanded = 'false';
 
-const blockWheel = (freeze: boolean): void => {
-    document.body.style.overflow = freeze ? 'hidden' : 'unset';
-};
-
 // menu
 let userPosition = window.scrollY;
 window.addEventListener('scroll', () => {
@@ -164,15 +175,15 @@ window.addEventListener('scroll', () => {
 
 const refreshMenu = () => {
     const availableSpace = document.documentElement.clientWidth;
+    const modal = document.querySelector<HTMLDialogElement>('dialog[open]');
     if (availableSpace > 650) {
         menu.classList.remove('visible');
-        hideMenu(false);
-        const modal = document.querySelector<HTMLDialogElement>('dialog[open]');
-        modal?.close();
-        blockWheel(false);
+        hideMenuAria(false);
     } else {
-        hideMenu(true);
+        hideMenuAria(true);
     }
+    modal?.close();
+    blockMain(false);
 };
 
 const debounce = (callback: Function, miliseconds: number) => {
@@ -181,6 +192,12 @@ const debounce = (callback: Function, miliseconds: number) => {
         clearTimeout(timer);
         timer = setTimeout(callback, miliseconds);
     };
+};
+
+const blockMain = (freeze: boolean): void => {
+    document.body.style.overflow = freeze ? 'hidden' : 'unset';
+    main.classList.toggle('first_plane', !freeze);
+    main.classList.toggle('second_plane', freeze);
 };
 
 window.addEventListener('resize', debounce(refreshMenu, 500));

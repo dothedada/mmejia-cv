@@ -126,10 +126,10 @@ body {
     left: 0;
     padding: var(--line-height) var(--line-height) 0;
     height: calc(var(--line-height) * 3);
-    background-color: var(--background);
     background-image: var(--grid);
     background-size: var(--line-height) var(--line-height);
     background-position: var(--grid-offset);
+    backdrop-filter: blur(var(--blur));
     width: 100vw;
     grid-template-columns: 46px min-content 1fr;
     gap: var(--line-height);
@@ -169,19 +169,16 @@ body {
     top: calc(var(--line-height) * 3);
     left: -100%;
     border-top: 1px solid var(--text);
-    backdrop-filter: blur(var(--blur));
-    background-image: var(--grid);
-    background-size: var(--line-height) var(--line-height);
-    background-position: var(--grid-offset);
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: var(--line-height);
-    transform: translateX(0);
-    transition: transform 0.2s ease-in-out;
 
+    &.noVisible {
+        animation: menu-out 0.2s ease-in-out 1 both;
+    }
     &.visible {
-        transform: translateX(100%);
+        animation: menu-in 0.2s ease-in-out 0.2s 1 both;
     }
 
     & a {
@@ -315,6 +312,7 @@ section {
     button {
         grid-column: 1 / -1;
         text-wrap: balance;
+        text-align: right;
     }
 
     &::after {
@@ -336,7 +334,6 @@ section {
         a,
         button {
             grid-column: 2 / -1;
-            text-wrap: balance;
         }
         & .subsection {
             grid-column: 1 / 4;
@@ -438,7 +435,7 @@ section li {
 }
 
 ::backdrop {
-    backdrop-filter: blur(var(--blur));
+    display: none;
 }
 
 dialog {
@@ -450,6 +447,14 @@ dialog {
     padding: var(--line-height);
     background: var(--text);
     color: var(--background);
+
+    &[open] {
+        animation: dialog-in 0.3s ease-in-out 0.2s 1 both;
+    }
+
+    &[closing] {
+        animation: dialog-out 0.3s ease-in-out 1 both;
+    }
 
     img {
         width: 100%;
@@ -814,5 +819,66 @@ dialog {
                 calc(var(--line-height) * 1);
             font-size: calc(var(--base-size) * 0.8);
         }
+    }
+}
+.second_plane {
+    animation: unfocus 0.3s ease-in-out 1 forwards;
+}
+.first_plane {
+    animation: focus 0.3s ease-in-out 1 forwards;
+}
+
+@keyframes focus {
+    0% {
+        filter: blur(var(--blur));
+        transform: scale(0.97);
+    }
+    100% {
+        filter: blur(0px);
+        transform: scale(1);
+    }
+}
+@keyframes unfocus {
+    0% {
+        filter: blur(0px);
+        transform: scale(1);
+    }
+    100% {
+        filter: blur(var(--blur));
+        transform: scale(0.97);
+    }
+}
+
+@keyframes menu-in {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+@keyframes menu-out {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes dialog-out {
+    0% {
+        transform: translateY(0%);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
+@keyframes dialog-in {
+    0% {
+        transform: translateY(100vh);
+    }
+    100% {
+        transform: translateY(0%);
     }
 }
