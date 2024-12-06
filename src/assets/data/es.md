@@ -8,9 +8,9 @@ portfolio:
 
 ---(about)
 
-# ¡Hola! Soy Miguel Mejía
+# Hola! Soy Miguel Mejia
 
-// HoLa!!! Soy MiGuel MMejía...
+// sin tilde por culpa de la fuente
 
 Trabajo en un rango que abarca desde la comunicación visual y la investigación hasta el desarrollo web front-end.
 

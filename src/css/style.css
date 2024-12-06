@@ -5,7 +5,7 @@
     --links: #ffbf00;
     --secondary: #ceaef5;
     --backup: #a0f3de;
-    --grid-lines-color: rgb(0 0 0 / 0.3);
+    --grid-lines-color: rgb(0 0 0 / 0.2);
     --transparent: rgb(0 0 0 / 0);
 
     --font-text: 'Martian Mono', monospace;
@@ -105,7 +105,8 @@ body {
     color: var(--text);
 
     background-color: var(--background);
-    background-image: linear-gradient(
+    background-image: url('/assets/img/retrato-mmejia.gif'),
+        linear-gradient(
             to right,
             transparent calc(var(--line-height) - 1px),
             var(--grid-lines-color) 1px
@@ -115,8 +116,16 @@ body {
             transparent calc(var(--line-height) - 1px),
             var(--grid-lines-color) 1px
         );
-    background-size: var(--line-height) var(--line-height);
-    background-position: var(--grid-offset);
+    background-repeat: no-repeat, repeat, repeat;
+    background-size:
+        auto,
+        var(--line-height) var(--line-height),
+        var(--line-height) var(--line-height);
+    background-position:
+        10vw 30vh,
+        var(--grid-offset),
+        var(--grid-offset);
+    background-blend-mode: multiply, normal, normal;
 }
 
 .menu {
@@ -304,7 +313,7 @@ section {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     column-gap: var(--line-height);
-    padding: calc(var(--line-height) * 4) 0 calc(var(--line-height) * 5);
+    padding: calc(var(--line-height) * 3) 0 calc(var(--line-height) * 4);
     position: relative;
 
     a,
@@ -330,6 +339,8 @@ section {
     }
 
     &:first-child {
+        margin: calc(var(--line-height) * 2) 0 0;
+
         a,
         button {
             grid-column: 2 / -1;
@@ -434,7 +445,7 @@ section li {
 }
 
 ::backdrop {
-    display: none;
+    opacity: 0;
 }
 
 dialog {
