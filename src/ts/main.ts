@@ -20,7 +20,7 @@ const loadPage = async () => {
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
 
         if (!html || !menuItems) {
-            throw new Error('Can not load the data');
+            throw new Error('Unable to load the data');
         }
 
         main.innerHTML = html;
@@ -31,10 +31,11 @@ const loadPage = async () => {
             'dialog .dialog__closeBtn',
         );
         const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
+        const modals = document.querySelectorAll<HTMLDialogElement>('dialog');
         hideMenu(document.documentElement.clientWidth < 650);
 
         if (!moreBtn || !closeBtn || !anchors) {
-            throw new Error('Can not render the UI');
+            throw new Error('Unable to render de UI');
         }
 
         moreBtn.forEach((btn) => {
@@ -56,12 +57,22 @@ const loadPage = async () => {
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
         });
+        modals.forEach((dialog) => {
+            dialog.addEventListener('pointerdown', clickOutsideDialog);
+        });
     } catch {
         throw new Error('Could not load the page');
     }
 };
 initializeLang();
 loadPage();
+
+document.body.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') {
+        return;
+    }
+    blockWheel(false);
+});
 
 const langBtn = document.querySelector<HTMLButtonElement>('.menu__lang')!;
 langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
@@ -79,6 +90,20 @@ const closeModal = (e: Event): void => {
     const target = e.currentTarget as HTMLButtonElement;
     (target.parentNode as HTMLDialogElement).close();
     blockWheel(false);
+};
+
+const clickOutsideDialog = (e: MouseEvent): void => {
+    const dialog = e.target as HTMLDialogElement;
+    const dialogBoundaries = dialog.getBoundingClientRect();
+    if (
+        e.clientY < dialogBoundaries.top ||
+        e.clientY > dialogBoundaries.bottom ||
+        e.clientX < dialogBoundaries.left ||
+        e.clientX > dialogBoundaries.right
+    ) {
+        dialog.close();
+        blockWheel(false);
+    }
 };
 
 const showMenu = (): void => {
@@ -157,4 +182,5 @@ const debounce = (callback: Function, miliseconds: number) => {
         timer = setTimeout(callback, miliseconds);
     };
 };
+
 window.addEventListener('resize', debounce(refreshMenu, 500));
