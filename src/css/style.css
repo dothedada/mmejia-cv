@@ -587,7 +587,7 @@ dialog {
     }
 
     ul {
-        grid-column: 2 / span 5;
+        grid-column: 3 / -1;
     }
     section li {
         margin: 0;
