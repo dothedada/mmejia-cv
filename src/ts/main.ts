@@ -25,8 +25,11 @@ const loadPage = async () => {
 
         main.innerHTML = html;
         menu.innerHTML = menuItems;
-        const moreBtn = document.querySelectorAll('.card__btn');
-        const closeBtn = document.querySelectorAll('dialog .dialog__closeBtn');
+        const moreBtn =
+            document.querySelectorAll<HTMLButtonElement>('.card__btn');
+        const closeBtn = document.querySelectorAll<HTMLButtonElement>(
+            'dialog .dialog__closeBtn',
+        );
         const anchors = menu.querySelectorAll<HTMLAnchorElement>('a');
         hideMenu(document.documentElement.clientWidth < 650);
 
@@ -36,9 +39,19 @@ const loadPage = async () => {
 
         moreBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', openModal);
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    openModal(e);
+                }
+            });
         });
         closeBtn.forEach((btn) => {
             btn.addEventListener('pointerdown', closeModal);
+            btn.addEventListener('keydown', (e) => {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    closeModal(e);
+                }
+            });
         });
         anchors.forEach((anchor) => {
             anchor.addEventListener('click', showMenu);
@@ -85,6 +98,11 @@ const showMenu = (): void => {
 
 const hideMenu = (hide: boolean): void => {
     menu.ariaHidden = `${hide}`;
+    if (hide) {
+        menu.removeAttribute('aria-live');
+    } else {
+        menu.setAttribute('aria-live', 'polite');
+    }
     const links = menu.querySelectorAll<HTMLAnchorElement>('a');
     links.forEach((link) => {
         link.tabIndex = hide ? -1 : 0;
@@ -92,6 +110,11 @@ const hideMenu = (hide: boolean): void => {
 };
 
 showMenuBtn.addEventListener('pointerdown', showMenu);
+showMenuBtn.addEventListener('keydown', (e) => {
+    if (e.key === ' ' || e.key === 'Enter') {
+        showMenu();
+    }
+});
 showMenuBtn.ariaLabel = uiSr_txt[getLang()].menu.BtnOpen;
 showMenuBtn.ariaExpanded = 'false';
 
