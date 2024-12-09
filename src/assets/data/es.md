@@ -12,7 +12,7 @@ portfolio:
 
 // sin tilde por culpa de la fuente
 
-Trabajo como desarrollador web front-end desde hace 2 años y llevo más de 15 años como comunicador visual especializado en fotografía y arquitectura de la información.
+Trabajo como desarrollador web front-end desde hace 2 años y llevo más de 15 como comunicador visual especializado en fotografía y arquitectura de la información.
 
 Me gusta crear herramientas que faciliten el acceso a la información y dar vida a narrativas que inspiren y apoyen a la construcción de sociedades más inclusivas.
 
@@ -32,7 +32,7 @@ Diseño y desarrollo soluciones accesibles y funcionales que ponen a las persona
 
 Disfruto trabajar con algoritmos y estructuras de datos (Me hace feliz crear e implementar Heaps). Investigar, planear y desarrollar herramientas me llena de energía, especialmente cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
 
-Aunque disfruto del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD). Este enfoque mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración o definición.
+Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD). Este enfoque mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración o definición.
 
 ### Tecnologías con las que trabajo:
 
@@ -79,7 +79,7 @@ Aunque disfruto del desarrollo guiado por pruebas (TDD), prefiero explorar el de
 
 ### Imagen
 
-Mi fascinación por la semiótica, la tipografía y la diagramación me ha llevado a desarrollar una mirada crítica y reflexiva. Esto me permite abordar con respeto y profundidad temas sociales complejos como discapacidad, derechos humanos, educación, cambio climático y conflicto armado.
+Mi fascinación por la semiótica y la imagen como documento histórico, me ha llevado a desarrollar una mirada crítica y reflexiva. Esto me permite abordar con respeto y profundidad temas sociales complejos como discapacidad, derechos humanos, educación, cambio climático y conflicto armado.
 
 ### Información
 
@@ -95,7 +95,7 @@ He trabajado desde la investigación y estructuración de información hasta la 
 
 ---
 
-Aunque la imagen y la información son constantes en mi trabajo, mi forma de abordarlas cambia. Hoy me centro en crear herramientas digitales que faciliten el acceso a la información. Sin embargo, si te interesa explorar mi trabajo como comunicador visual y fotógrafo, aquí te dejo algunos enlaces a esos proyectos.
+Aunque la imagen y la información son constantes en mi trabajo, como las abordo cambia con el tiempo. Hoy me centro en crear herramientas digitales que faciliten el acceso a la información. Sin embargo, si te interesa explorar mi trabajo como comunicador visual y fotógrafo, aquí te dejo algunos enlaces a esos proyectos.
 
 [Portafolio de retratos](https://mmejia.com)B
 [Portafolio de foto-producto](https://producto.mmejia.com)B
