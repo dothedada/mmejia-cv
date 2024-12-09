@@ -6,7 +6,7 @@ aditionalData: Creación de herramientas
 stack:
     - TypeScript
     - Vitest
-    - tooling
+    - Tooling para NPM
 preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
 url: https://dothedada.github.io/filemakerrrr/
 repository: https://github.com/dothedada/filemakerrrr

@@ -18,22 +18,30 @@ repository: https://github.com
 
 Me produce curiosidad cómo se intentan ocultar los errores y la necesidad de evitarlos, cuando estos son indispensables para el aprendizaje, la construcción de conocimiento y experiencia. Estos son algunos de los ejercicios que he realizado a medida que profundizo mis conocimientos en programación.
 
-La Mete-o fue un ejercicio para profundizar en el manejo de código asíncrono y la interacción con múltiples APIs. Aprendí a encadenar respuestas de APIs, utilizando la información de una para alimentar a la siguiente, como en el caso de obtener mi ubicación, para luego consultar el clima y luego generar un prompt que arrojara una imagen relacionada con el lugar, el clima y la hora. Creé una interfaz sensible a los datos recibidos, ajustando colores y saturación según el pronóstico. Este proyecto me permitió mejorar mis habilidades en la programación asíncrona y en la gestión de dependencias de datos.
+### La Mete-o
+
+fue un ejercicio para profundizar en el manejo de código asíncrono y la interacción con múltiples APIs. Aprendí a encadenar respuestas de APIs, utilizando la información de una para alimentar a la siguiente, como en el caso de obtener mi ubicación, para luego consultar el clima y luego generar un prompt que arrojara una imagen relacionada con el lugar, el clima y la hora. Creé una interfaz sensible a los datos recibidos, ajustando colores y saturación según el pronóstico. Este proyecto me permitió mejorar mis habilidades en la programación asíncrona y en la gestión de dependencias de datos.
 
 [Repositorio de La Mete-o](https://github.com/dothedada/laMeteo)B
 [Sitio de La Mete-o](https://dothedada.github.io/laMeteo/)B
 
-La Cumbancha fue mi versión de Battleship, donde me sumergí en el desarrollo guiado por pruebas (TDD). Aprendí a trabajar con unit testing y Jest, mientras configuraba un flujo de trabajo con Vite. En cuanto a la interfaz, experimenté con un diseño minimalista controlado por teclado, sin usar el mouse. Esto me enseñó sobre accesibilidad y cómo ofrecer una experiencia de usuario diferente, todo mientras perfeccionaba mis habilidades en pruebas y empaquetado de proyectos.
+### La Cumbancha
+
+fue mi versión de Battleship, donde me sumergí en el desarrollo guiado por pruebas (TDD). Aprendí a trabajar con unit testing y Jest, mientras configuraba un flujo de trabajo con Vite. En cuanto a la interfaz, experimenté con un diseño minimalista controlado por teclado, sin usar el mouse. Esto me enseñó sobre accesibilidad y cómo ofrecer una experiencia de usuario diferente, todo mientras perfeccionaba mis habilidades en pruebas y empaquetado de proyectos.
 
 [Repositorio de La Cumbancha](https://github.com/dothedada/batttleship-top)B
 [Sitio de La Cumbancha](https://dothedada.github.io/batttleship-top/)B
 
-La Calle Está Dura consistió en crear una herramienta para generar hojas de vida adaptadas a las ofertas laborales. Durante este ejercicio, trabajé con React y me enfoqué en la funcionalidad de exportar un CV a formato PDF, optimizado para que el usuario iterara en su hoja de vida permitiéndole resaltar sus habilidades y experiencia de manera efectiva y acorde a la oferta. Aprendí a integrar datos dinámicos y a construir una aplicación práctica que no solo mejora la experiencia del usuario, sino que también aporta valor real en la búsqueda de empleo.
+### La Calle Está Dura
+
+consistió en crear una herramienta para generar hojas de vida adaptadas a las ofertas laborales. Durante este ejercicio, trabajé con React y me enfoqué en la funcionalidad de exportar un CV a formato PDF, optimizado para que el usuario iterara en su hoja de vida permitiéndole resaltar sus habilidades y experiencia de manera efectiva y acorde a la oferta. Aprendí a integrar datos dinámicos y a construir una aplicación práctica que no solo mejora la experiencia del usuario, sino que también aporta valor real en la búsqueda de empleo.
 
 [Repositorio de La Calle Está Dura](https://github.com/dothedada/laCalleEstaDura)B
 [Sitio de La Calle Está Dura](https://la-calle-esta-dura.vercel.app/)B
 
-Etch a Sketch fue un proyecto donde creé un tablero de dibujo por píxeles con una interfaz sencilla. Implementé la capacidad de cambiar la densidad de la retícula y separar las acciones de clic y movimiento para mejorar la experiencia con trackpad. Este ejercicio me permitió aprender más sobre el control del DOM y la manipulación de eventos, mientras experimentaba con mezclas de colores a través de ecuaciones matemáticas. Fue una excelente oportunidad para explorar la interacción gráfica en el navegador de manera intuitiva.
+### Etch a Sketch
+
+fue un proyecto donde creé un tablero de dibujo por píxeles con una interfaz sencilla. Implementé la capacidad de cambiar la densidad de la retícula y separar las acciones de clic y movimiento para mejorar la experiencia con trackpad. Este ejercicio me permitió aprender más sobre el control del DOM y la manipulación de eventos, mientras experimentaba con mezclas de colores a través de ecuaciones matemáticas. Fue una excelente oportunidad para explorar la interacción gráfica en el navegador de manera intuitiva.
 
 [Repositorio de Etch a Sketch](https://github.com/dothedada/etch-a-sketch)B
 [Sitio de Etch a Sketch](https://dothedada.github.io/etch-a-sketch/)B

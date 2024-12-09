@@ -1,6 +1,6 @@
 ---
 date: 09/12/2024
-footerTxt: Miguel Mejía
+footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
     - ss.md
@@ -119,4 +119,3 @@ Aunque la imagen y la información son constantes en mi trabajo, como las abordo
 -   [info@mmejia.com](mailto:info@mmejia.com)B
 -   [(+57) 304 383 9127](tel:3043839127)B
 -   [WhatsApp](https://wa.me/573043839127)B
-    Bogotá, Colombia.
