@@ -2,13 +2,15 @@
 date: 09/12/2024
 footerTxt: Miguel Mejía
 portfolio:
-    - conTratoDigno.md
-    - mmejia.md
+    - filemakerrrr.md
+    - ss.md
+    - lab.md
+    - cms.md
 ---
 
 ---(Hola)
 
-# Hola! soy Miguel Mejia :)
+# Hola! soy Miguel Mejia
 
 // sin tilde por culpa de la fuente
 
