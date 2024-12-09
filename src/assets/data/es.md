@@ -1,5 +1,5 @@
 ---
-date: 16/11/2024
+date: 09/12/2024
 footerTxt: Miguel Mejía
 portfolio:
     - conTratoDigno.md
@@ -8,15 +8,15 @@ portfolio:
 
 ---(Hola)
 
-# Hola! Soy Miguel Mejia
+# Hola! soy Miguel Mejia :)
 
 // sin tilde por culpa de la fuente
 
-Trabajo como desarrollador web front-end hace 2 años y durante más de 15 años he sido comunicador visual especializado en fotografía y arquitectura de la información.
+Trabajo como desarrollador web front-end desde hace 2 años y llevo más de 15 años como comunicador visual especializado en fotografía y arquitectura de la información.
 
-Disfruto al crear herramientas que faciliten el acceso a la información o que me permitan desarrollar narrativas que apoyen la construcción de sociedades más inclusivas.
+Me gusta crear herramientas que faciliten el acceso a la información y dar vida a narrativas que inspiren y apoyen a la construcción de sociedades más inclusivas.
 
-Este micrositio es sobre mi trabajo como desarrollador.
+(Este micrositio es una ventana al trabajo que realizo como desarrollador.)
 
 [Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)D
 
@@ -28,33 +28,33 @@ Este micrositio es sobre mi trabajo como desarrollador.
 
 ### Mi Perfil
 
-Facilitar el acceso a la información es clave para promover la equidad, y es un propósito que va atado a cada proyecto en el que participo. La integración temprana de principios y recomendaciones de accesibilidad me permite desarrollar soluciones inclusivas que abarcan la diversidad corporal, sensorial, cognitiva, cultural y socioeconómica del público objetivo, asegurando fluidez en el proceso.
+Diseño y desarrollo soluciones accesibles y funcionales que ponen a las personas primero. Desde el inicio de cada proyecto, integro principios y patrones que consideran la diversidad corporal, sensorial, cognitiva, cultural y socioeconómica de los usuarios.
 
-Disfruto trabajo con algoritmos y estructuras de datos dirigido a crear herramientas de desarrollo o a crear soluciones inesperadas a problemas recurrentes.
+Disfruto trabajar con algoritmos y estructuras de datos (Me hace feliz crear e implementar Heaps). Investigar, planear y desarrollar herramientas me llena de energía, especialmente cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
 
-Aunque me gusta mucho el desarrollo guiado por pruebas (TDD), no creo que sea la única ni siempre la mejor práctica. Ayuda a avanzar cuando proyectos están bien definidos, pero es una piedra en el zapato los proyectos de exploración etapas de exploración. Por eso, prefiero el desarrollo guiado por preguntas (QDD), que mantiene satisfecha mi curiosidad.
+Aunque disfruto del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD). Este enfoque mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración o definición.
 
 ### Tecnologías con las que trabajo:
 
-Lenguajes
+#### Lenguajes
 
 -   JavaScript / TypeScript
 -   CSS (incluyendo SCSS y SASS)
--   HTML (Semántico)
--   Lua (Básico)
+-   HTML (Semántico, md)
+-   Lua
 -   Bash (Básico)
 
-Entornos (Runtimes)
+#### Entornos (Runtimes)
 
 -   Deno <3
 -   Node.js (Básico)
 
-Bibliotecas y Frameworks
+#### Bibliotecas y Frameworks
 
 -   React.js
 -   React Router
 
-Herramientas Desarrollo
+#### Herramientas Desarrollo
 
 -   Git
 -   Vite
@@ -62,19 +62,16 @@ Herramientas Desarrollo
 -   Vitest / Jest
 -   React Testing Library
 
-Infraestructura
+#### Despliegue
 
 -   AWS (S3, CloudFront, Route53)
 -   Vercel
 
-Generadores de Sitios Estáticos (SSG)
+#### Generadores de Sitios
 
--   11ty
--   Jekyll
-
-Gestores de Contenido (CMS)
-
--   WordPress
+-   WordPress (CMS)
+-   11ty (SSG)
+-   Jekyll (SSG)
 
 ---
 
@@ -82,21 +79,15 @@ Gestores de Contenido (CMS)
 
 ### Imagen
 
-Vivo fascinado por la semiótica, la diagramación y la tipografía. Me formé como diseñador gráfico y a partir de ahí, comencé a moverme hacia la fotografía editorial y la creación de narrativas visuales.
+Mi fascinación por la semiótica, la tipografía y la diagramación me ha llevado a desarrollar una mirada crítica y reflexiva. Esto me permite abordar con respeto y profundidad temas sociales complejos como discapacidad, derechos humanos, educación, cambio climático y conflicto armado.
 
-Soy minucioso con mi trabajo visual y siento la necesidad constante de cuestionar tanto lo que observo como la perspectiva desde la que lo hago. Esto me permite abordar con confianza y respeto temas sociales e individuales que pueden ser bastante complejos.
+### Información
 
-### Información y escritura
-
-He trabajado con profundidad temas como discapacidad visual, derechos humanos y laborales, educación y cultura, cambio climático y conflicto armado, donde he trabajado desde la investigación y estructuración de la información hasta la creación de narrativas, el desarrollo de estrategias y herramientas visuales para su comunicación.
-
-### Otras aptitudes
-
-Por gusto y responsabilidad necesito comprender a fondo lo que voy a comunicar, por lo tanto, me enseñé a estar constantemente aprendiendo. Sin embargo, el aprendizaje está incompleto si no se comparte lo aprendido, por lo que he dado clases y talleres sobre comunicación visual, semiótica y fotografía. También he organizado laboratorios y abierto conversatorios sobre ética, tecnología y comunicación.
+He trabajado desde la investigación y estructuración de información hasta la creación de narrativas y estrategias visuales para comunicar ideas de manera efectiva. Además, disfruto compartir lo aprendido a través de talleres, clases y laboratorios enfocados en comunicación visual, ética y tecnología.
 
 ---(Portafolio)
 
-## Algunos de mis proyectos
+## Algunos proyectos
 
 // Como desarrollador he realizado los siguientes trabajos...
 
@@ -104,7 +95,7 @@ Por gusto y responsabilidad necesito comprender a fondo lo que voy a comunicar, 
 
 ---
 
-Aunque la imagen siempre ha estado presente en mi trabajo, las formas en las que la abordo pueden cambiar. Actualmente mi enfoque se orienta hacia el acceso a la información y la creación de herramientas digitales, pero si la curiosidad te llama, en los siguientes enlaces se encuentra algo de mi trabajo como comunicador visual y fotógrafo.
+Aunque la imagen y la información son constantes en mi trabajo, mi forma de abordarlas cambia. Hoy me centro en crear herramientas digitales que faciliten el acceso a la información. Sin embargo, si te interesa explorar mi trabajo como comunicador visual y fotógrafo, aquí te dejo algunos enlaces a esos proyectos.
 
 [Portafolio de retratos](https://mmejia.com)B
 [Portafolio de foto-producto](https://producto.mmejia.com)B
@@ -116,12 +107,12 @@ Aunque la imagen siempre ha estado presente en mi trabajo, las formas en las que
 
 // Hablemos
 
-### Redes Sociales:
+### Redes:
 
 -   [GitHub](https://github.com/dothedada)B
 -   [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
 
-### Información de contacto:
+### Canales de comunicacion:
 
 -   [info@mmejia.com](mailto:info@mmejia.com)B
 -   [(+57) 304 383 9127](tel:3043839127)B

@@ -338,6 +338,12 @@ section {
         grid-column: 1 / -1;
     }
 
+    h4 {
+        margin: 0 1ch 0;
+        /* text-align: right; */
+        grid-column: span 2;
+    }
+
     &:first-child {
         margin: calc(var(--line-height) * 2) 0 0;
 
@@ -549,6 +555,12 @@ dialog {
             text-align: right;
         }
 
+        h4 {
+            /* margin: 0 1ch 0; */
+            text-align: right;
+            /* grid-column: span 2; */
+        }
+
         &:first-child {
             a,
             button {
@@ -681,6 +693,12 @@ dialog {
             width: 84%;
         }
 
+        ul {
+            grid-column: 4 / -1;
+        }
+        h4 {
+            grid-column: 2 / 4;
+        }
         &:first-child {
             a,
             button {
