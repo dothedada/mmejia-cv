@@ -399,12 +399,6 @@ h3 {
     margin: var(--line-height) 0;
 }
 
-img {
-    height: calc(var(--line-height) * 5);
-    aspect-ratio: 3 / 2;
-    transform: translateY(var(--baseline-offset));
-}
-
 hr {
     margin: calc(var(--line-height) * 2) 0 calc(var(--line-height) * 3 - 1px);
     padding: 0;
@@ -428,6 +422,7 @@ ul {
     & img {
         display: block;
         height: calc(var(--line-height) * 10);
+        mix-blend-mode: lighten !important;
         aspect-ratio: 1;
         grid-column: 1 / -1;
         transform: translateY(var(--baseline-offset));
@@ -485,7 +480,7 @@ dialog {
 
     img {
         width: 100%;
-        height: auto;
+        height: 100%;
         outline: 1px solid var(--background);
         margin: 0 0 var(--line-height);
     }
@@ -525,7 +520,7 @@ dialog {
     }
 
     figcaption {
-        text-align: right;
+        text-align: left;
         margin: calc(var(--line-height) * -1) 0 calc(var(--line-height) * 2);
         font-size: calc(var(--base-size) * 0.8);
     }
@@ -654,8 +649,6 @@ dialog {
         color: var(--background);
 
         img {
-            width: unset;
-            height: unset;
             margin: var(--line-height) 15% var(--line-height) 0;
             transform: translateX(calc(var(--line-height) * -1));
             outline: 1px solid var(--background);
@@ -811,13 +804,6 @@ dialog {
         background: var(--text);
         color: var(--background);
 
-        img {
-            width: 100%;
-            height: auto;
-            outline: 1px solid var(--background);
-            margin: 0 0 var(--line-height);
-        }
-
         a {
             color: var(--background);
             display: block;
@@ -835,10 +821,8 @@ dialog {
         }
 
         figcaption {
-            text-align: right;
             margin: calc(var(--line-height) * -1) 5%
                 calc(var(--line-height) * 1);
-            font-size: calc(var(--base-size) * 0.8);
         }
     }
 }

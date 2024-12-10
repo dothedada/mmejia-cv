@@ -326,10 +326,8 @@ export class Parser {
         }
 
         const [, imgAlt, imgSrc, figCaption] = imgArray;
-        if (!imgAlt.trim() || !imgSrc.trim()) {
-            throw new Error(
-                `Invalid image or alternate text in: "${sectionData}"`,
-            );
+        if (!imgSrc.trim()) {
+            throw new Error(`Invalid image path: "${sectionData}"`);
         }
 
         return {

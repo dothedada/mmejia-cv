@@ -14,12 +14,15 @@ repository: https://github.com/dothedada/filemakerrrr
 
 ## Filemakerrrr
 
+![](/assets/img/f4r/header.jpg){Filemakerrrr Demo Page}
 It is a JavaScript library that I designed to facilitate the zipping and unzipping of text strings and files directly from the browser. Focusing on efficiency, it uses Huffman encoding to achieve effective compression without blocking the runtime. The interface is simple and optimized for fast use.
 
 One of its features is the ability to perform asynchronous operations, which ensures that page performance is not affected during the processes of zipping or unzipping. In addition, it offers support for Unicode BMP (Basic Multilingual Plane), allowing it to work with a wide variety of characters and languages.
 
+![](/assets/img/f4r/zip.jpg){Metrics obtained by zipping the Qur'an}
 The zipping process is not always required, and to avoid high resource consumption, Filemakerrrr evaluates the string before attempting to compress it. The system predicts compression rates and only performs the operation if the benefits are clear, ensuring an efficient use of resources.
 
 The project design is fully typed, which provides greater security and ease of integration with other projects. In addition, it has no external dependencies, which makes it a light and easy to implement solution from NPM.
 
+![](/assets/img/f4r/unzip.jpg){Metrics obtained by unzipping the Qur'an}
 Filemakerrrr is part of a larger project I'm working on to make it easier to publish books and reports and read long texts on screen. The project is alive and I'm currently finishing on a text tokenizer, which I tested by building and producing this site :).

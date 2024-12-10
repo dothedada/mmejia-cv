@@ -19,6 +19,7 @@ const loadPage = async () => {
         const render = new Renderer();
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
 
+        console;
         if (!html || !menuItems) {
             throw new Error('Unable to load the data');
         }
@@ -60,7 +61,8 @@ const loadPage = async () => {
         dialogs.forEach((dialog) => {
             dialog.addEventListener('pointerdown', clickOutsideDialog);
         });
-    } catch {
+    } catch (err) {
+        console.log(err);
         throw new Error('Could not load the page');
     }
 };

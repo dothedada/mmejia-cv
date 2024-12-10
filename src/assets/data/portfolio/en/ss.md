@@ -23,20 +23,25 @@ This microsite, my resume, is an implementation of a Markdown parser I'm develop
 
 ### ConTrato Digno
 
+![](/assets/img/ss/contratoDigno.jpg){Wireframes and home screen of ConTrato Digno site}
 For [ConTrato Digno](https://contratodigno.org/)B (2023), a microsite focused on formalizing the hiring of domestic workers in Mexico and Guatemala, I was responsible for content structure, copywriting and programming. This project centralized the campaign, and was the first time I integrated the accessibility approach into my work.
 
 ### Domestic Workers
 
+![](/assets/img/ss/trabajadoras.jpg){Wireframes and page on Domestic Workers' Agreements}
 In [Domestic Workers](https://www.oas.org/en/cim/domestic-work/)B (2022), I developed a bilingual microsite, designed to be lightweight and optimized for the lowest possible data consumption. Based on a report on workers' rights, I structured the information in a clear way, ensuring that users could easily access the content, even on older devices.
 
 ### AMZK
 
+![](/assets/img/ss/amzk.jpg){Portfolio with the work done by the studio}
 At [AMZK - Amazink Studio](https://amazink.co/)B (2021), in addition to creating over 200 social media posts, I led the redesign of the studio's website. We migrated from WordPress to a non-CMS site. This restructuring process corrected UX errors on the previous site and improved the overall user experience.
 
 ### MAMA & PICSI
 
-The [MAMA](https://www.masartemasaccion.org/lumbung-documenta/lumbung-nuqui/)B (2021) and [Picsi](http://picsi.mmejia.com/)B (2020) project are two projects created at very different times, but both shared the principle of adaptability. In MAMA, I designed a flexible platform to upload content in real time during a workshop in Nuquí-Chocó, while in Picsi, I quickly developed a product photography service to support local businesses during the pandemic, with an efficient and adaptable design to the urgent needs of businesses.
+![](/assets/img/ss/nuqui.jpg){Lumbung Nuqui homepage and diary}
+The MAMA (2021) and [Picsi](http://picsi.mmejia.com/)B (2020) project are two projects created at very different times, but both shared the principle of adaptability. In MAMA, I designed a flexible platform to upload content in real time during a workshop in Nuquí-Chocó, while in Picsi, I quickly developed a product photography service to support local businesses during the pandemic, with an efficient and adaptable design to the urgent needs of businesses.
 
 ### mmejia.com
 
+![](/assets/img/ss/mmejia.jpg){Page with commercial photography portfolio}
 One of the first projects was [mmejia.com](https://mmejia.com)B (2018), my own portfolio, which I completely reprogrammed to differentiate it from other photography sites. The goal was to improve performance, provide a smoother user experience, and make maintenance easier. At the time, I decided to work solely with my own code, pushing myself to the limits of what I knew about programming. I designed the structure to replicate and implement it in each of the audiovisual lines of work I do.

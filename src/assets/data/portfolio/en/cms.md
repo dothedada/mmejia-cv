@@ -14,16 +14,19 @@ preview: /assets/img/portadas/cms.gif
 
 ## Some works with CMS
 
-[Fundación Arte-Caona](https://fundacioncaona.org)B
 [Tres legados de Transformación](https://3ltlatam.com)B
 [Atelier Lapaetau (Alemania)](https://atelierlapaetau.com)B
 [90+](https://90mas.lat/)B
 [Re-Genera (España)](https://re-genera.org)B
 
+![](/assets/img/cms/lapaetau.jpg){Atelier lapaetau's Home}
 This set of projects involves the design and development of highly customized websites for organizations and artists. I was involved from the approach of the information and its presentation, through the selection and procurement of templates, to making adjustments to meet the specific needs of each client.
 
+![](/assets/img/cms/3lt.jpg){sketch and finalization of the site 3 legacies of transformation}
 The initial designs were made in Figma, prototyping and creating visual sketches that allowed us to evaluate the structure of the information and shape it to the project. In addition to guiding the development process, the artwork developed ensured that each site not only fulfilled its functional purpose, but also had a unique aesthetic consistent with the identity of each organization.
 
+![](/assets/img/cms/90mas.jpg){Site and sketch for 90más}
 The process included extensive customization of the templates, not only visually, but also functionally, to align with the objectives of each project. The sites have multi-language functionalities and in some cases geotargeting, to offer a relevant experience to visitors.
 
+![](/assets/img/cms/regenera.jpg){Planning and development of re-genera.org}
 I also implemented secure and easy-to-use payment gateways, allowing for seamless online donation and payment management. Each integration was carefully thought out to offer a frictionless user experience adapted to local regulations.

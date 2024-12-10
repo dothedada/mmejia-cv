@@ -20,6 +20,7 @@ I am curious about how people try to hide errors and the need to avoid them, whe
 
 ### The Mete-o
 
+![](/assets/img/lab/lameteo.jpg){Texture generated with the climate of various places in the world.}
 was an exercise to deepen my asynchronous code handling and interaction with multiple APIs. I learned how to chain API responses together, using information from one to feed the next, as in the case of getting my location, then querying the weather and then generating a prompt that would throw up an image related to the location, weather and time. I created an interface sensitive to the data received, adjusting colors and saturation according to the forecast. This project allowed me to improve my skills in asynchronous programming and data dependency management.
 
 [La Mete-o repository](https://github.com/dothedada/laMeteo)B
@@ -27,6 +28,7 @@ was an exercise to deepen my asynchronous code handling and interaction with mul
 
 ### La Cumbancha
 
+![](/assets/img/lab/lacumbancha.jpg){The beginning of a game and the defeat at La Cumbancha}
 was my version of Battleship, where I immersed myself in test-driven development (TDD). I learned to work with unit testing and Jest, while setting up a workflow with Vite. As for the interface, I experimented with a minimalist keyboard-driven design, without using the mouse. This taught me about accessibility and how to deliver a different user experience, all while honing my skills in testing and packaging projects.
 
 [La Cumbancha repository](https://github.com/dothedada/batttleship-top)B
@@ -34,6 +36,7 @@ was my version of Battleship, where I immersed myself in test-driven development
 
 ### La Calle Está Dura
 
+![](/assets/img/lab/lacalleestadura.jpg){Process of creating a resume}
 consisted of creating a tool to generate resumes tailored to job offers. During this exercise, I worked with React and focused on the functionality of exporting a CV to PDF format, optimized for the user to iterate on their resume allowing them to highlight their skills and experience effectively and according to the offer. I learned how to integrate dynamic data and build a practical application that not only improves the user experience, but also brings real value to the job search.
 
 [La Calle Está Dura repository](https://github.com/dothedada/laCalleEstaDura)B
@@ -41,6 +44,7 @@ consisted of creating a tool to generate resumes tailored to job offers. During 
 
 ### Etch a Sketch
 
+![](/assets/img/lab/sketch.jpg){Drawing interface}
 was a project where I created a pixel drawing board with a simple interface. I implemented the ability to change the grid density and separate click and move actions to improve the trackpad experience. This exercise allowed me to learn more about DOM control and event manipulation, while experimenting with color blending through mathematical equations. It was an excellent opportunity to explore graphical interaction in the browser in an intuitive way.
 
 [Etch a Sketch repository](https://github.com/dothedada/etch-a-sketch)B
