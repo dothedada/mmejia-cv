@@ -9,7 +9,7 @@ stack:
     - PHP
     - CSS
     - Figma
-preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
+preview: /assets/img/portadas/cms.gif
 ---
 
 ## Some works with CMS

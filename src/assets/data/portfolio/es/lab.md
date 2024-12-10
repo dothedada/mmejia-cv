@@ -10,7 +10,7 @@ stack:
     - Vite
     - Jest
     - CSS
-preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
+preview: /assets/img/portadas/lab.gif
 repository: https://github.com
 ---
 

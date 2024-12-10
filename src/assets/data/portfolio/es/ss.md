@@ -9,7 +9,7 @@ stack:
     - CSS
     - semantic HTML
     - AWS
-preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
+preview: /assets/img/portadas/ss.gif
 ---
 
 ## Sitios web estáticos

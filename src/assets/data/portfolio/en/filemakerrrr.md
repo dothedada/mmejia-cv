@@ -7,7 +7,7 @@ stack:
     - TypeScript
     - Vitest
     - NPM Tooling
-preview: https://cv.mmejia.com/assets/img/contratoDigno_PADF-0.png
+preview: /assets/img/portadas/f4r.gif
 url: https://dothedada.github.io/filemakerrrr/
 repository: https://github.com/dothedada/filemakerrrr
 ---
