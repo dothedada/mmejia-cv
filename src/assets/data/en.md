@@ -20,7 +20,7 @@ I like to create tools that facilitate the access to information and bring to li
 
 (This microsite is a glimpse into the work I do as a developer.)
 
-[Download my resume](/assets/pdf/MiguelMejia_resume-cv.pdf)D
+[Download my resume](/assets/pdf/MiguelMejia-CV_EN.pdf)D
 
 ---(Skills)
 

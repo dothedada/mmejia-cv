@@ -166,7 +166,7 @@ export class Renderer {
         if (this.state.inSubsection) {
             prefix += this.closeSubsection();
         }
-        const img = `<img alt="${token.alt}" src="${token.src}">\n`;
+        const img = `<img loading="lazy" alt="${token.alt}" src="${token.src}">\n`;
         if (token.figCaption) {
             return `${prefix}<figure>\n${img}<figcaption>${token.figCaption}\n</figcaption>\n</figure>`;
         }

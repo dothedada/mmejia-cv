@@ -16,8 +16,6 @@ preview: /assets/img/portadas/ss.gif
 
 Este conjunto de proyectos abarca varios sitios web estáticos que desarrollé, con un enfoque claro en la personalización y adaptación a las necesidades específicas de cada cliente, desde micrositios para organizaciones humanitarias y culturales hasta proyectos para negocios locales durante la pandemia.
 
-### Mi Hoja de vida
-
 Este micrositio, mi curriculum, es una implementación de un parser de Markdown que estoy desarrollando. Quería ver qué tan rápido y eficiente era mi tokenizador, por lo que decidí usar la actualización de mi CV como pretexto para ponerlo a prueba. El único HTML que contiene el sitio son las etiquetas meta; lo que ves ahora es una serie de archivos Markdown que se interpretan al cargar el sitio y se renderizan como HTML.
 
 ### ConTrato Digno

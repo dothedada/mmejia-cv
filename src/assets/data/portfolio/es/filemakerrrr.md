@@ -20,10 +20,9 @@ Es una biblioteca de JavaScript que diseñe para facilitar la compresión y desc
 
 Una de sus características es la capacidad para realizar operaciones asíncronas, lo que asegura que el rendimiento de la página no se vea afectado durante el proceso de compresión o descompresión. Además, ofrece soporte para el Unicode BMP (Plano Multilingüe Básico), lo que le permite trabajar con una amplia variedad de caracteres e idiomas.
 
-![](/assets/img/f4r/zip.jpg){Datos obtenidos al comprimir el Coran}
+![](/assets/img/f4r/zip.jpg){Datos obtenidos al comprimir y descomprimir el Corán}
 El proceso de compresión no es siempre necesario, y para evitar un alto consumo de recursos, Filemakerrrr evalúa la cadena antes de intentar comprimirla. El sistema predice las tasas de compresión y solo lleva a cabo la operación si los beneficios son claros, garantizando un uso eficiente de los recursos.
 
 El diseño del proyecto es completamente tipado, lo que proporciona una mayor seguridad y facilidad al integrarlo en otros proyectos. Además, no tiene dependencias externas, lo que lo convierte en una solución ligera y fácil de implementar desde NPM.
 
-![](/assets/img/f4r/unzip.jpg){Datos obtenidos al descomprimir el Corán}
 Filemakerrrr hace parte de un proyecto más grande en el que trabajo para facilitar la publicación de libros e informes y lectura de textos extensos en pantalla. El proyecto está vivo y actualmente estoy terminando en un tokenizador de textos, el cual testeé y produjo este sitio :).

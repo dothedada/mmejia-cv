@@ -17,8 +17,6 @@ preview: /assets/img/portadas/ss.gif
 
 This set of projects encompasses several static websites I developed, with a clear focus on customization and adaptation to the specific needs of each client, from microsites for humanitarian and cultural organizations to projects for local businesses during the pandemic.
 
-### My CV
-
 This microsite, my resume, is an implementation of a Markdown parser I'm developing. I wanted to see how fast and efficient my tokenizer was, so I decided to use my CV update as a pretext to put it to the test. The only HTML the site contains are the meta tags; what you see now is a series of Markdown files that are interpreted when the site loads and rendered as HTML.
 
 ### ConTrato Digno

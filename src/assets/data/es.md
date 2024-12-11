@@ -20,7 +20,7 @@ Me gusta crear herramientas que faciliten el acceso a la información y dar vida
 
 (Este micrositio es una ventana al trabajo que realizo como desarrollador.)
 
-[Descargar mi hoja de vida](/assets/pdf/MiguelMejia_resume-cv.pdf)D
+[Descargar mi hoja de vida](/assets/pdf/MiguelMejia-CV_ES.pdf)D
 
 ---(Habilidades)
 
