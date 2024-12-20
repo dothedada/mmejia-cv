@@ -43,6 +43,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 -   JavaScript / TypeScript
 -   CSS (incluyendo SCSS y SASS)
 -   HTML (Semántico, md)
+-   Python
 -   Lua
 -   Bash (Básico)
 
