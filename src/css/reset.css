@@ -5,8 +5,18 @@
     font-style: normal;
     src:
         local('Martian Mono'),
-        url('../assets/fonts/MartianMono-Light.woff2') format('woff2'),
+        url('../assets/fonts/n27-regular.woff2') format('woff2'),
         url('../assets/fonts/MartianMono-Light.woff') format('woff');
+}
+@font-face {
+    font-family: 'Neue Metana Mono';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local('NeueMetanaMono'),
+        url('../assets/fonts/NeueMetanaMono-Lt.woff2') format('woff2'),
+        url('../assets/fonts/NeueMetanaMono-Lt.woff') format('woff');
 }
 @font-face {
     font-family: 'rock_3dregular';
