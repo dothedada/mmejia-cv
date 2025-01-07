@@ -1,5 +1,5 @@
 ---
-date: 09/12/2024
+date: 07/01/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -10,9 +10,9 @@ portfolio:
 
 ---(Hola)
 
-# Hola! soy Miguel Mejia
+# Hola! soy Miguel Mejía
 
-// sin tilde por culpa de la fuente
+// todo en minúscula porque sí
 
 Trabajo como desarrollador web desde hace 2 años y durante más de 15 lo he hecho como comunicador visual, donde me especializo en arquitectura de la información y fotografía.
 
