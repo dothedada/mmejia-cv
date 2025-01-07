@@ -1,6 +1,8 @@
 @import url('./reset.css');
 :root {
     --background: #1d1907;
+    --dialog-bkg: #f9f9f9;
+    --dialog-lnk: #0003a5;
     --text: #98aad2;
     --links: #ffbf00;
     --secondary: #ceaef5;
@@ -466,7 +468,7 @@ dialog {
     margin: calc(var(--line-height) * 3) auto;
     border: none;
     padding: var(--line-height);
-    background: var(--text);
+    background: var(--dialog-bkg);
     color: var(--background);
     box-shadow: none;
 
@@ -478,6 +480,13 @@ dialog {
         animation: dialog-out 0.3s ease-in-out 1 both;
     }
 
+    h2 {
+        margin: calc(var(--line-height) * 2) 0 var(--line-height);
+    }
+    h3 {
+        margin: calc(var(--line-height) * 3) 0 var(--line-height);
+    }
+
     img {
         width: 100%;
         height: 100%;
@@ -485,8 +494,9 @@ dialog {
         margin: 0 0 var(--line-height);
     }
 
+    button,
     a {
-        color: var(--background);
+        color: var(--dialog-lnk);
         display: block;
         text-align: right;
     }
@@ -521,7 +531,7 @@ dialog {
 
     figcaption {
         text-align: left;
-        margin: calc(var(--line-height) * -1) 0 calc(var(--line-height) * 2);
+        margin: calc(var(--line-height) * -1) 0 calc(var(--line-height) * 1);
         font-size: calc(var(--base-size) * 0.8);
     }
 }
@@ -645,8 +655,6 @@ dialog {
         margin: calc(var(--line-height) * 3) auto;
         border: none;
         padding: var(--line-height);
-        background: var(--text);
-        color: var(--background);
 
         img {
             margin: var(--line-height) 15% var(--line-height) 0;
@@ -654,10 +662,9 @@ dialog {
             outline: 1px solid var(--background);
         }
 
-        > a {
-            color: var(--background);
-            display: block;
-            text-align: right;
+        h3 {
+            font-size: 1.3rem;
+            margin: calc(var(--line-height) * 3) 0 var(--line-height);
         }
 
         p {
@@ -677,8 +684,7 @@ dialog {
         }
 
         figcaption {
-            margin: calc(var(--line-height) * -1) 5%
-                calc(var(--line-height) * 2);
+            margin: calc(var(--line-height) * -1) 5% var(--line-height);
         }
     }
 }
@@ -801,13 +807,14 @@ dialog {
         margin: calc(var(--line-height) * 3) auto;
         border: none;
         padding: var(--line-height);
-        background: var(--text);
-        color: var(--background);
 
-        a {
-            color: var(--background);
-            display: block;
-            text-align: right;
+        h2 {
+            margin: calc(var(--line-height) * 3);
+        }
+
+        h3 {
+            margin: calc(var(--line-height) * 4) 0 0;
+            transform: translateX(calc(var(--line-height) * -1));
         }
 
         .subsection p {

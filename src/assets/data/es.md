@@ -14,11 +14,11 @@ portfolio:
 
 // sin tilde por culpa de la fuente
 
-Trabajo como desarrollador web front-end desde hace 2 años y llevo más de 15 como comunicador visual especializado en fotografía y arquitectura de la información.
+Trabajo como desarrollador web desde hace 2 años y durante más de 15 lo he hecho como comunicador visual, donde me especializo en arquitectura de la información y fotografía.
 
-Me gusta crear herramientas que faciliten el acceso a la información y dar vida a narrativas que inspiren y apoyen a la construcción de sociedades más inclusivas.
+Me gusta crear herramientas que faciliten el acceso a la información, fomenten el análisis y den vida a narrativas que apoyan a la construcción de sociedades más inclusivas.
 
-(Este micrositio es una ventana al trabajo que realizo como desarrollador.)
+(Este micrositio se centra en mi trabajo como desarrollador.)
 
 [Descargar mi hoja de vida](/assets/pdf/MiguelMejia-CV_ES.pdf)D
 
@@ -26,36 +26,37 @@ Me gusta crear herramientas que faciliten el acceso a la información y dar vida
 
 ## Como desarrollador web front-end...
 
-// Aunque no llevo mucho tiempo como programador, soy curioso y disfruto los provesos de aprendizaje e integración del conocimiento
+// Aunque no llevo mucho tiempo como programador, soy curioso y disfruto los procesos de aprendizaje e integración del conocimiento
 
 ### Mi Perfil
 
 Diseño y desarrollo soluciones accesibles y funcionales que ponen a las personas primero. Desde el inicio de cada proyecto, integro principios y patrones que consideran la diversidad corporal, sensorial, cognitiva, cultural y socioeconómica de los usuarios.
 
-Disfruto trabajar con algoritmos y estructuras de datos (Me hace feliz crear e implementar Heaps). Investigar, planear y desarrollar herramientas me llena de energía, especialmente cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
+Disfruto trabajar con algoritmos y estructuras de datos. Investigar, planear y desarrollar herramientas me llena de energía, especialmente cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
 
-Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD). Este enfoque mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración o definición.
+Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD), que mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración.
 
 ### Tecnologías con las que trabajo:
 
 #### Lenguajes
 
 -   JavaScript / TypeScript
--   CSS (incluyendo SCSS y SASS)
+-   CSS (SCSS y SASS)
 -   HTML (Semántico, md)
 -   Python
 -   Lua
--   Bash (Básico)
+-   Bash
 
 #### Entornos (Runtimes)
 
--   Deno <3
+-   Deno ❤️
 -   Node.js (Básico)
 
 #### Bibliotecas y Frameworks
 
 -   React.js
 -   React Router
+-   Django
 
 #### Herramientas Desarrollo
 
@@ -76,15 +77,19 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 -   11ty (SSG)
 -   Jekyll (SSG)
 
+### Idiomas
+
+- Español (Nativo)
+- Inglés (B2 - Intermedio avanzado)
 ---
 
 ## ...como comunicador visual
 
 ### Imagen
 
-Mi fascinación por la semiótica y la imagen como documento histórico, me ha llevado a desarrollar una mirada crítica y reflexiva. Esto me permite abordar con respeto y profundidad temas sociales complejos como discapacidad, derechos humanos, educación, cambio climático y conflicto armado.
+Me encanta la semiótica y trabajar la imagen como documento histórico, esto me ha permitido desarrollar una mirada crítica y reflexiva, lo que me ayuda a abordar con profundidad temas como cultura, diversidad funcional y cognitiva, derechos humanos, educación, cambio climático y conflicto armado.
 
-### Información
+### Información y narrativas
 
 He trabajado desde la investigación y estructuración de información hasta la creación de narrativas y estrategias visuales para comunicar ideas de manera efectiva. Además, disfruto compartir lo aprendido a través de talleres, clases y laboratorios enfocados en comunicación visual, ética y tecnología.
 
@@ -98,7 +103,7 @@ He trabajado desde la investigación y estructuración de información hasta la 
 
 ---
 
-Aunque la imagen y la información son constantes en mi trabajo, como las abordo cambia con el tiempo. Hoy me centro en crear herramientas digitales que faciliten el acceso a la información. Sin embargo, si te interesa explorar mi trabajo como comunicador visual y fotógrafo, aquí te dejo algunos enlaces a esos proyectos.
+Aunque la imagen y la información son constantes en mi trabajo, la forma en la que las abordo cambia con el tiempo. Actualmente mi interés está en crear herramientas digitales que faciliten el acceso a la información. Sin embargo, si quieres conocer algo de mi trabajo como comunicador visual y fotógrafo, aquí te dejo algunos enlaces...
 
 [Portafolio de retratos](https://mmejia.com)B
 [Portafolio de foto-producto](https://producto.mmejia.com)B
