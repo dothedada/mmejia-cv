@@ -12,7 +12,7 @@ portfolio:
 
 # Hola! soy Miguel Mejía
 
-// todo en minúscula porque sí
+// Ahora sí siene tildes :)
 
 Trabajo como desarrollador web desde hace 2 años y durante más de 15 lo he hecho como comunicador visual, donde me especializo en arquitectura de la información y fotografía.
 
@@ -73,9 +73,9 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 
 #### Generadores de Sitios
 
--   WordPress (CMS)
 -   11ty (SSG)
 -   Jekyll (SSG)
+-   WordPress (CMS)
 
 ### Idiomas
 

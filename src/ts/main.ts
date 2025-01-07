@@ -19,13 +19,13 @@ const loadPage = async () => {
         const render = new Renderer();
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
 
-        console;
         if (!html || !menuItems) {
             throw new Error('Unable to load the data');
         }
 
         main.innerHTML = html;
         menu.innerHTML = menuItems;
+        main.className = 'first_plane';
         const moreBtn =
             document.querySelectorAll<HTMLButtonElement>('.card__btn');
         const closeBtn = document.querySelectorAll<HTMLButtonElement>(

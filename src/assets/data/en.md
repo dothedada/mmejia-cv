@@ -1,5 +1,5 @@
 ---
-date: 12/09/2024
+date: 07/01/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -10,15 +10,15 @@ portfolio:
 
 ---(Hello)
 
-# Hello! I'm Miguel Mejia
+# Hello! I'm Miguel Mejía
 
-// no accent due to the font
+// Now this font have accents :)
 
-I've been working as a front-end web developer for 2 years and I have over 15 years as a visual communicator focused on photography and information architecture.
+I have been working as a web developer for 2 years and for more than 15 years as a visual communicator, where I specialize in information architecture and photography.
 
-I like to create tools that facilitate the access to information and bring to life narratives that inspire and support the construction of more inclusive societies.
+I like to create tools that facilitate access to information, encourage analysis and bring to life narratives that support the construction of more inclusive societies.
 
-(This microsite is a glimpse into the work I do as a developer.)
+(This microsite focuses on my work as a developer).
 
 [Download my resume](/assets/pdf/MiguelMejia-CV_EN.pdf)D
 
@@ -30,31 +30,33 @@ I like to create tools that facilitate the access to information and bring to li
 
 ### My Profile
 
-I design and develop accessible and functional solutions that put users first. From the beginning of each project, I integrate principles and patterns that consider the body, sensory, cognitive, cultural and socioeconomic diversity of its users.
+I design and develop accessible and functional solutions that put people first. From the beginning of each project, I integrate principles and patterns that consider the bodily, sensory, cognitive, cultural and socioeconomic diversity of the users.
 
-I enjoy working with algorithms and data structures (I am happy to create and implement Heaps). Researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
+I enjoy working with algorithms and data structures. Researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
 
-Although I enjoy and understand the importance of Test Driven Development (TDD), I prefer to explore Question Driven Development (QDD). This approach keeps my curiosity happy and allows me to move forward with flexibility, especially on projects that are still in exploration or definition stages.
+Although I enjoy and understand the importance of Test Driven Development (TDD), I prefer to explore Question Driven Development (QDD), which keeps my curiosity happy and allows me to move forward with flexibility, especially in projects that are still in exploratory stages.
 
 ### Technologies I work with:
 
 #### Languages
 
 -   JavaScript / TypeScript
--   CSS (including SCSS and SASS)
--   HTML (Semantic, md)
+-   CSS (SCSS y SASS)
+-   HTML (Semántico, md)
+-   Python
 -   Lua
--   Bash (Basic)
+-   Bash
 
 #### Runtimes
 
--   Deno <3
+-   Deno ❤️
 -   Node.js (Basic)
 
 #### Libraries and Frameworks
 
 -   React.js
 -   React Router
+-   Django
 
 #### Dev Tools
 
@@ -71,9 +73,9 @@ Although I enjoy and understand the importance of Test Driven Development (TDD),
 
 #### Site Generators
 
--   WordPress (CMS)
 -   11ty (SSG)
 -   Jekyll (SSG)
+-   WordPress (CMS)
 
 ---
 
@@ -81,11 +83,11 @@ Although I enjoy and understand the importance of Test Driven Development (TDD),
 
 ### Image
 
-My fascination with semiotics and the image as a historical document has led me to develop a critical and reflective perspective. This allows me to address complex social issues such as disability, human rights, education, climate change, and armed conflict with respect and depth.
+I love semiotics and working with images as historical documents, this has enabled me to develop a critical and thoughtful view, which helps me to address in depth issues such as culture, functional and cognitive diversity, human rights, education, climate change and armed conflict.
 
 ### Information
 
-I have worked on tasks ranging from research and structuring information to creating narratives and visual strategies for effective communication. Additionally, I enjoy sharing what I’ve learned through workshops, classes, and labs focused on visual communication, ethics, and technology.
+I have worked from researching and structuring information to creating narratives and visual strategies to communicate ideas effectively. In addition, I enjoy sharing what I have learned through workshops, classes and labs focused on visual communication, ethics and technology.
 
 ---(Portfolio)
 
@@ -97,7 +99,7 @@ I have worked on tasks ranging from research and structuring information to crea
 
 ---
 
-While image and information are the foundations of my work, how I approach them evolves over time. Today, I focus on creating digital tools that facilitate access to information. However, if you’re interested in exploring my work as a visual communicator and photographer, here are some links to those projects.
+Although images and information are constant in my work, the way I approach them changes over time. Currently my interest lays in creating digital tools that facilitate access to information. However, if you want to know more about my work as a visual communicator and photographer, here are some links...
 
 [Portrait Portfolio](https://mmejia.com)B  
 [Product Photography Portfolio](https://producto.mmejia.com)B  
