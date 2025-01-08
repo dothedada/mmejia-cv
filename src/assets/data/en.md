@@ -77,6 +77,12 @@ Although I enjoy and understand the importance of Test Driven Development (TDD),
 -   Jekyll (SSG)
 -   WordPress (CMS)
 
+
+### Languages
+
+- Espanish (native)
+- English (B2 - Upper intermediate)
+
 ---
 
 ## ...as a visual communicator

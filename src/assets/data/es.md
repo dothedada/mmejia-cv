@@ -81,6 +81,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 
 - Español (Nativo)
 - Inglés (B2 - Intermedio avanzado)
+
 ---
 
 ## ...como comunicador visual
