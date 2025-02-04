@@ -33,18 +33,18 @@
 h1 {
     font-family: var(--font-title);
     font-size: calc(var(--line-height) * 3);
-    line-height: calc(var(--line-height) * 4);
+    line-height: calc(var(--line-height) * 3);
     margin: 0 0 calc(var(--line-height) * 2);
+    transform: translateY(calc(var(--line-height) * 0.5));
     color: var(--secondary);
-    font-weight: 900;
 }
 
 h2 {
     font-family: var(--font-title);
     font-size: calc(var(--base-size) * 2);
     line-height: calc(var(--line-height) * 2);
-    transform: translateY(calc(var(--line-height) * 0.45));
     margin: 0 0 var(--line-height);
+    transform: translateY(calc(var(--line-height) * 0.4));
 }
 h3,
 h4,
@@ -62,6 +62,7 @@ h4 {
     h1 {
         font-size: calc(var(--line-height) * 5);
         line-height: calc(var(--line-height) * 5);
+        transform: translateY(var(--line-height));
         text-align: left;
     }
     h2 {
@@ -70,11 +71,13 @@ h4 {
         line-height: calc(var(--line-height) * 2);
     }
 }
+
 @media (min-width: 1100px) {
     h1 {
         text-align: center;
     }
 }
+
 a,
 button {
     color: var(--links);
@@ -433,6 +436,7 @@ ul {
         grid-column: 1 / -1;
         transform: translateY(var(--baseline-offset));
         margin: 0 0 var(--line-height) calc(var(--line-height) * 2);
+        cursor: pointer;
     }
 
     & div {
@@ -838,10 +842,10 @@ dialog {
     }
 }
 .first_plane {
-    animation: focus 0.3s ease-in-out 1 forwards;
+    animation: focus 0.3s ease-in-out 1 both;
 }
 .second_plane {
-    animation: unfocus 0.3s ease-in-out 1 forwards;
+    animation: unfocus 0.3s ease-in-out 1 both;
 }
 
 @keyframes focus {

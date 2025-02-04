@@ -8,6 +8,7 @@ import uiSr_txt from './ui-sr_txt';
 const main = document.querySelector<HTMLElement>('main')!;
 const menu = document.querySelector<HTMLUListElement>('.menu__links')!;
 const showMenuBtn = document.querySelector<HTMLButtonElement>('.menu__show')!;
+const menuBar = document.querySelector<HTMLDivElement>('.menu')!;
 
 const loadPage = async () => {
     try {
@@ -31,7 +32,7 @@ const loadPage = async () => {
         main.innerHTML = html;
         menu.innerHTML = menuItems;
         const moreBtn =
-            document.querySelectorAll<HTMLButtonElement>('.card__btn');
+            document.querySelectorAll<HTMLButtonElement>('[data-target]');
         const closeBtn = document.querySelectorAll<HTMLButtonElement>(
             'dialog .dialog__closeBtn',
         );
@@ -44,7 +45,7 @@ const loadPage = async () => {
         }
 
         moreBtn.forEach((btn) => {
-            btn.addEventListener('pointerdown', openDialog);
+            btn.addEventListener('click', openDialog);
             btn.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Enter') {
                     openDialog(e);
@@ -65,6 +66,7 @@ const loadPage = async () => {
         dialogs.forEach((dialog) => {
             dialog.addEventListener('pointerdown', clickOutsideDialog);
         });
+        menuBar.classList.remove('hidden');
     } catch (err) {
         throw new Error('Could not load the page');
     } finally {
@@ -90,7 +92,7 @@ langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
 const openDialog = (e: Event): void => {
     const navBar = document.querySelector<HTMLMenuElement>('.menu')!;
     navBar.classList.add('hide');
-    const target = e.currentTarget as HTMLButtonElement;
+    const target = e.target as HTMLElement;
     const id = target.getAttribute('data-target')!;
     const modal = document.getElementById(id)! as HTMLDialogElement;
     modal.showModal();

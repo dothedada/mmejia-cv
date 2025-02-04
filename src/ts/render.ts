@@ -273,7 +273,7 @@ export class Renderer {
         let html = `<div class="card" data-modal="${id}">\n`;
         html += `<h3>${displayText(item.title)}</h3>\n`;
         html += `<p>${displayText(item.summary)}</p>\n`;
-        html += `<img alt="${item.previewTxt}" src="${item.preview}">\n`;
+        html += `<img alt="${item.previewTxt ?? ''}" src="${item.preview}" data-target="${id}" role="button" aria-haspopup="dialog" aria-label="${uiSr_txt[lang].card.viewMore}">\n`;
         html += `<div>\n`;
         html += `${item.aditionalData ? `<p>${displayText(item.aditionalData)}</p>\n` : ''}`;
         html += `${item.stack ? `<p>${displayText(item.stack)}</p>\n` : ''}`;
