@@ -13,11 +13,12 @@ const loadPage = async () => {
     try {
         // carga de información
         const lang = getLang();
-        const data = await dataLoader(lang);
+        const { data, loaded } = await dataLoader(lang);
         const parser = new Parser();
         const parsed = await parser.parseDocument(data);
         const render = new Renderer();
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
+        main.className = 'first_plane';
 
         if (!html || !menuItems) {
             throw new Error('Unable to load the data');
@@ -25,7 +26,6 @@ const loadPage = async () => {
 
         main.innerHTML = html;
         menu.innerHTML = menuItems;
-        main.className = 'first_plane';
         const moreBtn =
             document.querySelectorAll<HTMLButtonElement>('.card__btn');
         const closeBtn = document.querySelectorAll<HTMLButtonElement>(
