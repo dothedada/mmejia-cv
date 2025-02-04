@@ -65,7 +65,16 @@ export class Parser {
             const lang = getLang();
             const loadItems = await Promise.all(
                 files.map(async (file: string) => {
-                    const data = await dataLoader(lang, key, file as string);
+                    const { data, onError } = await dataLoader(
+                        lang,
+                        key,
+                        file as string,
+                    );
+
+                    if (onError.length || !data) {
+                        throw new Error(onError[0]);
+                    }
+
                     const parser = new Parser();
                     return parser.parseDocument(data);
                 }),

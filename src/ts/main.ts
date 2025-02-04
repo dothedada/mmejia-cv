@@ -13,12 +13,16 @@ const loadPage = async () => {
     try {
         // carga de información
         const lang = getLang();
-        const { data, loaded } = await dataLoader(lang);
+        const { data, onError } = await dataLoader(lang);
+
+        if (onError.length || !data) {
+            throw new Error(onError[0]);
+        }
+
         const parser = new Parser();
         const parsed = await parser.parseDocument(data);
         const render = new Renderer();
         const { html, menu: menuItems } = render.renderMarkdown(parsed);
-        main.className = 'first_plane';
 
         if (!html || !menuItems) {
             throw new Error('Unable to load the data');
@@ -62,8 +66,9 @@ const loadPage = async () => {
             dialog.addEventListener('pointerdown', clickOutsideDialog);
         });
     } catch (err) {
-        console.log(err);
         throw new Error('Could not load the page');
+    } finally {
+        main.className = 'first_plane';
     }
 };
 initializeLang();

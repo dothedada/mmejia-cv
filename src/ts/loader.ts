@@ -1,7 +1,6 @@
 type Lang = 'es' | 'en';
 type LoadedData = {
     data: string | null;
-    loaded: boolean;
     onError: string[];
 };
 
@@ -10,17 +9,16 @@ const dataLoader = async (
     folder?: string,
     filename?: string,
 ): Promise<LoadedData> => {
-    let filePath = '/assets/data/a';
+    let filePath = '/assets/data/';
     filePath += !folder ? `${lang}.md` : `${folder}/${lang}/${filename}`;
 
     let data: string | null = null;
-    let loaded: boolean = false;
     let onError: string[] = [];
     try {
         const loader = await fetch(filePath);
 
         if (!loader.ok) {
-            throw new Error(`Error: ${loader.status}`);
+            throw new Error(`${loader.status}`);
         }
 
         data = await loader.text();
@@ -31,8 +29,7 @@ const dataLoader = async (
     } catch (err) {
         onError.push(`Error loading the file ${filePath}.\nDetails: ${err}`);
     } finally {
-        loaded = true;
-        return { data, loaded, onError };
+        return { data, onError };
     }
 };
 
