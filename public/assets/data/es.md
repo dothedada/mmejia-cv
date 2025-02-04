@@ -1,5 +1,5 @@
 ---
-date: 07/01/2025
+date: 04/02/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -10,13 +10,13 @@ portfolio:
 
 ---(Hola)
 
-# Hola! soy Miguel Mejía
+# ¡Hola! soy Miguel Mejía
 
 // Ahora sí siene tildes :)
 
-Trabajo como desarrollador web desde hace 2 años y durante más de 15 lo he hecho como comunicador visual, donde me especializo en arquitectura de la información y fotografía.
+Trabajo como desarrollador web desde hace más de 2 años y durante casi 15 lo he hecho como comunicador visual y fotógrafo.
 
-Me gusta crear herramientas que faciliten el acceso a la información, fomenten el análisis y den vida a narrativas que apoyan a la construcción de sociedades más inclusivas.
+Disfruto crear herramientas digitales y comunicativas que democratizan el acceso a la información, impulsan el análisis crítico y construyen narrativas que promueven sociedades más inclusivas.
 
 (Este micrositio se centra en mi trabajo como desarrollador.)
 
@@ -30,11 +30,11 @@ Me gusta crear herramientas que faciliten el acceso a la información, fomenten 
 
 ### Mi Perfil
 
-Diseño y desarrollo soluciones accesibles y funcionales que ponen a las personas primero. Desde el inicio de cada proyecto, integro principios y patrones que consideran la diversidad corporal, sensorial, cognitiva, cultural y socioeconómica de los usuarios.
+Diseño y desarrollo soluciones accesibles que ponen a las personas primero. Integro desde el inicio principios y patrones que consideran la diversidad corporal, sensorial, cognitiva, cultural y socioeconómica de los usuarios.
 
-Disfruto trabajar con algoritmos y estructuras de datos. Investigar, planear y desarrollar herramientas me llena de energía, especialmente cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
+Tanto trabajar con algoritmos y estructuras de datos como investigar, planear y desarrollar herramientas me llena de energía, en especial cuando encuentro soluciones sostenibles e inesperadas a problemas que parecen no tener salida.
 
-Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD), que mantiene feliz a mi curiosidad y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración.
+Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD), que me mantiene curioso y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración.
 
 ### Tecnologías con las que trabajo:
 
@@ -42,7 +42,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 
 -   JavaScript / TypeScript
 -   CSS (SCSS y SASS)
--   HTML (Semántico, md)
+-   HTML (Semántico, md ❤️)
 -   Python
 -   Lua
 -   Bash
@@ -56,7 +56,6 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 
 -   React.js
 -   React Router
--   Django
 
 #### Herramientas Desarrollo
 

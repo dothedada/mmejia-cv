@@ -1,5 +1,5 @@
 ---
-date: 07/01/2025
+date: 04/02/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -14,9 +14,9 @@ portfolio:
 
 // Now this font have accents :)
 
-I have been working as a web developer for 2 years and for more than 15 years as a visual communicator, where I specialize in information architecture and photography.
+I've been a web developer for over 2 years and a visual communicator and photographer for almost 15. 
 
-I like to create tools that facilitate access to information, encourage analysis and bring to life narratives that support the construction of more inclusive societies.
+I like to create digital and communication tools that democratize access to information, foster critical analysis, and build narratives that promotes more inclusive societies.
 
 (This microsite focuses on my work as a developer).
 
@@ -32,9 +32,9 @@ I like to create tools that facilitate access to information, encourage analysis
 
 I design and develop accessible and functional solutions that put people first. From the beginning of each project, I integrate principles and patterns that consider the bodily, sensory, cognitive, cultural and socioeconomic diversity of the users.
 
-I enjoy working with algorithms and data structures. Researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
+Working with algorithms and data structures as well researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
 
-Although I enjoy and understand the importance of Test Driven Development (TDD), I prefer to explore Question Driven Development (QDD), which keeps my curiosity happy and allows me to move forward with flexibility, especially in projects that are still in exploratory stages.
+While I enjoy and understand the importance of test-driven development (TDD), I prefer to explore question-driven development (QDD), which keeps me curious and allows me to move forward with flexibility, especially on projects that are still in exploratory stages.
 
 ### Technologies I work with:
 
@@ -42,7 +42,7 @@ Although I enjoy and understand the importance of Test Driven Development (TDD),
 
 -   JavaScript / TypeScript
 -   CSS (SCSS y SASS)
--   HTML (Semántico, md)
+-   HTML (Semántico, md ❤️)
 -   Python
 -   Lua
 -   Bash
