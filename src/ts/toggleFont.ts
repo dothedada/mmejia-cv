@@ -1,17 +1,38 @@
-const getFont = (): boolean => {
-    let dislexyaFont: string | null = localStorage.getItem('font');
-    if (dislexyaFont === null) {
-        localStorage.setItem('font', 'false');
-    }
+import { getLang } from './lang';
+import { Lang } from './types';
+import uiSr_txt from './ui-sr_txt';
 
-    return !!dislexyaFont;
+const getFont = () => {
+    let fontLocal = localStorage.getItem('font_d');
+    if (fontLocal === null) {
+        fontLocal = 'false';
+        localStorage.setItem('font_d', fontLocal);
+    }
+    return fontLocal === 'true';
+};
+
+const setFont = (font: boolean) => {
+    localStorage.setItem('font_d', `${font}`);
+    setFontButton(font, getLang());
 };
 
 const toggleFont = () => {
-    const isDislexyaFont = !getFont();
-    localStorage.setItem('font', `${isDislexyaFont}`);
-
-    return isDislexyaFont;
+    setFont(!getFont());
 };
 
-export { getFont, toggleFont };
+const setFontButton = (font: boolean, lang: Lang) => {
+    const btn = document.querySelector<HTMLButtonElement>('.menu__dislexya')!;
+    btn.textContent = '';
+    const srData = document.createElement('span');
+    const isDyslexic = font ? 'dyslexic' : 'nonDyslexic';
+    srData.classList.add('sr-only');
+    srData.textContent = uiSr_txt[lang][isDyslexic].dyslexicBtnSr;
+    const txtBtn = document.createElement('span');
+    txtBtn.ariaHidden = 'true';
+    txtBtn.textContent = uiSr_txt[lang][isDyslexic].dyslexicBtn;
+
+    btn.append(srData, txtBtn);
+    btn.addEventListener('pointerdown', toggleFont);
+};
+
+export { getFont, setFont };

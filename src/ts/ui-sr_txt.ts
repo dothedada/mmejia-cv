@@ -6,6 +6,15 @@ export default {
         },
         langBtn: 'Cambia el idioma a Español',
         closeBtn: 'Close',
+
+        dyslexic: {
+            dyslexicBtnSr: 'Change to regular font',
+            dyslexicBtn: '(regular font)',
+        },
+        nonDyslexic: {
+            dyslexicBtnSr: 'Change to dyslexic font',
+            dyslexicBtn: '(dyslexic font)',
+        },
         card: {
             viewMore: 'View more',
             viewProject: 'Go to the site',
@@ -19,6 +28,15 @@ export default {
         },
         langBtn: 'Changes the language to English',
         closeBtn: 'Cerrar',
+        dyslexic: {
+            dyslexicBtnSr: 'Cambiar a una tipografía regular',
+            dyslexicBtn: '(Regular)',
+        },
+        nonDyslexic: {
+            dyslexicBtnSr:
+                'Cambiar a una tipografía para personas con dislexia',
+            dyslexicBtn: '(Dislexia)',
+        },
         card: {
             viewMore: 'Leer más',
             viewProject: 'Ir al sitio',

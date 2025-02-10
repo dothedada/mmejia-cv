@@ -3,6 +3,7 @@ import { getLang, initializeLang, toggleLang } from './lang';
 import { dataLoader } from './loader';
 import { Parser } from './parser';
 import { Renderer } from './render';
+import { getFont, setFont } from './toggleFont';
 import uiSr_txt from './ui-sr_txt';
 
 const main = document.querySelector<HTMLElement>('main')!;
@@ -20,6 +21,7 @@ const loadPage = async () => {
             throw new Error(onError[0]);
         }
 
+        setFont(getFont());
         const parser = new Parser();
         const parsed = await parser.parseDocument(data);
         const render = new Renderer();
