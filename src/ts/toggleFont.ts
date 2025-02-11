@@ -21,7 +21,7 @@ const toggleFont = () => {
 };
 
 const setFontButton = (font: boolean, lang: Lang) => {
-    const btn = document.querySelector<HTMLButtonElement>('.menu__dislexya')!;
+    const btn = document.querySelector<HTMLButtonElement>('.menu__dyslexic')!;
     btn.textContent = '';
     const srData = document.createElement('span');
     const isDyslexic = font ? 'dyslexic' : 'nonDyslexic';

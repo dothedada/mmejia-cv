@@ -9,11 +9,11 @@ export default {
 
         dyslexic: {
             dyslexicBtnSr: 'Change to regular font',
-            dyslexicBtn: '(regular font)',
+            dyslexicBtn: '(regular)',
         },
         nonDyslexic: {
             dyslexicBtnSr: 'Change to dyslexic font',
-            dyslexicBtn: '(dyslexic font)',
+            dyslexicBtn: '(dyslexic)',
         },
         card: {
             viewMore: 'View more',
