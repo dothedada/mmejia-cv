@@ -33,6 +33,8 @@ const setFontButton = (font: boolean, lang: Lang) => {
 
     btn.append(srData, txtBtn);
     btn.addEventListener('pointerdown', toggleFont);
+
+    document.documentElement.classList.toggle('dyslexic', font);
 };
 
 export { getFont, setFont };

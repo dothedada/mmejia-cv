@@ -1,4 +1,55 @@
 @import url('./reset.css');
+
+@font-face {
+    font-family: 'Martian Mono';
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+    src:
+        local('Martian Mono'),
+        url('../assets/fonts/n27-regular.woff2') format('woff2'),
+        url('../assets/fonts/MartianMono-Light.woff') format('woff');
+}
+@font-face {
+    font-family: 'Neue Metana Mono';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local('NeueMetanaMono'),
+        url('../assets/fonts/NeueMetanaMono-Lt.woff2') format('woff2'),
+        url('../assets/fonts/NeueMetanaMono-Lt.woff') format('woff');
+}
+@font-face {
+    font-family: 'rock_3dregular';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local('rock_3dregular'),
+        url('../assets/fonts/rock3d-regular-webfont.woff2') format('woff2'),
+        url('../assets/fonts/rock3d-regular-webfont.woff') format('woff');
+}
+@font-face {
+    font-family: 'OpenDyslexic';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local('OpenDyslexic'),
+        url('../assets/fonts/OpenDyslexic-Regular.woff2') format('woff2'),
+        url('../assets/fonts/OpenDyslexic-Regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'OpenDyslexic';
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    src:
+        local('OpenDyslexic'),
+        url('../assets/fonts/OpenDyslexic-Bold.woff2') format('woff2'),
+        url('../assets/fonts/OpenDyslexic-Bold.woff') format('woff');
+}
 :root {
     --background: #1d1907;
     --dialog-bkg: #f9f9f9;
@@ -30,6 +81,12 @@
     --baseline-offset: calc(var(--line-height) * -0.2);
     --blur: 10px;
 }
+
+.dyslexic {
+    --font-text: 'OpenDyslexic', monospace;
+    --font-title: 'OpenDyslexic', monospace;
+}
+
 h1 {
     font-family: var(--font-title);
     font-size: calc(var(--line-height) * 3);
