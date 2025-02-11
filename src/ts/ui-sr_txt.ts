@@ -30,12 +30,12 @@ export default {
         closeBtn: 'Cerrar',
         dyslexic: {
             dyslexicBtnSr: 'Cambiar a una tipografía regular',
-            dyslexicBtn: '(Regular)',
+            dyslexicBtn: '(regular)',
         },
         nonDyslexic: {
             dyslexicBtnSr:
                 'Cambiar a una tipografía para personas con dislexia',
-            dyslexicBtn: '(Dislexia)',
+            dyslexicBtn: '(dislexia)',
         },
         card: {
             viewMore: 'Leer más',

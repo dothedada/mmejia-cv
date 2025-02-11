@@ -16,7 +16,7 @@ portfolio:
 
 I've been a web developer for over 2 years and a visual communicator and photographer for almost 15. 
 
-I like to create digital and communication tools that democratize access to information, foster critical analysis, and build narratives that promotes more inclusive societies.
+I enjoy creating digital and communicational tools that democratize access to information, encourage critical thinking and build narratives that promote more inclusive societies.
 
 (This microsite focuses on my work as a developer).
 
