@@ -44,6 +44,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 -   CSS (SCSS y SASS)
 -   HTML (Semántico, md ❤️)
 -   Python
+-   SQL
 -   Lua
 -   Bash
 

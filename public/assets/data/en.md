@@ -44,6 +44,7 @@ While I enjoy and understand the importance of test-driven development (TDD), I 
 -   CSS (SCSS y SASS)
 -   HTML (Semántico, md ❤️)
 -   Python
+-   SQL
 -   Lua
 -   Bash
 
