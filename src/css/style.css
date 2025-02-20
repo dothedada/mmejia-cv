@@ -57,8 +57,10 @@
     --font-text: 'Martian Mono', monospace;
     --font-title: 'Neue Metana Mono', monospace;
     --base-size: 1rem;
+    --menu-size: unset;
 
-    --grid: linear-gradient(
+    --grid:
+        linear-gradient(
             to right,
             transparent calc(var(--line-height) - 1px),
             var(--grid-lines-color) 1px
@@ -77,10 +79,11 @@
 .dyslexic {
     --font-text: 'OpenDyslexic', monospace;
     --font-title: 'OpenDyslexic', monospace;
+    --menu-size: 0.85rem;
 }
 
 h1 {
-    font-family: var(--font-title);
+    font-family: 'OpenDyslexic', monospace;
     font-size: calc(var(--line-height) * 3);
     line-height: calc(var(--line-height) * 3);
     margin: 0 0 calc(var(--line-height) * 2);
@@ -170,7 +173,8 @@ body {
     color: var(--text);
 
     background-color: var(--background);
-    background-image: url('/assets/img/retrato-mmejia.gif'),
+    background-image:
+        url('/assets/img/retrato-mmejia.gif'),
         linear-gradient(
             to right,
             transparent calc(var(--line-height) - 1px),
@@ -204,7 +208,7 @@ body {
     background-size: var(--line-height) var(--line-height);
     background-position: var(--grid-offset);
     backdrop-filter: blur(var(--blur));
-    font-size: 0.9rem;
+    font-size: var(--menu-size);
     width: 100vw;
     grid-template-columns: 46px min-content max-content 1fr;
     gap: var(--line-height);
@@ -324,9 +328,9 @@ body {
     }
 }
 
-@media (min-width: 650px) {
+@media (min-width: 700px) {
     .menu {
-        grid-template-columns: 46px 1fr min-content max-content;
+        grid-template-columns: 46px 1fr min-content min-content;
         backdrop-filter: blur(var(--blur));
         background-color: unset;
     }
@@ -410,7 +414,6 @@ section {
 
     & h4 {
         margin: 0 1ch 0;
-        /* text-align: right; */
         grid-column: span 2;
     }
 
