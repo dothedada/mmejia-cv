@@ -55,7 +55,7 @@ const loadPage = async () => {
             });
         });
         closeBtn.forEach((btn) => {
-            btn.addEventListener('pointerdown', closeDialog);
+            btn.addEventListener('click', closeDialog);
             btn.addEventListener('keydown', (e) => {
                 if (e.key === ' ' || e.key === 'Enter') {
                     closeDialog(e);
@@ -66,7 +66,7 @@ const loadPage = async () => {
             anchor.addEventListener('click', showMenu);
         });
         dialogs.forEach((dialog) => {
-            dialog.addEventListener('pointerdown', clickOutsideDialog);
+            dialog.addEventListener('click', clickOutsideDialog);
         });
         menuBar.classList.remove('hidden');
     } catch (err) {
@@ -89,7 +89,7 @@ document.body.addEventListener('keydown', (e) => {
 });
 
 const langBtn = document.querySelector<HTMLButtonElement>('.menu__lang')!;
-langBtn.addEventListener('pointerdown', () => toggleLang(loadPage));
+langBtn.addEventListener('click', () => toggleLang(loadPage));
 
 const openDialog = (e: Event): void => {
     const navBar = document.querySelector<HTMLMenuElement>('.menu')!;
@@ -160,7 +160,7 @@ const hideMenuAria = (hide: boolean): void => {
     });
 };
 
-showMenuBtn.addEventListener('pointerdown', showMenu);
+showMenuBtn.addEventListener('click', showMenu);
 showMenuBtn.addEventListener('keydown', (e) => {
     if (e.key === ' ' || e.key === 'Enter') {
         showMenu();

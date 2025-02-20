@@ -32,7 +32,7 @@ const setFontButton = (font: boolean, lang: Lang) => {
     txtBtn.textContent = uiSr_txt[lang][isDyslexic].dyslexicBtn;
 
     btn.append(srData, txtBtn);
-    btn.addEventListener('pointerdown', toggleFont);
+    btn.addEventListener('click', toggleFont);
 
     document.documentElement.classList.toggle('dyslexic', font);
 };
