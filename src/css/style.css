@@ -82,6 +82,12 @@
     --menu-size: 0.85rem;
 }
 
+@media (min-width: 850px) {
+    .dyslexic {
+        --menu-size: unset;
+    }
+}
+
 h1 {
     font-family: 'OpenDyslexic', monospace;
     font-size: calc(var(--line-height) * 3);
