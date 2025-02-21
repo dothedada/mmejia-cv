@@ -1,5 +1,5 @@
 ---
-date: 04/02/2025
+date: 21/02/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -16,7 +16,7 @@ portfolio:
 
 Trabajo como desarrollador web desde hace más de 2 años y durante casi 15 lo he hecho como comunicador visual y fotógrafo.
 
-Disfruto crear herramientas digitales y comunicativas que democratizan el acceso a la información, impulsan el análisis crítico y construyen narrativas que promueven sociedades más inclusivas.
+Disfruto crear herramientas de comunicación digital que buscan democratizar el acceso a la información, fomentar el pensamiento crítico y construir narrativas para sociedades más inclusivas.
 
 (Este micrositio se centra en mi trabajo como desarrollador.)
 

@@ -1,7 +1,7 @@
 ---
 date: 2024-11-10
 title: Ratas de Laboratorio
-summary: Siempre tengo un ejercicio en mente, gracias a ellos he aprendido desde trabajar con APIs y código asíncrono, hasta implementar TDD y sus pros y contras. Me han permitido visualizar y llevar a cabo el desarrollo de herramientas como generadores de documentos y un tableros interactivos.
+summary: Siempre tengo un ejercicio en mente, gracias a ellos he aprendido desde trabajar con APIs y código asíncrono, hasta implementar TDD y sus pros y contras. Me han permitido visualizar y llevar a cabo el desarrollo de herramientas como generadores de documentos y tableros interactivos.
 aditionalData: Interfases, patrones de diseño, tooling y testing
 stack:
     - React.js

@@ -1,5 +1,5 @@
 ---
-date: 04/02/2025
+date: 21/02/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
@@ -16,7 +16,7 @@ portfolio:
 
 I've been a web developer for over 2 years and a visual communicator and photographer for almost 15. 
 
-I enjoy creating digital and communicational tools that democratize access to information, encourage critical thinking and build narratives that promote more inclusive societies.
+I enjoy creating digital communication tools that aim to democratize access to information, foster critical thinking and build narratives for more inclusive societies.
 
 (This microsite focuses on my work as a developer).
 
@@ -32,7 +32,7 @@ I enjoy creating digital and communicational tools that democratize access to in
 
 I design and develop accessible and functional solutions that put people first. From the beginning of each project, I integrate principles and patterns that consider the bodily, sensory, cognitive, cultural and socioeconomic diversity of the users.
 
-Working with algorithms and data structures as well researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
+Working with algorithms and data structures as well as researching, planning and developing tools fills me with energy, especially when I find sustainable and unexpected solutions to problems that seem to have no way out.
 
 While I enjoy and understand the importance of test-driven development (TDD), I prefer to explore question-driven development (QDD), which keeps me curious and allows me to move forward with flexibility, especially on projects that are still in exploratory stages.
 

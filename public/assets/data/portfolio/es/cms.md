@@ -1,7 +1,7 @@
 ---
 date: 2024-11-10
 title: Algunos trabajos con CMS
-summary: Diseñé y desarrollé sitios web para organizaciones y artistas, adaptando plantillas genéricas a sus necesidades más específicas, integré plugins, personalizacé funcionalidades y creé de pasarelas de pago seguras.
+summary: Diseñé y desarrollé sitios web para organizaciones y artistas, adaptando plantillas genéricas a sus necesidades más específicas, integré plugins, personalizacé funcionalidades y creé pasarelas de pago seguras.
 aditionalData: Creación de herramientas
 stack:
     - Wordpress
