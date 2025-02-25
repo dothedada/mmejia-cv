@@ -89,7 +89,6 @@
 }
 
 h1 {
-    font-family: 'OpenDyslexic', monospace;
     font-size: calc(var(--line-height) * 3);
     line-height: calc(var(--line-height) * 3);
     margin: 0 0 calc(var(--line-height) * 2);
