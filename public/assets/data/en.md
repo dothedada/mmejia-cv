@@ -24,7 +24,7 @@ I enjoy creating digital communication tools that aim to democratize access to i
 
 ---(Skills)
 
-## As a front-end web developer...
+## As a web developer...
 
 // Although I haven’t been programming for long, I am curious and enjoy the processes of learning and integrating knowledge.
 
@@ -57,7 +57,6 @@ While I enjoy and understand the importance of test-driven development (TDD), I 
 
 -   React.js
 -   React Router
--   Django
 
 #### Dev Tools
 

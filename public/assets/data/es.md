@@ -24,7 +24,7 @@ Disfruto crear herramientas de comunicación digital que buscan democratizar el 
 
 ---(Habilidades)
 
-## Como desarrollador web front-end...
+## Como desarrollador web...
 
 // Aunque no llevo mucho tiempo como programador, soy curioso y disfruto los procesos de aprendizaje e integración del conocimiento
 
