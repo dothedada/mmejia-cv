@@ -44,8 +44,7 @@
 
 :root {
     --background: #1d1907;
-    --dialog-bkg: #f9f9f9;
-    --dialog-lnk: #0003a5;
+    --dialog-bkg: #1d1907ee;
     --text: #98aad2;
     --links: #ffbf00;
     --secondary: #ceaef5;
@@ -119,7 +118,7 @@ h4 {
     h1 {
         font-size: calc(var(--line-height) * 5);
         line-height: calc(var(--line-height) * 5);
-        transform: translateY(var(--line-height));
+        transform: translateY(var(--baseline-offset));
         text-align: left;
     }
     h2 {
@@ -152,6 +151,7 @@ button {
 
     &:focus-visible {
         outline: solid 1px var(--links);
+        outline-offset: 0.3rem;
     }
 }
 
@@ -498,6 +498,11 @@ ul {
         transform: translateY(var(--baseline-offset));
         margin: 0 0 var(--line-height) calc(var(--line-height) * 2);
         cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     & div {
@@ -535,14 +540,14 @@ dialog {
     width: calc(100dvw - var(--line-height) * 2);
     height: calc(100dvh - var(--line-height) * 5);
     margin: calc(var(--line-height) * 3) auto;
-    border: none;
+    border: 1px solid var(--links);
     padding: var(--line-height);
     background: var(--dialog-bkg);
-    color: var(--background);
-    box-shadow: none;
+    color: var(--text);
+    box-shadow: 0 0 0 100vw #ffbf0099;
 
     &[open] {
-        animation: dialog-in 0.3s ease-in-out 0.2s 1 both;
+        animation: dialog-in 0.6s ease-in-out 1 both;
     }
 
     &[closing] {
@@ -561,18 +566,6 @@ dialog {
         height: 100%;
         outline: 1px solid var(--background);
         margin: 0 0 var(--line-height);
-    }
-
-    button,
-    a {
-        color: var(--dialog-lnk);
-        display: block;
-        text-align: right;
-    }
-
-    p a {
-        display: inline;
-        text-align: unset;
     }
 
     & .dialog__closeBtn {
@@ -722,7 +715,6 @@ dialog {
     dialog {
         width: calc(90% - var(--line-height) * 2);
         margin: calc(var(--line-height) * 3) auto;
-        border: none;
         padding: var(--line-height);
 
         img {
@@ -874,7 +866,6 @@ dialog {
         width: min(calc(84dvw - var(--line-height) * 2), 1080px);
         height: calc(100dvh - var(--line-height) * 4);
         margin: calc(var(--line-height) * 3) auto;
-        border: none;
         padding: var(--line-height);
 
         h2 {
@@ -935,12 +926,12 @@ dialog {
         transform: translateY(0%) scale(1);
     }
     100% {
-        transform: translateY(100vh) scale(0.7);
+        transform: translateY(150vh) scale(0.7);
     }
 }
 @keyframes dialog-in {
     0% {
-        transform: translateY(100vh) scale(0.7);
+        transform: translateY(150vh) scale(0.7);
     }
     100% {
         transform: translateY(0%) scale(1);
