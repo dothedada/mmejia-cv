@@ -51,7 +51,7 @@ While I enjoy and understand the importance of test-driven development (TDD), I 
 #### Runtimes
 
 -   Deno ❤️
--   Node.js (Basic)
+-   Node.js
 
 #### Libraries and Frameworks
 

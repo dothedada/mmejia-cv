@@ -51,7 +51,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 #### Entornos (Runtimes)
 
 -   Deno ❤️
--   Node.js (Básico)
+-   Node.js
 
 #### Bibliotecas y Frameworks
 
