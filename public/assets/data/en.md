@@ -1,8 +1,9 @@
 ---
-date: 21/02/2025
+date: 26/03/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
+    - solo5.md
     - ss.md
     - lab.md
     - cms.md
@@ -14,7 +15,7 @@ portfolio:
 
 // Now this font have accents :)
 
-I've been a web developer for over 2 years and a visual communicator and photographer for almost 15. 
+I've been a web developer for over 2 years and a visual communicator and photographer for almost 15.
 
 I enjoy creating digital communication tools that aim to democratize access to information, foster critical thinking and build narratives for more inclusive societies.
 
@@ -24,7 +25,7 @@ I enjoy creating digital communication tools that aim to democratize access to i
 
 ---(Skills)
 
-## As a web developer...
+## As a web developer
 
 // Although I haven’t been programming for long, I am curious and enjoy the processes of learning and integrating knowledge.
 
@@ -36,47 +37,46 @@ Working with algorithms and data structures as well as researching, planning and
 
 While I enjoy and understand the importance of test-driven development (TDD), I prefer to explore question-driven development (QDD), which keeps me curious and allows me to move forward with flexibility, especially on projects that are still in exploratory stages.
 
-### Technologies I work with:
+### Technologies I work with
 
 #### Languages
 
--   JavaScript / TypeScript
--   CSS (SCSS y SASS)
--   HTML (Semántico, md ❤️)
--   Python
--   SQL
--   Lua
--   Bash
+- JavaScript / TypeScript
+- CSS (SCSS y SASS)
+- HTML (Semántico, md ❤️)
+- Python
+- SQL
+- Lua
+- Bash
 
 #### Runtimes
 
--   Deno ❤️
--   Node.js
+- Deno ❤️
+- Node.js
 
 #### Libraries and Frameworks
 
--   React.js
--   React Router
+- React.js
+- React Router
 
 #### Dev Tools
 
--   Git
--   Vite
--   Webpack
--   Vitest / Jest
--   React Testing Library
+- Git
+- Vite
+- Webpack
+- Vitest / Jest
+- React Testing Library
 
 #### Deployment
 
--   AWS (S3, CloudFront, Route53)
--   Vercel
+- AWS (S3, CloudFront, Route53)
+- Vercel
 
 #### Site Generators
 
--   11ty (SSG)
--   Jekyll (SSG)
--   WordPress (CMS)
-
+- 11ty (SSG)
+- Jekyll (SSG)
+- WordPress (CMS)
 
 ### Languages
 
@@ -117,13 +117,13 @@ Although images and information are constant in my work, the way I approach them
 
 // Let’s talk
 
-### Networks:
+### Networks
 
--   [GitHub](https://github.com/dothedada)B
--   [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
+- [GitHub](https://github.com/dothedada)B
+- [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
 
-### Communication Channels:
+### Communication Channels
 
--   [info@mmejia.com](mailto:info@mmejia.com)B
--   [(+57) 304 383 9127](tel:3043839127)B
--   [WhatsApp](https://wa.me/573043839127)B
+- [info@mmejia.com](mailto:info@mmejia.com)B
+- [(+57) 304 383 9127](tel:3043839127)B
+- [WhatsApp](https://wa.me/573043839127)B

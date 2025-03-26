@@ -1,8 +1,9 @@
 ---
-date: 21/02/2025
+date: 26/03/2025
 footerTxt: Miguel Mejía. Bogotá, Colombia
 portfolio:
     - filemakerrrr.md
+    - solo5.md
     - ss.md
     - lab.md
     - cms.md
@@ -24,7 +25,7 @@ Disfruto crear herramientas de comunicación digital que buscan democratizar el 
 
 ---(Habilidades)
 
-## Como desarrollador web...
+## Como desarrollador web
 
 // Aunque no llevo mucho tiempo como programador, soy curioso y disfruto los procesos de aprendizaje e integración del conocimiento
 
@@ -36,46 +37,46 @@ Tanto trabajar con algoritmos y estructuras de datos como investigar, planear y 
 
 Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TDD), prefiero explorar el desarrollo guiado por preguntas (QDD), que me mantiene curioso y me permite avanzar con flexibilidad, especialmente en proyectos que aún están en etapas de exploración.
 
-### Tecnologías con las que trabajo:
+### Tecnologías con las que trabajo
 
 #### Lenguajes
 
--   JavaScript / TypeScript
--   CSS (SCSS y SASS)
--   HTML (Semántico, md ❤️)
--   Python
--   SQL
--   Lua
--   Bash
+- JavaScript / TypeScript
+- CSS (SCSS y SASS)
+- HTML (Semántico, md ❤️)
+- Python
+- SQL
+- Lua
+- Bash
 
 #### Entornos (Runtimes)
 
--   Deno ❤️
--   Node.js
+- Deno ❤️
+- Node.js
 
 #### Bibliotecas y Frameworks
 
--   React.js
--   React Router
+- React.js
+- React Router
 
 #### Herramientas Desarrollo
 
--   Git
--   Vite
--   Webpack
--   Vitest / Jest
--   React Testing Library
+- Git
+- Vite
+- Webpack
+- Vitest / Jest
+- React Testing Library
 
 #### Despliegue
 
--   AWS (S3, CloudFront, Route53)
--   Vercel
+- AWS (S3, CloudFront, Route53)
+- Vercel
 
 #### Generadores de Sitios
 
--   11ty (SSG)
--   Jekyll (SSG)
--   WordPress (CMS)
+- 11ty (SSG)
+- Jekyll (SSG)
+- WordPress (CMS)
 
 ### Idiomas
 
@@ -116,13 +117,13 @@ Aunque la imagen y la información son constantes en mi trabajo, la forma en la 
 
 // Hablemos
 
-### Redes:
+### Redes
 
--   [GitHub](https://github.com/dothedada)B
--   [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
+- [GitHub](https://github.com/dothedada)B
+- [LinkedIn](https://www.linkedin.com/in/-mmejia/)B
 
-### Canales de comunicacion:
+### Canales de comunicacion
 
--   [info@mmejia.com](mailto:info@mmejia.com)B
--   [(+57) 304 383 9127](tel:3043839127)B
--   [WhatsApp](https://wa.me/573043839127)B
+- [info@mmejia.com](mailto:info@mmejia.com)B
+- [(+57) 304 383 9127](tel:3043839127)B
+- [WhatsApp](https://wa.me/573043839127)B
