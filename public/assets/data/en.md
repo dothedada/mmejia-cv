@@ -42,10 +42,10 @@ While I enjoy and understand the importance of test-driven development (TDD), I 
 #### Languages
 
 - JavaScript / TypeScript
-- CSS (SCSS y SASS)
+- CSS (SASS, SCSS)
 - HTML (Semántico, md ❤️)
 - Python
-- SQL
+- SQL (PostgreSQL ❤️, SQLite)
 - Lua
 - Bash
 
@@ -58,6 +58,7 @@ While I enjoy and understand the importance of test-driven development (TDD), I 
 
 - React.js
 - React Router
+- Express.js
 
 #### Dev Tools
 

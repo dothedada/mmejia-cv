@@ -42,10 +42,10 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 #### Lenguajes
 
 - JavaScript / TypeScript
-- CSS (SCSS y SASS)
+- CSS (SASS, SCSS)
 - HTML (Semántico, md ❤️)
 - Python
-- SQL
+- SQL (PostgreSQL ❤️, SQLite)
 - Lua
 - Bash
 
@@ -58,6 +58,7 @@ Aunque disfruto y comprendo la importancia del desarrollo guiado por pruebas (TD
 
 - React.js
 - React Router
+- Express.js
 
 #### Herramientas Desarrollo
 
